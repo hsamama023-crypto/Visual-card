@@ -9,7 +9,7 @@
 body{background: radial-gradient(circle at top, #222, #000); min-height:100vh; display:flex; justify-content:center; align-items:center; padding:14px; font-family:'Poppins',sans-serif;}
 .card{width:100%; max-width:420px; background:#fdf8e8; border-radius:28px; overflow:hidden; box-shadow:0 0 0 2px #d4af37, 0 0 35px rgba(212,175,55,.6), 0 35px 90px rgba(0,0,0,.8); animation:float 5s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.header{background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #1e1e1e); padding:32px 22px 28px; text-align:center; border-bottom:3px solid #d4af37; position:relative; cursor:pointer;}
+.header{background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #1e1e1e); padding:32px 22px 28px; text-align:center; border-bottom:3px solid #d4af37; position:relative;}
 .header::after{content:'✦'; color:#d4af37; position:absolute; bottom:-13px; left:50%; transform:translateX(-50%); background:#1a1a1a; width:30px; height:26px; border-radius:50%; line-height:26px; font-size:14px; border:1px solid #d4af37;}
 .bism{font-family:'Amiri',serif; color:#d4af37; font-size:23px; margin-bottom:8px;}
 .couple-head{font-family:'Great Vibes',cursive; font-size:54px; color:#d4af37; line-height:1;}
@@ -27,8 +27,7 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
 .err{color:#c0392b; font-size:12px; margin-top:8px; min-height:16px; font-weight:600;}
 .main{display:none; animation:pop .55s ease;} .main.show{display:block;}
 @keyframes pop{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)}}
-.footer{background:#0f0f0f; color:#c9a86a; text-align:center; padding:16px; font-size:10px; letter-spacing:3px; border-top:1px solid #d4af37;}
-/* ADMIN LOCK MODAL */
+.footer{background:#0f0f0f; color:#c9a86a; text-align:center; padding:16px; font-size:10px; letter-spacing:3px; border-top:1px solid #d4af37; cursor:pointer;}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:14px}
 .modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:20px;width:100%;max-width:380px;max-height:90vh;overflow:auto;color:#fff}
 .admin-input{border:1px solid #555!important;background:#2a2a2a!important;color:#fff!important;text-align:left!important}
@@ -64,10 +63,9 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
       <p style="font-size:11px; color:#8a7a5a; margin-top:6px;" id="familyBox">— Family of Zain & Aeman —</p>
     </div>
   </div>
-  <div class="footer" id="footer">ZAIN ❤️ AEMAN • 2026</div>
+  <div class="footer" id="footer" onclick="openLock()">ZAIN ❤️ AEMAN • 2026 (Admin ke liye tap karo)</div>
 </div>
 
-<!-- ADMIN LOCK -->
 <div id="lockModal" class="modal">
   <div class="modal-box" style="text-align:center">
     <h3 style="color:#d4af37">🔒 Admin Lock</h3>
@@ -79,7 +77,6 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div id="adminModal" class="modal">
   <div class="modal-box">
     <h3 style="color:#d4af37;text-align:center">👑 Admin Panel</h3>
@@ -106,17 +103,25 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
 
 <script>
 const ADMIN_PASS='Admin0823';
+function openLock(){
+  document.getElementById('lockModal').style.display='flex';
+  document.getElementById('lockPass').value='';
+  document.getElementById('lockMsg').innerText='';
+  if(navigator.vibrate) navigator.vibrate(80);
+}
+function closeLock(){document.getElementById('lockModal').style.display='none';}
+function closeAdmin(){document.getElementById('adminModal').style.display='none'; loadCfg();}
+
 let tapCount=0,tapTimer=null;
 document.getElementById('secretTap').addEventListener('click',()=>{
   tapCount++; if(tapTimer) clearTimeout(tapTimer); tapTimer=setTimeout(()=>tapCount=0,2000);
-  if(tapCount>=5){tapCount=0; document.getElementById('lockModal').style.display='flex';}
+  if(tapCount>=5){tapCount=0; openLock();}
 });
-function closeLock(){document.getElementById('lockModal').style.display='none';}
-function closeAdmin(){document.getElementById('adminModal').style.display='none'; loadCfg();}
+
 document.getElementById('unlockBtn').addEventListener('click',()=>{
   if(document.getElementById('lockPass').value===ADMIN_PASS){
     closeLock(); document.getElementById('adminModal').style.display='flex'; loadAdminForm(); renderGuests();
-  } else { document.getElementById('lockMsg').innerText='❌ Galat Password'; }
+  } else { document.getElementById('lockMsg').innerText='❌ Galat Password - Admin0823 likho'; }
 });
 
 function loadCfg(){
@@ -125,10 +130,9 @@ function loadCfg(){
   document.getElementById('coupleHead').innerText=C1+" & "+C2;document.getElementById('coupleBig').innerText=C1+" & "+C2;
   document.getElementById('detailsBox').innerHTML=`📅 <b>Date:</b> ${CDate}<br>⏰ <b>Time:</b> ${CTime}<br>📍 <b>Venue:</b> ${CVenue}`;
   document.getElementById('msgBox').innerText=CMsg;document.getElementById('familyBox').innerText=`— Family of ${C1} & ${C2} —`;
-  document.getElementById('footer').innerText=`${C1.toUpperCase()} ❤️ ${C2.toUpperCase()} • ${CDate}`;
 }
 function loadAdminForm(){let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}'); c1.value=cfg.c1||"Zain"; c2.value=cfg.c2||"Aeman"; venue.value=cfg.venue||"Gujranwala Marquee Palace"; date.value=cfg.date||"Friday, 25th Dec 2026"; time.value=cfg.time||"07:00 PM"; msg.value=cfg.msg||"";}
-function saveCfg(){let d={c1:c1.value,c2:c2.value,venue:venue.value,date:date.value,time:time.value,msg:msg.value||"Your presence will be a blessing"}; localStorage.setItem('ZAIN_CFG',JSON.stringify(d)); loadCfg(); alert('✅ Saved! Ab card me foran ayega');}
+function saveCfg(){let d={c1:c1.value,c2:c2.value,venue:venue.value,date:date.value,time:time.value,msg:msg.value||"Your presence will be a blessing"}; localStorage.setItem('ZAIN_CFG',JSON.stringify(d)); loadCfg(); alert('✅ Saved!');}
 function getGuests(){try{return JSON.parse(localStorage.getItem('ZAIN_GUESTS')||'[]')}catch(e){return[]}}
 function setGuests(g){localStorage.setItem('ZAIN_GUESTS',JSON.stringify(g))}
 function addOne(){let n=gName.value.trim(),p=gPass.value.trim(); if(!n||!p) return alert('Naam + Pass likho'); let g=getGuests(); g.unshift({name:n,pass:p}); setGuests(g); gName.value=''; gPass.value=''; renderGuests();}
@@ -137,7 +141,9 @@ function renderGuests(){let q=(search.value||'').toLowerCase(); let g=getGuests(
 function delOne(i){let g=getGuests(); g.splice(i,1); setGuests(g); renderGuests();}
 function shareWa(i){let g=getGuests()[i]; let link=location.href.split('?')[0]+'?pass='+encodeURIComponent(g.pass); let m=`Assalam-o-Alaikum ${g.name} Sahib,%0AZain ❤️ Aeman Card:%0A${link}%0APassword: *${g.pass}*`; window.open('https://wa.me/?text='+m,'_blank');}
 
-let params=new URLSearchParams(location.search); let passUrl=params.get('pass')||""; if(passUrl){document.getElementById('passInput').value=passUrl; setTimeout(()=>unlock(),400);}
+let params=new URLSearchParams(location.search);
+if(params.get('admin')===ADMIN_PASS){setTimeout(()=>{document.getElementById('adminModal').style.display='flex'; loadAdminForm(); renderGuests();},600);}
+let passUrl=params.get('pass')||""; if(passUrl){document.getElementById('passInput').value=passUrl; setTimeout(()=>unlock(),400);}
 function unlock(){let entered=document.getElementById('passInput').value.trim(); if(!entered){errMsg.innerText="⚠️ Password likho";return;} if(entered==="1234"){showCard("Mehman-e-Khaas");return;} let guests=getGuests(); let found=guests.find(g=>g.pass===entered); if(found){showCard(found.name);} else{errMsg.innerText=`❌ Ye password save nahi hai`;}}
 function showCard(name){guestName.innerText=name; lockDiv.style.display='none'; mainDiv.classList.add('show');}
 loadCfg();

@@ -1,228 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zain & Aeman - Wedding Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Card - Zain & Aeman</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;700;800&family=Amiri&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:14px;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
-.main{width:100%;max-width:420px;background:linear-gradient(180deg,#fffef7,#fdf6d8);border-radius:28px;overflow:hidden;border:2px solid #e8c765;box-shadow:0 20px 60px rgba(232,199,101,.35), inset 0 1px 0 rgba(255,255,255,.8);position:relative}
-.main:before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#8B0000,#d4af37,#8B0000)}
-.top{height:300px;background:#0f0f0f;position:relative;overflow:hidden;display:flex;justify-content:center;align-items:center}
-.top img{width:100%;height:100%;object-fit:cover;opacity:.55;position:absolute;top:0;left:0;filter:saturate(1.1)}
-.top:after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,#000)}
-.top-content{position:relative;z-index:2;text-align:center;color:#fff;padding:20px}
-.bism{font-family:'Amiri',serif;font-size:22px;color:#ffdf8a;text-shadow:0 2px 10px rgba(0,0,0,.8);line-height:1.6}
-.bism-sub{font-size:10px;letter-spacing:3px;color:#c9a86a;margin-top:6px}
-.couple{font-family:'Great Vibes',cursive;font-size:62px;color:#ffda6b;text-shadow:0 4px 20px rgba(0,0,0,.9);line-height:.9;margin-top:10px}
-.badge{display:inline-block;margin-top:12px;padding:6px 16px;border-radius:20px;border:1px solid rgba(212,175,55,.6);background:rgba(0,0,0,.35);backdrop-filter:blur(6px);font-size:9px;letter-spacing:3px;color:#e8c765}
-.mid{padding:0 18px 18px 18px}
-.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:1px solid rgba(212,175,55,.5);border-radius:20px;padding:18px;margin-top:-36px;position:relative;z-index:3;box-shadow:0 12px 30px rgba(0,0,0,.18)}
-.lock-title{color:#8B0000;font-weight:700;font-size:18px}
-.lock-sub{font-size:11px;color:#6b6b6b;margin:6px 0 12px 0;line-height:1.5}
-.input{width:100%;padding:14px 16px;border-radius:12px;border:2px solid #1a1a1a;background:#fff;text-align:center;font-size:15px;font-weight:600;letter-spacing:.5px;outline:none;transition:.2s}
-.input:focus{border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,.2)}
-.btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#1a1a1a,#2e2e2e);color:#e8c765;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.25);transition:.2s}
-.btn:active{transform:scale(.98)}
-.btn-gold{background:linear-gradient(135deg,#b8960c,#e8c765);color:#111;box-shadow:0 8px 18px rgba(232,199,101,.4)}
-.err{color:#b91c1c;font-size:11px;margin-top:8px;min-height:14px}
-.hint{font-size:9px;color:#9a9a9a;margin-top:8px}
-.gName{color:#8B0000;text-align:center;font-size:22px;font-weight:700;margin:6px 0}
-.slider-wrap{position:relative}
-.slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.slider::-webkit-scrollbar{display:none}
-.slide{min-width:100%;scroll-snap-align:start;padding:4px}
-.cardBox{background:#fff;border-radius:18px;padding:16px;border:1px solid rgba(212,175,55,.45);box-shadow:0 8px 22px rgba(0,0,0,.08);position:relative;overflow:hidden}
-.cardBox:before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#8B0000,gold)}
-.ev{display:inline-block;font-size:10px;letter-spacing:2px;padding:5px 12px;border-radius:20px;color:#fff;font-weight:700}
-.ev-barat{background:linear-gradient(135deg,#8B0000,#b91c1c)}
-.ev-walima{background:linear-gradient(135deg,#111,#333)}
-.couple-mini{font-family:'Great Vibes',cursive;font-size:44px;color:#8B0000;margin:8px 0 4px 0}
-.details{background:#fffaf0;border-radius:12px;padding:12px;border-left:4px solid #e8c765;text-align:left;font-size:12.5px;line-height:2.1;color:#222}
-.details b{color:#111}
-.dots{display:flex;justify-content:center;gap:8px;margin:12px 0 4px 0}
-.dots span{width:26px;height:6px;border-radius:10px;background:#e9e1b8;transition:.3s}
-.dots span.active{background:#d4af37;width:30px}
-.swipe-hint{text-align:center;font-size:10px;color:#8a7d5a;margin:6px 0 2px 0;letter-spacing:.5px}
-.foot{background:#0f0f0f;color:#a08a5a;padding:12px;text-align:center;font-size:9px;letter-spacing:2px;border-top:1px solid rgba(212,175,55,.2)}
-.dua{font-family:'Amiri',serif;color:#8B0000;text-align:center;font-size:13px;margin-top:10px;opacity:.9}
-#admin{padding:14px}
+body{background: radial-gradient(circle at top, #222, #000); min-height:100vh; display:flex; justify-content:center; align-items:center; padding:14px; font-family:'Poppins',sans-serif;}
+.card{width:100%; max-width:420px; background:#fdf8e8; border-radius:28px; overflow:hidden; box-shadow:0 0 0 2px #d4af37, 0 0 35px rgba(212,175,55,.6), 0 35px 90px rgba(0,0,0,.8); position:relative;}
+.header{background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #1e1e1e); padding:32px 22px 28px; text-align:center; border-bottom:3px solid #d4af37;}
+.bism{font-family:'Amiri',serif; color:#d4af37; font-size:23px; margin-bottom:8px;}
+.couple-head{font-family:'Great Vibes',cursive; font-size:54px; color:#d4af37; line-height:1;}
+.sub{color:#c9a86a; letter-spacing:4px; font-size:10px; margin-top:8px; font-weight:700;}
+.body{padding:26px 22px 22px; text-align:center; background: radial-gradient(circle at center, #fffcf0, #fdf6e3);}
+.badge{display:inline-block; background:#111; color:#d4af37; padding:7px 16px; border-radius:20px; font-size:10px; letter-spacing:2px; border:1px solid #d4af37; margin-bottom:14px;}
+.guest{color:#8B0000; font-weight:800; font-size:26px; margin:8px 0; line-height:1.2;}
+.divider{height:1px; background: linear-gradient(to right, transparent, #d4af37, transparent); margin:18px 0;}
+.couple-big{font-family:'Great Vibes',cursive; font-size:62px; color:#8B0000; line-height:1; margin:10px 0;}
+.details{background:#fff; border-left:4px solid #d4af37; border-radius:14px; padding:14px; text-align:left; font-size:13px; line-height:2; color:#3a2e18;}
+.details b{color:#8B0000;}
+.lock{background:#fff; border:1.5px solid #e9d8a6; border-radius:16px; padding:18px;}
+input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #111; text-align:center; font-size:14px; outline:none; margin:6px 0;}
+.btn{width:100%; padding:14px; border-radius:12px; border:none; background: linear-gradient(135deg,#b8960c,#d4af37,#f0c75e); color:#000; font-weight:800; font-size:15px; cursor:pointer; margin-top:12px;}
+.err{color:#c0392b; font-size:12px; margin-top:8px; min-height:16px; font-weight:600;}
+.main{display:none;} .main.show{display:block;}
+.footer{background:#0f0f0f; color:#c9a86a; text-align:center; padding:16px; font-size:10px; letter-spacing:3px; border-top:1px solid #d4af37;}
+/* SIDE ADMIN BUTTON */
+.admin-float{position:fixed; bottom:20px; right:20px; width:50px; height:50px; background:linear-gradient(135deg,#b8960c,#d4af37); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 4px 15px rgba(0,0,0,.5); cursor:pointer; z-index:50; border:2px solid #fff;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:14px}
+.modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:20px;width:100%;max-width:380px;max-height:90vh;overflow:auto;color:#fff}
+.admin-input{border:1px solid #555!important;background:#2a2a2a!important;color:#fff!important;text-align:left!important}
 </style>
 </head>
 <body>
-<div class="main">
-<div class="top">
-<img id="bgPic" src="" alt="" style="display:none">
-<div class="top-content">
-<div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-<div class="bism-sub">IN THE NAME OF ALLAH, MOST GRACIOUS, MOST MERCIFUL</div>
-<div class="couple" id="coupleHead">Zain & Aeman</div>
-<div class="badge">PRIVATE WEDDING INVITATION</div>
-</div>
-</div>
-
-<div class="mid">
-<div id="lock" class="glass">
-<div class="lock-title">🔐 Private Invitation</div>
-<div class="lock-sub">Har mehman ka alag password hai.<br>Apna password likh ke card kholein.</div>
-<input id="p" class="input" type="password" placeholder="🔑 Password likhein">
-<button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO</button>
-<div class="err" id="e"></div>
-<div class="hint">Demo password: <b>1234</b> • Admin: <b>?admin=Zain@2026</b></div>
-</div>
-
-<div id="cards" style="display:none">
-<div class="gName" id="gName"></div>
-<div class="dua">Alhamdulilah</div>
-<div class="slider-wrap" style="margin-top:12px">
-<div class="slider" id="slider">
-<div class="slide">
-<div class="cardBox">
-<div class="ev ev-barat">BARAT CEREMONY</div>
-<div class="couple-mini">Barat</div>
-<div class="details">
-📅 <b>Date:</b> <span id="bDate">12 Dec 2026</span><br>
-⏰ <b>Time:</b> <span id="bTime">07:00 PM</span><br>
-📍 <b>Venue:</b> <span id="bVenue">Al Janat Marquee, Gujranwala</span>
-</div>
-</div>
-</div>
-<div class="slide">
-<div class="cardBox">
-<div class="ev ev-walima">WALIMA CEREMONY</div>
-<div class="couple-mini">Walima</div>
-<div class="details">
-📅 <b>Date:</b> <span id="wDate">13 Dec 2026</span><br>
-⏰ <b>Time:</b> <span id="wTime">01:00 PM</span><br>
-📍 <b>Venue:</b> <span id="wVenue">Royal Palace, Gujranwala</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="dots"><span class="active" id="dot1"></span><span id="dot2"></span></div>
-<div class="swipe-hint">👉 Swipe karein — Barat ➡️ Walima</div>
-<button class="btn" style="margin-top:10px;background:#111;color:#e8c765;border:1px solid rgba(212,175,55,.3)" onclick="location.reload()">🔒 LOCK CARD</button>
+<div class="card">
+  <div class="header">
+    <div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <div class="couple-head" id="coupleHead">Zain & Aeman</div>
+    <div class="sub">WEDDING CELEBRATION</div>
+  </div>
+  <div class="body">
+    <div id="lockDiv">
+      <div class="badge">SECURED INVITE</div>
+      <div class="guest" style="font-size:18px;">Apna Password Likho</div>
+      <p style="font-size:11px; color:#8a7a5a; margin-bottom:12px;">Jis naam ka password hoga usi naam ka card khulega</p>
+      <div class="lock">
+        <input id="passInput" type="password" placeholder="🔑 Password">
+        <button class="btn" onclick="unlock()">✨ CARD KHOLO ✨</button>
+        <div class="err" id="errMsg"></div>
+      </div>
+    </div>
+    <div id="mainDiv" class="main">
+      <div class="badge">YOU ARE INVITED</div>
+      <div class="guest">Dear <span id="guestName"></span> ❤️</div>
+      <p style="font-size:11px; color:#888;">Aapko dil se dawat hai</p>
+      <div class="couple-big" id="coupleBig">Zain & Aeman</div>
+      <div class="divider"></div>
+      <div class="details" id="detailsBox"></div>
+      <div class="divider"></div>
+      <p style="font-size:13px; color:#8B0000; font-weight:700;" id="msgBox">Your presence will be a blessing</p>
+      <p style="font-size:11px; color:#8a7a5a; margin-top:6px;" id="familyBox">— Family of Zain & Aeman —</p>
+    </div>
+  </div>
+  <div class="footer" id="footer">ZAIN ❤️ AEMAN • 2026</div>
 </div>
 
-<div id="admin" style="display:none">
-<h3 style="font-size:14px">⚙️ Admin Panel</h3>
-<p style="font-size:10px;color:#666;margin:4px 0 8px 0">Pic + Barat/Walima + Guests + Music — bina code ke</p>
-<input type="file" id="picUp" accept="image/*" style="font-size:12px">
-<div style="display:flex;gap:6px;margin-top:6px"><button class="btn" style="padding:8px;background:#b91c1c;color:#fff" onclick="removePic()">Remove Pic</button><button class="btn" style="padding:8px" onclick="document.getElementById('bgPic').style.display='none'">Hide</button></div>
+<!-- SIDE BUTTON - ADMIN -->
+<div class="admin-float" onclick="openLock()">⚙️</div>
 
-<hr style="margin:12px 0;border:none;border-top:1px solid #eee">
-<h4 style="font-size:12px">🎵 Background Music (Apni Marzi Ka)</h4>
-<input type="file" id="musicUp" accept="audio/*" style="font-size:12px;margin-top:6px">
-<input id="musicUrl" class="input" placeholder="Ya MP3 ka link paste karo" style="margin-top:6px;text-align:left;font-size:11px">
-<div style="display:flex;gap:6px;margin-top:6px">
-<button class="btn" style="padding:8px;background:#111;color:#e8c765" onclick="saveMusic()">Save Music</button>
-<button class="btn" style="padding:8px;background:#b91c1c;color:#fff" onclick="removeMusic()">Remove Music</button>
-</div>
-<audio id="preview" controls style="width:100%;margin-top:8px;display:none"></audio>
-<div id="musicStatus" style="font-size:10px;color:#666;margin-top:4px"></div>
-
-<hr style="margin:12px 0;border:none;border-top:1px solid #eee">
-<h4 style="font-size:12px">Barat</h4><input id="bd" class="input" placeholder="Barat Date - e.g. 12 Dec 2026" style="margin-top:6px;text-align:left"><input id="bt" class="input" placeholder="Barat Time" style="margin-top:6px;text-align:left"><input id="bv" class="input" placeholder="Barat Venue" style="margin-top:6px;text-align:left">
-<h4 style="font-size:12px;margin-top:10px">Walima</h4><input id="wd" class="input" placeholder="Walima Date" style="margin-top:6px;text-align:left"><input id="wt" class="input" placeholder="Walima Time" style="margin-top:6px;text-align:left"><input id="wv" class="input" placeholder="Walima Venue" style="margin-top:6px;text-align:left">
-<button class="btn btn-gold" onclick="saveAll()" style="margin-top:10px">Save Barat & Walima</button>
-<textarea id="list" rows="5" class="input" style="text-align:left;font-size:11px;margin-top:12px" placeholder="Guests format: Naam,Password (har line pe ek)&#10;Ali Bhai,Ali123&#10;Usman Khan,Usman786"></textarea>
-<button class="btn" style="background:#111;color:#e8c765;margin-top:6px" onclick="addGuests()">Add Guests (500)</button>
-<div id="cnt" style="font-size:11px;margin-top:8px;color:#333"></div>
-<div id="glist" style="max-height:160px;overflow:auto;margin-top:6px"></div>
-<button class="btn" style="background:#fff;border:1px solid #ddd;color:#333;margin-top:8px" onclick="location.href=location.pathname">Exit Admin</button>
+<div id="lockModal" class="modal">
+  <div class="modal-box" style="text-align:center">
+    <h3 style="color:#d4af37">🔒 Admin Lock</h3>
+    <p style="font-size:11px;color:#aaa;margin:6px 0">Password: Admin0823</p>
+    <input id="lockPass" type="password" placeholder="Password likho">
+    <button class="btn" id="unlockBtn">Unlock Admin</button>
+    <button class="btn" style="background:#333;color:#fff" onclick="closeLock()">Cancel</button>
+    <p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p>
+  </div>
 </div>
 
+<div id="adminModal" class="modal">
+  <div class="modal-box">
+    <h3 style="color:#d4af37;text-align:center">👑 Admin Panel</h3>
+    <button class="btn" style="background:#333;color:#fff" onclick="closeAdmin()">← Back to Card</button>
+    <label style="font-size:11px;color:#d4af37">Couple 1</label><input id="c1" class="admin-input" placeholder="Zain">
+    <label style="font-size:11px;color:#d4af37">Couple 2</label><input id="c2" class="admin-input" placeholder="Aeman">
+    <label style="font-size:11px;color:#d4af37">Venue</label><input id="venue" class="admin-input" value="Gujranwala Marquee Palace">
+    <label style="font-size:11px;color:#d4af37">Date</label><input id="date" class="admin-input" placeholder="Friday, 25th Dec 2026">
+    <label style="font-size:11px;color:#d4af37">Time</label><input id="time" class="admin-input" placeholder="07:00 PM">
+    <label style="font-size:11px;color:#d4af37">Message</label><input id="msg" class="admin-input" placeholder="Your presence will be a blessing">
+    <button class="btn" onclick="saveCfg()">💾 Save Settings</button>
+    <hr style="margin:14px 0;border:1px solid #333">
+    <label style="font-size:11px;color:#d4af37">Mehman Add (Naam + Password)</label>
+    <input id="gName" class="admin-input" placeholder="Naam: Ali"><input id="gPass" class="admin-input" placeholder="Pass: 1234">
+    <button class="btn" onclick="addOne()">+ ADD</button>
+    <textarea id="bulk" class="admin-input" rows="4" placeholder="Ali,1234&#10;Ahmed,5678"></textarea>
+    <button class="btn" onclick="addBulk()">🚀 Bulk Add 500</button>
+    <input id="search" class="admin-input" placeholder="🔍 Search..." oninput="renderGuests()">
+    <div id="guestList" style="max-height:250px;overflow:auto;margin-top:10px"></div>
+    <p id="total" style="font-size:12px;margin-top:8px"></p>
+  </div>
 </div>
-<div class="foot">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ • <span id="footNames">ZAIN & AEMAN 2026</span></div>
-</div>
-
-<!-- MUSIC SYSTEM - ADDED -->
-<audio id="bgMusic" loop preload="none"></audio>
-<button id="musicBtn" onclick="toggleMusic()" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:48px;height:48px;border-radius:50%;border:2px solid #e8c765;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);color:#e8c765;font-size:20px;cursor:pointer;display:none;box-shadow:0 6px 18px rgba(0,0,0,.4)">🎵</button>
 
 <script>
-let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}');
-let BD=cfg.bd||"Friday, 12th Dec 2026",BT=cfg.bt||"07:00 PM",BV=cfg.bv||"Al Janat Marquee, Gujranwala";
-let WD=cfg.wd||"Saturday, 13th Dec 2026",WT=cfg.wt||"01:00 PM",WV=cfg.wv||"Royal Palace, Gujranwala";
-let C1=cfg.c1||"Zain",C2=cfg.c2||"Aeman";
-function apply(){
-document.getElementById('coupleHead').innerText=C1+" & "+C2;
-document.getElementById('bDate').innerText=BD;document.getElementById('bTime').innerText=BT;document.getElementById('bVenue').innerText=BV;
-document.getElementById('wDate').innerText=WD;document.getElementById('wTime').innerText=WT;document.getElementById('wVenue').innerText=WV;
-document.getElementById('footNames').innerText=(C1+" & "+C2).toUpperCase()+" • 2026";
-let pic=localStorage.getItem('ZAIN_PIC');if(pic){let im=document.getElementById('bgPic');im.src=pic;im.style.display='block'}
-let music=localStorage.getItem('ZAIN_MUSIC');if(music){let a=document.getElementById('bgMusic');a.src=music;document.getElementById('musicStatus').innerText="✅ Music saved hai";let pv=document.getElementById('preview');if(pv){pv.src=music;pv.style.display='block'}}
-let musicUrl=localStorage.getItem('ZAIN_MUSIC_URL');if(musicUrl){document.getElementById('musicUrl').value=musicUrl}
-}
-apply();
-let guests=JSON.parse(localStorage.getItem('ZAIN_GUESTS')||'[]');
-let ps=new URLSearchParams(location.search);
-if(ps.get('pass')){document.getElementById('p').value=ps.get('pass');setTimeout(unlock,350)}
-if(ps.get('admin')==="Zain@2026"){document.getElementById('lock').style.display='none';document.getElementById('admin').style.display='block';loadG();document.getElementById('bd').value=BD;document.getElementById('bt').value=BT;document.getElementById('bv').value=BV;document.getElementById('wd').value=WD;document.getElementById('wt').value=WT;document.getElementById('wv').value=WV}
-function unlock(){
-let v=document.getElementById('p').value.trim();
-if(!v){document.getElementById('e').innerText="⚠️ Password likhein";return}
-if(v==="1234"){show("Mehman-e-Khaas");return}
-let f=guests.find(x=>x.pass===v);
-if(f){show(f.name)}else{document.getElementById('e').innerText="❌ Galat password - Admin me check karein"}
-}
-function show(n){
-document.getElementById('gName').innerText="Dear "+n+" ❤️";
-document.getElementById('lock').style.display='none';
-document.getElementById('cards').style.display='block';
-let a=document.getElementById('bgMusic');
-if(a.src){document.getElementById('musicBtn').style.display='block';setTimeout(()=>{a.volume=0.5;a.play().then(()=>{document.getElementById('musicBtn').innerText='🔊';isPlaying=true}).catch(()=>{document.getElementById('musicBtn').innerText='🎵'})},600)}
-}
-function saveAll(){
-localStorage.setItem('ZAIN_CFG',JSON.stringify({bd:document.getElementById('bd').value||BD,bt:document.getElementById('bt').value||BT,bv:document.getElementById('bv').value||BV,wd:document.getElementById('wd').value||WD,wt:document.getElementById('wt').value||WT,wv:document.getElementById('wv').value||WV,c1:C1,c2:C2}));
-location.reload();
-}
-function addGuests(){
-let lines=document.getElementById('list').value.trim().split('\n');let added=0;
-lines.forEach(l=>{let a=l.split(',');if(a.length>=2){let name=a[0].trim(),pass=a[1].trim();if(name&&pass){guests.push({name,pass});added++}}});
-localStorage.setItem('ZAIN_GUESTS',JSON.stringify(guests));document.getElementById('list').value="";loadG();alert(added+" guests added. Total: "+guests.length);
-}
-function loadG(){
-document.getElementById('cnt').innerText="Total Guests: "+guests.length;
-let h="";guests.slice(-50).reverse().forEach((g,i)=>{h+=`<div style="background:#fff;padding:6px 8px;margin:3px 0;border-radius:8px;border:1px solid #eee;font-size:11px">${g.name} — <b>${g.pass}</b></div>`});
-document.getElementById('glist').innerHTML=h+(guests.length>50?`<div style="font-size:10px;color:#999;margin-top:4px">...aur ${guests.length-50} pehle wale</div>`:"");
-}
-document.getElementById('p').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
-document.getElementById('slider')?.addEventListener('scroll',()=>{let s=document.getElementById('slider');let idx=s.scrollLeft > s.clientWidth/2 ? 1:0;document.getElementById('dot1').className=idx===0?'active':'';document.getElementById('dot2').className=idx===1?'active':''});
-document.getElementById('picUp')?.addEventListener('change',e=>{let file=e.target.files[0];if(!file)return;if(file.size>900000){alert("Pic 900KB se choti rakhein");return}let r=new FileReader();r.onload=()=>{localStorage.setItem('ZAIN_PIC',r.result);apply();alert("✅ Pic save ho gayi!")};r.readAsDataURL(file)});
-function removePic(){localStorage.removeItem('ZAIN_PIC');document.getElementById('bgPic').style.display='none';alert("Pic removed")}
-
-// --- MUSIC FUNCTIONS - NEW (purane functions me change nahi) ---
-let isPlaying=false;
-function toggleMusic(){
-let a=document.getElementById('bgMusic');
-if(!a.src){alert("Pehle Admin me music add karo");return}
-if(a.paused){a.play();document.getElementById('musicBtn').innerText='🔊';isPlaying=true}
-else{a.pause();document.getElementById('musicBtn').innerText='🔇';isPlaying=false}
-}
-function saveMusic(){
-let url=document.getElementById('musicUrl').value.trim();
-if(url){localStorage.setItem('ZAIN_MUSIC',url);localStorage.setItem('ZAIN_MUSIC_URL',url);document.getElementById('bgMusic').src=url;document.getElementById('musicStatus').innerText="✅ Music link save ho gaya!";alert("✅ Music save ho gaya!");return}
-alert("MP3 file select karo ya link paste karo")
-}
-document.getElementById('musicUp')?.addEventListener('change',e=>{
-let file=e.target.files[0];if(!file)return;
-if(file.size>5000000){alert("Music 5MB se chota rakhein, warna save nahi hoga");return}
-let r=new FileReader();
-r.onload=()=>{
-localStorage.setItem('ZAIN_MUSIC',r.result);
-localStorage.removeItem('ZAIN_MUSIC_URL');
-document.getElementById('bgMusic').src=r.result;
-let pv=document.getElementById('preview');pv.src=r.result;pv.style.display='block';
-document.getElementById('musicStatus').innerText="✅ Music file save ho gaya! ("+(file.size/1024/1024).toFixed(2)+" MB)";
-alert("✅ Apki marzi ka music save ho gaya!")
-};
-r.readAsDataURL(file);
+const ADMIN_PASS='Admin0823';
+function openLock(){document.getElementById('lockModal').style.display='flex';}
+function closeLock(){document.getElementById('lockModal').style.display='none';}
+function closeAdmin(){document.getElementById('adminModal').style.display='none'; loadCfg();}
+document.getElementById('unlockBtn').addEventListener('click',()=>{
+  if(document.getElementById('lockPass').value===ADMIN_PASS){
+    closeLock(); document.getElementById('adminModal').style.display='flex'; loadAdminForm(); renderGuests();
+  } else { document.getElementById('lockMsg').innerText='❌ Galat Password'; }
 });
-function removeMusic(){localStorage.removeItem('ZAIN_MUSIC');localStorage.removeItem('ZAIN_MUSIC_URL');document.getElementById('bgMusic').src="";document.getElementById('musicBtn').style.display='none';document.getElementById('preview').style.display='none';document.getElementById('musicStatus').innerText="❌ Music removed";document.getElementById('musicUrl').value="";alert("Music removed")}
+function loadCfg(){
+  let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}');
+  let C1=cfg.c1||"Zain",C2=cfg.c2||"Aeman",CDate=cfg.date||"Friday, 25th Dec 2026",CTime=cfg.time||"07:00 PM",CVenue=cfg.venue||"Gujranwala Marquee Palace",CMsg=cfg.msg||"Your presence will be a blessing";
+  document.getElementById('coupleHead').innerText=C1+" & "+C2;document.getElementById('coupleBig').innerText=C1+" & "+C2;
+  document.getElementById('detailsBox').innerHTML=`📅 <b>Date:</b> ${CDate}<br>⏰ <b>Time:</b> ${CTime}<br>📍 <b>Venue:</b> ${CVenue}`;
+  document.getElementById('msgBox').innerText=CMsg;document.getElementById('familyBox').innerText=`— Family of ${C1} & ${C2} —`;
+}
+function loadAdminForm(){let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}'); c1.value=cfg.c1||"Zain"; c2.value=cfg.c2||"Aeman"; venue.value=cfg.venue||"Gujranwala Marquee Palace"; date.value=cfg.date||"Friday, 25th Dec 2026"; time.value=cfg.time||"07:00 PM"; msg.value=cfg.msg||"";}
+function saveCfg(){let d={c1:c1.value,c2:c2.value,venue:venue.value,date:date.value,time:time.value,msg:msg.value||"Your presence will be a blessing"}; localStorage.setItem('ZAIN_CFG',JSON.stringify(d)); loadCfg(); alert('✅ Saved!');}
+function getGuests(){try{return JSON.parse(localStorage.getItem('ZAIN_GUESTS')||'[]')}catch(e){return[]}}
+function setGuests(g){localStorage.setItem('ZAIN_GUESTS',JSON.stringify(g))}
+function addOne(){let n=gName.value.trim(),p=gPass.value.trim(); if(!n||!p) return alert('Naam + Pass likho'); let g=getGuests(); g.unshift({name:n,pass:p}); setGuests(g); gName.value=''; gPass.value=''; renderGuests();}
+function addBulk(){let txt=bulk.value.trim(); if(!txt) return; let lines=txt.split('\n'),g=getGuests(); lines.forEach(l=>{let a=l.split(','); if(a.length>=2){g.unshift({name:a[0].trim(),pass:a[1].trim()})}}); setGuests(g); bulk.value=''; renderGuests();}
+function renderGuests(){let q=(search.value||'').toLowerCase(); let g=getGuests(); let f=g.filter(x=>x.name.toLowerCase().includes(q)); let h=''; f.forEach((x,i)=>{let real=g.indexOf(x); let link=location.href.split('?')[0]+'?pass='+encodeURIComponent(x.pass); h+=`<div style="background:#2a2a2a;padding:8px;border-radius:8px;margin:5px 0;font-size:12px;text-align:left"><b>${x.name}</b> - ${x.pass}<br><button onclick="shareWa(${real})" style="background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:6px;margin-top:4px">WhatsApp</button> <button onclick="delOne(${real})" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:6px">X</button></div>`;}); document.getElementById('guestList').innerHTML=h||'Koi nahi'; document.getElementById('total').innerText='Total: '+g.length;}
+function delOne(i){let g=getGuests(); g.splice(i,1); setGuests(g); renderGuests();}
+function shareWa(i){let g=getGuests()[i]; let link=location.href.split('?')[0]+'?pass='+encodeURIComponent(g.pass); let m=`Assalam-o-Alaikum ${g.name} Sahib,%0ACard: ${link}%0APass: *${g.pass}*`; window.open('https://wa.me/?text='+m,'_blank');}
+let params=new URLSearchParams(location.search); if(params.get('admin')===ADMIN_PASS){setTimeout(()=>{document.getElementById('adminModal').style.display='flex'; loadAdminForm(); renderGuests();},400);}
+if(params.get('pass')){document.getElementById('passInput').value=params.get('pass'); setTimeout(()=>unlock(),400);}
+function unlock(){let e=passInput.value.trim(); if(!e){errMsg.innerText="⚠️ Password likho";return;} if(e==="1234"){showCard("Mehman-e-Khaas");return;} let f=getGuests().find(g=>g.pass===e); if(f){showCard(f.name);} else{errMsg.innerText=`❌ Ye password save nahi hai`;}}
+function showCard(name){guestName.innerText=name; lockDiv.style.display='none'; mainDiv.classList.add('show');}
+loadCfg();
 </script>
 </body>
 </html>

@@ -1,43 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zain & Aeman Invitation</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zain & Aeman | Luxury Invite</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
 <style>
-body{background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;font-family:Arial}
-.card{width:92%;max-width:360px;background:#fff8e7;border-radius:20px;overflow:hidden;border:2px solid gold;text-align:center}
-.top{background:#111;color:gold;padding:22px}
-.top h1{font-size:36px;margin:5px 0}
-.mid{padding:20px}
-input{width:100%;padding:13px;border-radius:8px;border:2px solid #111;text-align:center;font-size:16px;box-sizing:border-box}
-button{width:100%;padding:13px;border-radius:8px;border:none;background:gold;font-weight:bold;margin-top:10px}
-.bot{background:#111;color:#aaa;padding:10px;font-size:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:10px;font-family:'Poppins',sans-serif}
+.main{width:100%;max-width:420px;background:#fffaf0;border-radius:28px;overflow:hidden;border:3px solid #d4af37;position:relative;box-shadow:0 0 40px rgba(212,175,55,.6)}
+.top{height:320px;background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.9)),url('https://images.unsplash.com/photo-1519741497674-611481863552?w=600');background-size:cover;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;text-align:center;padding:20px}
+.couple{font-family:'Great Vibes',cursive;font-size:60px;color:#ffda6b;line-height:1}
+.tag{border:1px solid #d4af37;padding:5px 15px;border-radius:20px;font-size:9px;letter-spacing:3px;color:#d4af37;margin-top:10px}
+.mid{padding:22px;text-align:center}
+.glass{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border:1px solid gold;border-radius:18px;padding:16px;margin-top:-50px;position:relative;z-index:2;box-shadow:0 10px 20px rgba(0,0,0,.2)}
+.input{width:100%;padding:15px;border-radius:12px;border:2px solid #111;text-align:center;font-size:16px}
+.btn{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,#111,#333);color:#d4af37;font-weight:700;margin-top:10px;cursor:pointer;letter-spacing:1px}
+.btn-gold{background:linear-gradient(135deg,#b8960c,#d4af37);color:#111}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.d-box{background:#fff;border-radius:12px;padding:10px;border-left:4px solid #d4af37;text-align:left;font-size:12px}
+.count{display:flex;justify-content:center;gap:8px;margin:12px 0}
+.c-box{background:#111;color:#d4af37;border-radius:10px;padding:8px 10px;min-width:50px}
+.c-box b{font-size:18px;display:block}
+.c-box span{font-size:8px}
+.foot{background:#111;color:#888;padding:12px;text-align:center;font-size:10px;letter-spacing:2px}
+.icons{display:flex;justify-content:center;gap:12px;margin:10px 0}
+.icons a{width:38px;height:38px;background:#111;border-radius:50%;display:flex;justify-content:center;align-items:center;color:#d4af37;text-decoration:none;border:1px solid #d4af37}
 </style>
 </head>
 <body>
-<div class="card">
+<div class="main">
 <div class="top">
-<div>BISMILLAH</div>
-<h1>Zain & Aeman</h1>
-<div style="font-size:10px;letter-spacing:2px">WEDDING INVITE</div>
+<div style="font-family:'Amiri',serif;color:#d4af37">بِسْمِ اللهِ</div>
+<div class="couple" id="ch">Zain & Aeman</div>
+<div class="tag">YOU ARE CORDIALLY INVITED</div>
 </div>
 <div class="mid">
-<h3>Password Likho</h3>
-<p style="font-size:12px;color:#666">Har naam ka alag password</p>
-<input id="p" type="password" placeholder="Password">
-<button onclick="go()">OPEN CARD</button>
-<p id="e" style="color:red;font-size:12px"></p>
-<p style="font-size:10px;color:#999">Demo: 1234</p>
+<div class="glass" id="lock">
+<h3 style="color:#8B0000">🔐 Private Invitation</h3>
+<p style="font-size:11px;color:#666;margin:6px 0">Apna secret password likhein<br><small>Har guest ka alag hai</small></p>
+<input class="input" id="p" type="password" placeholder="🔑 Password">
+<button class="btn btn-gold" onclick="unlock()">✨ UNLOCK YOUR CARD ✨</button>
+<p id="e" style="color:red;font-size:12px;margin-top:6px"></p>
+<p style="font-size:9px;color:#aaa;margin-top:8px">Demo: 1234 | Admin: ?admin=Zain@2026</p>
 </div>
-<div class="bot">ZAIN & AEMAN 2026</div>
+
+<div id="card" style="display:none">
+<div style="margin-top:-40px;position:relative;z-index:3">
+<div style="background:#111;color:#d4af37;display:inline-block;padding:6px 18px;border-radius:20px;font-size:10px;border:1px solid gold">WALIMA CEREMONY</div>
+<h2 id="gName" style="color:#8B0000;margin:10px 0;font-size:22px">Dear Guest</h2>
+<div class="couple" id="cBig" style="font-size:52px;color:#8B0000">Zain & Aeman</div>
+<div style="height:1px;background:linear-gradient(to right,transparent,gold,transparent);margin:12px 0"></div>
+<div class="count" id="countdown"></div>
+<div class="detail-grid">
+<div class="d-box">📅 <b>Date</b><br><span id="dDate">25 Dec 2026</span></div>
+<div class="d-box">⏰ <b>Time</b><br><span id="dTime">07:00 PM</span></div>
+<div class="d-box">📍 <b>Venue</b><br><span id="dVenue">Gujranwala Palace</span></div>
+<div class="d-box">👔 <b>Dress Code</b><br><span>Formal / Traditional</span></div>
+</div>
+<div class="d-box" style="text-align:center">💌 <i>"Two souls, one heart. Join us as we begin our forever."</i></div>
+<div class="icons">
+<a href="#" onclick="openMap()">📍</a>
+<a href="tel:03000000000">📞</a>
+<a href="#" onclick="rsvp()">✅</a>
+</div>
+<button class="btn" onclick="share()">📤 Share Card</button>
+<button class="btn btn-gold" onclick="location.reload()" style="margin-top:6px">🔒 Lock Again</button>
+</div>
+</div>
+
+<div id="admin" style="display:none;text-align:left">
+<h3>⚙️ Admin - Interface Control</h3>
+<input id="c1" placeholder="Groom" class="input" style="margin-top:8px">
+<input id="c2" placeholder="Bride" class="input" style="margin-top:8px">
+<input id="cd" placeholder="Date" class="input" style="margin-top:8px">
+<input id="ct" placeholder="Time" class="input" style="margin-top:8px">
+<input id="cv" placeholder="Venue + Map Link" class="input" style="margin-top:8px">
+<button class="btn btn-gold" onclick="saveCfg()">Save All</button>
+<textarea id="list" rows="5" class="input" style="text-align:left;margin-top:10px" placeholder="Naam,Password"></textarea>
+<button class="btn" onclick="addGuests()">Add Guests</button>
+<div id="cnt" style="font-size:12px;margin-top:6px"></div>
+<div id="gl" style="max-height:150px;overflow:auto;font-size:11px;margin-top:6px"></div>
+</div>
+
+</div>
+<div class="foot" id="foot">ZAIN ❤️ AEMAN • FOREVER BEGINS</div>
 </div>
 <script>
-function go(){
-var v=document.getElementById('p').value;
-if(v.trim()==""){document.getElementById('e').innerHTML="Password likho";return}
-location.href="card.html?pass="+encodeURIComponent(v);
-}
+let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}');
+let C1=cfg.c1||"Zain",C2=cfg.c2||"Aeman",CD=cfg.date||"25 Dec 2026",CT=cfg.time||"7 PM",CV=cfg.venue||"Gujranwala Marquee";
+function apply(){document.getElementById('ch').innerText=C1+" & "+C2;document.getElementById('cBig').innerText=C1+" & "+C2;document.getElementById('dDate').innerText=CD;document.getElementById('dTime').innerText=CT;document.getElementById('dVenue').innerText=CV;document.getElementById('foot').innerText=C1.toUpperCase()+" ❤️ "+C2.toUpperCase();let target=new Date(CD);let now=new Date();let diff=target-now;if(diff>0){let d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000);document.getElementById('countdown').innerHTML=`<div class=c-box><b>${d}</b><span>DAYS</span></div><div class=c-box><b>${h}</b><span>HOURS</span></div><div class=c-box><b>${m}</b><span>MINS</span></div>`}}apply();
+let guests=JSON.parse(localStorage.getItem('ZAIN_GUESTS')||'[]');
+let ps=new URLSearchParams(location.search);
+if(ps.get('pass')){document.getElementById('p').value=ps.get('pass');setTimeout(unlock,500)}
+if(ps.get('admin')==="Zain@2026"){document.getElementById('lock').style.display='none';document.getElementById('admin').style.display='block';loadG()}
+function unlock(){let v=document.getElementById('p').value.trim();if(!v){document.getElementById('e').innerText="Password likho";return}if(v==="1234"){show("Mehman");return}let f=guests.find(x=>x.pass===v);if(f)show(f.name);else document.getElementById('e').innerText="❌ Galat Password"}
+function show(n){document.getElementById('gName').innerText="Dear "+n+" ❤️";document.getElementById('lock').style.display='none';document.getElementById('card').style.display='block'}
+function saveCfg(){localStorage.setItem('ZAIN_CFG',JSON.stringify({c1:document.getElementById('c1').value||C1,c2:document.getElementById('c2').value||C2,date:document.getElementById('cd').value||CD,time:document.getElementById('ct').value||CT,venue:document.getElementById('cv').value||CV}));location.reload()}
+function addGuests(){let lines=document.getElementById('list').value.trim().split('\n');lines.forEach(l=>{let a=l.split(',');if(a.length>=2)guests.push({name:a[0].trim(),pass:a[1].trim()})});localStorage.setItem('ZAIN_GUESTS',JSON.stringify(guests));document.getElementById('list').value="";loadG()}
+function loadG(){document.getElementById('cnt').innerText="Total: "+guests.length;let h="";guests.forEach((g,i)=>h+=`<div style="background:#fff;color:#000;padding:5px;margin:2px 0;border-radius:6px">${i+1}. ${g.name} - ${g.pass}</div>`);document.getElementById('gl').innerHTML=h}
+function openMap(){window.open("https://maps.google.com/?q="+encodeURIComponent(CV),"_blank")}
+function rsvp(){alert("RSVP Received! Shukriya "+document.getElementById('gName').innerText)}
+function share(){if(navigator.share)navigator.share({title:C1+" & "+C2+" Wedding",url:location.href});else alert("Link Copy Karo: "+location.href)}
 </script>
-</body>
+</body> 
 </html>

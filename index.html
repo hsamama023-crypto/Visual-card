@@ -64,7 +64,6 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 </div>
 
 <div class="mid">
-<!-- LOCK -->
 <div id="lock" class="glass">
 <div class="lock-title">🔐 Private Invitation</div>
 <div class="lock-sub">Har mehman ka alag password hai.<br>Apna password likh ke card kholein.</div>
@@ -74,7 +73,6 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <div class="hint">Demo password: <b>1234</b> • Admin: <b>?admin=Zain@2026</b></div>
 </div>
 
-<!-- CARDS -->
 <div id="cards" style="display:none">
 <div class="gName" id="gName"></div>
 <div class="dua">بارك الله لكما وبارك عليكما وجمع بينكما في خير</div>
@@ -109,12 +107,23 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <button class="btn" style="margin-top:10px;background:#111;color:#e8c765;border:1px solid rgba(212,175,55,.3)" onclick="location.reload()">🔒 LOCK CARD</button>
 </div>
 
-<!-- ADMIN -->
 <div id="admin" style="display:none">
 <h3 style="font-size:14px">⚙️ Admin Panel</h3>
-<p style="font-size:10px;color:#666;margin:4px 0 8px 0">Pic + Barat/Walima + Guests — bina code ke</p>
+<p style="font-size:10px;color:#666;margin:4px 0 8px 0">Pic + Barat/Walima + Guests + Music — bina code ke</p>
 <input type="file" id="picUp" accept="image/*" style="font-size:12px">
 <div style="display:flex;gap:6px;margin-top:6px"><button class="btn" style="padding:8px;background:#b91c1c;color:#fff" onclick="removePic()">Remove Pic</button><button class="btn" style="padding:8px" onclick="document.getElementById('bgPic').style.display='none'">Hide</button></div>
+
+<hr style="margin:12px 0;border:none;border-top:1px solid #eee">
+<h4 style="font-size:12px">🎵 Background Music (Apni Marzi Ka)</h4>
+<input type="file" id="musicUp" accept="audio/*" style="font-size:12px;margin-top:6px">
+<input id="musicUrl" class="input" placeholder="Ya MP3 ka link paste karo" style="margin-top:6px;text-align:left;font-size:11px">
+<div style="display:flex;gap:6px;margin-top:6px">
+<button class="btn" style="padding:8px;background:#111;color:#e8c765" onclick="saveMusic()">Save Music</button>
+<button class="btn" style="padding:8px;background:#b91c1c;color:#fff" onclick="removeMusic()">Remove Music</button>
+</div>
+<audio id="preview" controls style="width:100%;margin-top:8px;display:none"></audio>
+<div id="musicStatus" style="font-size:10px;color:#666;margin-top:4px"></div>
+
 <hr style="margin:12px 0;border:none;border-top:1px solid #eee">
 <h4 style="font-size:12px">Barat</h4><input id="bd" class="input" placeholder="Barat Date - e.g. 12 Dec 2026" style="margin-top:6px;text-align:left"><input id="bt" class="input" placeholder="Barat Time" style="margin-top:6px;text-align:left"><input id="bv" class="input" placeholder="Barat Venue" style="margin-top:6px;text-align:left">
 <h4 style="font-size:12px;margin-top:10px">Walima</h4><input id="wd" class="input" placeholder="Walima Date" style="margin-top:6px;text-align:left"><input id="wt" class="input" placeholder="Walima Time" style="margin-top:6px;text-align:left"><input id="wv" class="input" placeholder="Walima Venue" style="margin-top:6px;text-align:left">
@@ -130,6 +139,10 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <div class="foot">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ • <span id="footNames">ZAIN & AEMAN 2026</span></div>
 </div>
 
+<!-- MUSIC SYSTEM - ADDED -->
+<audio id="bgMusic" loop preload="none"></audio>
+<button id="musicBtn" onclick="toggleMusic()" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:48px;height:48px;border-radius:50%;border:2px solid #e8c765;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);color:#e8c765;font-size:20px;cursor:pointer;display:none;box-shadow:0 6px 18px rgba(0,0,0,.4)">🎵</button>
+
 <script>
 let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}');
 let BD=cfg.bd||"Friday, 12th Dec 2026",BT=cfg.bt||"07:00 PM",BV=cfg.bv||"Al Janat Marquee, Gujranwala";
@@ -141,6 +154,8 @@ document.getElementById('bDate').innerText=BD;document.getElementById('bTime').i
 document.getElementById('wDate').innerText=WD;document.getElementById('wTime').innerText=WT;document.getElementById('wVenue').innerText=WV;
 document.getElementById('footNames').innerText=(C1+" & "+C2).toUpperCase()+" • 2026";
 let pic=localStorage.getItem('ZAIN_PIC');if(pic){let im=document.getElementById('bgPic');im.src=pic;im.style.display='block'}
+let music=localStorage.getItem('ZAIN_MUSIC');if(music){let a=document.getElementById('bgMusic');a.src=music;document.getElementById('musicStatus').innerText="✅ Music saved hai";let pv=document.getElementById('preview');if(pv){pv.src=music;pv.style.display='block'}}
+let musicUrl=localStorage.getItem('ZAIN_MUSIC_URL');if(musicUrl){document.getElementById('musicUrl').value=musicUrl}
 }
 apply();
 let guests=JSON.parse(localStorage.getItem('ZAIN_GUESTS')||'[]');
@@ -158,6 +173,8 @@ function show(n){
 document.getElementById('gName').innerText="Dear "+n+" ❤️";
 document.getElementById('lock').style.display='none';
 document.getElementById('cards').style.display='block';
+let a=document.getElementById('bgMusic');
+if(a.src){document.getElementById('musicBtn').style.display='block';setTimeout(()=>{a.volume=0.5;a.play().then(()=>{document.getElementById('musicBtn').innerText='🔊';isPlaying=true}).catch(()=>{document.getElementById('musicBtn').innerText='🎵'})},600)}
 }
 function saveAll(){
 localStorage.setItem('ZAIN_CFG',JSON.stringify({bd:document.getElementById('bd').value||BD,bt:document.getElementById('bt').value||BT,bv:document.getElementById('bv').value||BV,wd:document.getElementById('wd').value||WD,wt:document.getElementById('wt').value||WT,wv:document.getElementById('wv').value||WV,c1:C1,c2:C2}));
@@ -177,6 +194,35 @@ document.getElementById('p').addEventListener('keydown',e=>{if(e.key==='Enter')u
 document.getElementById('slider')?.addEventListener('scroll',()=>{let s=document.getElementById('slider');let idx=s.scrollLeft > s.clientWidth/2 ? 1:0;document.getElementById('dot1').className=idx===0?'active':'';document.getElementById('dot2').className=idx===1?'active':''});
 document.getElementById('picUp')?.addEventListener('change',e=>{let file=e.target.files[0];if(!file)return;if(file.size>900000){alert("Pic 900KB se choti rakhein");return}let r=new FileReader();r.onload=()=>{localStorage.setItem('ZAIN_PIC',r.result);apply();alert("✅ Pic save ho gayi!")};r.readAsDataURL(file)});
 function removePic(){localStorage.removeItem('ZAIN_PIC');document.getElementById('bgPic').style.display='none';alert("Pic removed")}
+
+// --- MUSIC FUNCTIONS - NEW (purane functions me change nahi) ---
+let isPlaying=false;
+function toggleMusic(){
+let a=document.getElementById('bgMusic');
+if(!a.src){alert("Pehle Admin me music add karo");return}
+if(a.paused){a.play();document.getElementById('musicBtn').innerText='🔊';isPlaying=true}
+else{a.pause();document.getElementById('musicBtn').innerText='🔇';isPlaying=false}
+}
+function saveMusic(){
+let url=document.getElementById('musicUrl').value.trim();
+if(url){localStorage.setItem('ZAIN_MUSIC',url);localStorage.setItem('ZAIN_MUSIC_URL',url);document.getElementById('bgMusic').src=url;document.getElementById('musicStatus').innerText="✅ Music link save ho gaya!";alert("✅ Music save ho gaya!");return}
+alert("MP3 file select karo ya link paste karo")
+}
+document.getElementById('musicUp')?.addEventListener('change',e=>{
+let file=e.target.files[0];if(!file)return;
+if(file.size>5000000){alert("Music 5MB se chota rakhein, warna save nahi hoga");return}
+let r=new FileReader();
+r.onload=()=>{
+localStorage.setItem('ZAIN_MUSIC',r.result);
+localStorage.removeItem('ZAIN_MUSIC_URL');
+document.getElementById('bgMusic').src=r.result;
+let pv=document.getElementById('preview');pv.src=r.result;pv.style.display='block';
+document.getElementById('musicStatus').innerText="✅ Music file save ho gaya! ("+(file.size/1024/1024).toFixed(2)+" MB)";
+alert("✅ Apki marzi ka music save ho gaya!")
+};
+r.readAsDataURL(file);
+});
+function removeMusic(){localStorage.removeItem('ZAIN_MUSIC');localStorage.removeItem('ZAIN_MUSIC_URL');document.getElementById('bgMusic').src="";document.getElementById('musicBtn').style.display='none';document.getElementById('preview').style.display='none';document.getElementById('musicStatus').innerText="❌ Music removed";document.getElementById('musicUrl').value="";alert("Music removed")}
 </script>
 </body>
 </html>

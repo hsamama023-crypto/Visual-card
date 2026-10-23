@@ -14,6 +14,7 @@ body{background: radial-gradient(circle at top, #222, #000); min-height:100vh; d
 .sub{color:#c9a86a; letter-spacing:4px; font-size:10px; margin-top:8px; font-weight:700;}
 .body{padding:26px 22px 22px; text-align:center; background: radial-gradient(circle at center, #fffcf0, #fdf6e3);}
 .badge{display:inline-block; background:#111; color:#d4af37; padding:7px 16px; border-radius:20px; font-size:10px; letter-spacing:2px; border:1px solid #d4af37; margin-bottom:14px;}
+.couple-pic{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #d4af37;margin:0 auto 12px;display:none;box-shadow:0 4px 15px rgba(0,0,0,.3)}
 .guest{color:#8B0000; font-weight:800; font-size:26px; margin:8px 0; line-height:1.2;}
 .divider{height:1px; background: linear-gradient(to right, transparent, #d4af37, transparent); margin:18px 0;}
 .couple-big{font-family:'Great Vibes',cursive; font-size:62px; color:#8B0000; line-height:1; margin:10px 0;}
@@ -25,11 +26,11 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
 .err{color:#c0392b; font-size:12px; margin-top:8px; min-height:16px; font-weight:600;}
 .main{display:none;} .main.show{display:block;}
 .footer{background:#0f0f0f; color:#c9a86a; text-align:center; padding:16px; font-size:10px; letter-spacing:3px; border-top:1px solid #d4af37;}
-/* SIDE ADMIN BUTTON */
 .admin-float{position:fixed; bottom:20px; right:20px; width:50px; height:50px; background:linear-gradient(135deg,#b8960c,#d4af37); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 4px 15px rgba(0,0,0,.5); cursor:pointer; z-index:50; border:2px solid #fff;}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:14px}
 .modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:20px;width:100%;max-width:380px;max-height:90vh;overflow:auto;color:#fff}
 .admin-input{border:1px solid #555!important;background:#2a2a2a!important;color:#fff!important;text-align:left!important}
+.audio-box{margin-top:10px}
 </style>
 </head>
 <body>
@@ -43,7 +44,6 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
     <div id="lockDiv">
       <div class="badge">SECURED INVITE</div>
       <div class="guest" style="font-size:18px;">Apna Password Likho</div>
-      <p style="font-size:11px; color:#8a7a5a; margin-bottom:12px;">Jis naam ka password hoga usi naam ka card khulega</p>
       <div class="lock">
         <input id="passInput" type="password" placeholder="🔑 Password">
         <button class="btn" onclick="unlock()">✨ CARD KHOLO ✨</button>
@@ -51,28 +51,26 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
       </div>
     </div>
     <div id="mainDiv" class="main">
+      <img id="couplePic" class="couple-pic" src="">
       <div class="badge">YOU ARE INVITED</div>
       <div class="guest">Dear <span id="guestName"></span> ❤️</div>
-      <p style="font-size:11px; color:#888;">Aapko dil se dawat hai</p>
       <div class="couple-big" id="coupleBig">Zain & Aeman</div>
       <div class="divider"></div>
       <div class="details" id="detailsBox"></div>
       <div class="divider"></div>
-      <p style="font-size:13px; color:#8B0000; font-weight:700;" id="msgBox">Your presence will be a blessing</p>
-      <p style="font-size:11px; color:#8a7a5a; margin-top:6px;" id="familyBox">— Family of Zain & Aeman —</p>
+      <p style="font-size:13px; color:#8B0000; font-weight:700;" id="msgBox"></p>
+      <div class="audio-box"><audio id="songPlayer" controls style="width:100%;display:none;"></audio><button id="playBtn" class="btn" style="display:none;background:#111;color:#d4af37;" onclick="document.getElementById('songPlayer').play()">🎵 Gaana Chalao</button></div>
     </div>
   </div>
-  <div class="footer" id="footer">ZAIN ❤️ AEMAN • 2026</div>
+  <div class="footer">ZAIN ❤️ AEMAN • 2026</div>
 </div>
 
-<!-- SIDE BUTTON - ADMIN -->
 <div class="admin-float" onclick="openLock()">⚙️</div>
 
 <div id="lockModal" class="modal">
   <div class="modal-box" style="text-align:center">
     <h3 style="color:#d4af37">🔒 Admin Lock</h3>
-    <p style="font-size:11px;color:#aaa;margin:6px 0">Password: Admin0823</p>
-    <input id="lockPass" type="password" placeholder="Password likho">
+    <input id="lockPass" type="password" placeholder="Admin Password">
     <button class="btn" id="unlockBtn">Unlock Admin</button>
     <button class="btn" style="background:#333;color:#fff" onclick="closeLock()">Cancel</button>
     <p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p>
@@ -82,20 +80,29 @@ input,textarea{width:100%; padding:12px; border-radius:12px; border:2px solid #1
 <div id="adminModal" class="modal">
   <div class="modal-box">
     <h3 style="color:#d4af37;text-align:center">👑 Admin Panel</h3>
-    <button class="btn" style="background:#333;color:#fff" onclick="closeAdmin()">← Back to Card</button>
-    <label style="font-size:11px;color:#d4af37">Couple 1</label><input id="c1" class="admin-input" placeholder="Zain">
-    <label style="font-size:11px;color:#d4af37">Couple 2</label><input id="c2" class="admin-input" placeholder="Aeman">
-    <label style="font-size:11px;color:#d4af37">Venue</label><input id="venue" class="admin-input" value="Gujranwala Marquee Palace">
-    <label style="font-size:11px;color:#d4af37">Date</label><input id="date" class="admin-input" placeholder="Friday, 25th Dec 2026">
-    <label style="font-size:11px;color:#d4af37">Time</label><input id="time" class="admin-input" placeholder="07:00 PM">
-    <label style="font-size:11px;color:#d4af37">Message</label><input id="msg" class="admin-input" placeholder="Your presence will be a blessing">
+    <button class="btn" style="background:#333;color:#fff" onclick="closeAdmin()">← Back</button>
+    
+    <label style="color:#d4af37;font-size:11px;">📸 Couple Pic Upload</label>
+    <input type="file" id="picFile" accept="image/*" class="admin-input" onchange="uploadPic()">
+    <button class="btn" style="background:#ef4444;color:#fff" onclick="removePic()">Pic Delete</button>
+
+    <label style="color:#d4af37;font-size:11px;">🎵 Song MP3 Upload</label>
+    <input type="file" id="songFile" accept="audio/*" class="admin-input" onchange="uploadSong()">
+    <button class="btn" style="background:#ef4444;color:#fff" onclick="removeSong()">Song Delete</button>
+
+    <label style="font-size:11px;color:#d4af37">Couple 1</label><input id="c1" class="admin-input">
+    <label style="font-size:11px;color:#d4af37">Couple 2</label><input id="c2" class="admin-input">
+    <label style="font-size:11px;color:#d4af37">Venue</label><input id="venue" class="admin-input">
+    <label style="font-size:11px;color:#d4af37">Date</label><input id="date" class="admin-input">
+    <label style="font-size:11px;color:#d4af37">Time</label><input id="time" class="admin-input">
+    <label style="font-size:11px;color:#d4af37">Message</label><input id="msg" class="admin-input">
     <button class="btn" onclick="saveCfg()">💾 Save Settings</button>
     <hr style="margin:14px 0;border:1px solid #333">
-    <label style="font-size:11px;color:#d4af37">Mehman Add (Naam + Password)</label>
-    <input id="gName" class="admin-input" placeholder="Naam: Ali"><input id="gPass" class="admin-input" placeholder="Pass: 1234">
+    <label style="font-size:11px;color:#d4af37">Mehman Add</label>
+    <input id="gName" class="admin-input" placeholder="Naam"><input id="gPass" type="password" class="admin-input" placeholder="Pass">
     <button class="btn" onclick="addOne()">+ ADD</button>
-    <textarea id="bulk" class="admin-input" rows="4" placeholder="Ali,1234&#10;Ahmed,5678"></textarea>
-    <button class="btn" onclick="addBulk()">🚀 Bulk Add 500</button>
+    <textarea id="bulk" class="admin-input" rows="4" placeholder="Ali,1234"></textarea>
+    <button class="btn" onclick="addBulk()">🚀 Bulk Add</button>
     <input id="search" class="admin-input" placeholder="🔍 Search..." oninput="renderGuests()">
     <div id="guestList" style="max-height:250px;overflow:auto;margin-top:10px"></div>
     <p id="total" style="font-size:12px;margin-top:8px"></p>
@@ -112,12 +119,18 @@ document.getElementById('unlockBtn').addEventListener('click',()=>{
     closeLock(); document.getElementById('adminModal').style.display='flex'; loadAdminForm(); renderGuests();
   } else { document.getElementById('lockMsg').innerText='❌ Galat Password'; }
 });
+function uploadPic(){let f=document.getElementById('picFile').files[0]; if(!f) return; let r=new FileReader(); r.onload=e=>{localStorage.setItem('ZAIN_PIC',e.target.result); loadCfg(); alert('✅ Pic Save!');}; r.readAsDataURL(f);}
+function removePic(){localStorage.removeItem('ZAIN_PIC'); loadCfg(); alert('Pic Deleted');}
+function uploadSong(){let f=document.getElementById('songFile').files[0]; if(!f) return; if(f.size>4000000) return alert('File 4MB se kam rakho'); let r=new FileReader(); r.onload=e=>{localStorage.setItem('ZAIN_SONG',e.target.result); loadCfg(); alert('✅ Song Save!');}; r.readAsDataURL(f);}
+function removeSong(){localStorage.removeItem('ZAIN_SONG'); loadCfg(); alert('Song Deleted');}
 function loadCfg(){
   let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}');
   let C1=cfg.c1||"Zain",C2=cfg.c2||"Aeman",CDate=cfg.date||"Friday, 25th Dec 2026",CTime=cfg.time||"07:00 PM",CVenue=cfg.venue||"Gujranwala Marquee Palace",CMsg=cfg.msg||"Your presence will be a blessing";
   document.getElementById('coupleHead').innerText=C1+" & "+C2;document.getElementById('coupleBig').innerText=C1+" & "+C2;
   document.getElementById('detailsBox').innerHTML=`📅 <b>Date:</b> ${CDate}<br>⏰ <b>Time:</b> ${CTime}<br>📍 <b>Venue:</b> ${CVenue}`;
-  document.getElementById('msgBox').innerText=CMsg;document.getElementById('familyBox').innerText=`— Family of ${C1} & ${C2} —`;
+  document.getElementById('msgBox').innerText=CMsg;
+  let pic=localStorage.getItem('ZAIN_PIC'); if(pic){let img=document.getElementById('couplePic'); img.src=pic; img.style.display='block';} else {document.getElementById('couplePic').style.display='none';}
+  let song=localStorage.getItem('ZAIN_SONG'); let player=document.getElementById('songPlayer'); let btn=document.getElementById('playBtn'); if(song){player.src=song; player.style.display='block'; btn.style.display='block';} else {player.style.display='none'; btn.style.display='none';}
 }
 function loadAdminForm(){let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}'); c1.value=cfg.c1||"Zain"; c2.value=cfg.c2||"Aeman"; venue.value=cfg.venue||"Gujranwala Marquee Palace"; date.value=cfg.date||"Friday, 25th Dec 2026"; time.value=cfg.time||"07:00 PM"; msg.value=cfg.msg||"";}
 function saveCfg(){let d={c1:c1.value,c2:c2.value,venue:venue.value,date:date.value,time:time.value,msg:msg.value||"Your presence will be a blessing"}; localStorage.setItem('ZAIN_CFG',JSON.stringify(d)); loadCfg(); alert('✅ Saved!');}
@@ -125,12 +138,12 @@ function getGuests(){try{return JSON.parse(localStorage.getItem('ZAIN_GUESTS')||
 function setGuests(g){localStorage.setItem('ZAIN_GUESTS',JSON.stringify(g))}
 function addOne(){let n=gName.value.trim(),p=gPass.value.trim(); if(!n||!p) return alert('Naam + Pass likho'); let g=getGuests(); g.unshift({name:n,pass:p}); setGuests(g); gName.value=''; gPass.value=''; renderGuests();}
 function addBulk(){let txt=bulk.value.trim(); if(!txt) return; let lines=txt.split('\n'),g=getGuests(); lines.forEach(l=>{let a=l.split(','); if(a.length>=2){g.unshift({name:a[0].trim(),pass:a[1].trim()})}}); setGuests(g); bulk.value=''; renderGuests();}
-function renderGuests(){let q=(search.value||'').toLowerCase(); let g=getGuests(); let f=g.filter(x=>x.name.toLowerCase().includes(q)); let h=''; f.forEach((x,i)=>{let real=g.indexOf(x); let link=location.href.split('?')[0]+'?pass='+encodeURIComponent(x.pass); h+=`<div style="background:#2a2a2a;padding:8px;border-radius:8px;margin:5px 0;font-size:12px;text-align:left"><b>${x.name}</b> - ${x.pass}<br><button onclick="shareWa(${real})" style="background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:6px;margin-top:4px">WhatsApp</button> <button onclick="delOne(${real})" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:6px">X</button></div>`;}); document.getElementById('guestList').innerHTML=h||'Koi nahi'; document.getElementById('total').innerText='Total: '+g.length;}
+function renderGuests(){let q=(search.value||'').toLowerCase(); let g=getGuests(); let f=g.filter(x=>x.name.toLowerCase().includes(q)); let h=''; f.forEach((x,i)=>{let real=g.indexOf(x); h+=`<div style="background:#2a2a2a;padding:8px;border-radius:8px;margin:5px 0;font-size:12px;text-align:left"><b>${x.name}</b> <span style="color:#888">••••</span><br><button onclick="shareWa(${real})" style="background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:6px;margin-top:4px">WhatsApp</button> <button onclick="delOne(${real})" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:6px">X</button></div>`;}); document.getElementById('guestList').innerHTML=h||'Koi nahi'; document.getElementById('total').innerText='Total: '+g.length;}
 function delOne(i){let g=getGuests(); g.splice(i,1); setGuests(g); renderGuests();}
 function shareWa(i){let g=getGuests()[i]; let link=location.href.split('?')[0]+'?pass='+encodeURIComponent(g.pass); let m=`Assalam-o-Alaikum ${g.name} Sahib,%0ACard: ${link}%0APass: *${g.pass}*`; window.open('https://wa.me/?text='+m,'_blank');}
 let params=new URLSearchParams(location.search); if(params.get('admin')===ADMIN_PASS){setTimeout(()=>{document.getElementById('adminModal').style.display='flex'; loadAdminForm(); renderGuests();},400);}
 if(params.get('pass')){document.getElementById('passInput').value=params.get('pass'); setTimeout(()=>unlock(),400);}
-function unlock(){let e=passInput.value.trim(); if(!e){errMsg.innerText="⚠️ Password likho";return;} if(e==="1234"){showCard("Mehman-e-Khaas");return;} let f=getGuests().find(g=>g.pass===e); if(f){showCard(f.name);} else{errMsg.innerText=`❌ Ye password save nahi hai`;}}
+function unlock(){let e=passInput.value.trim(); if(!e){errMsg.innerText="⚠️ Password likho";return;} if(e==="1234"){showCard("Mehman-e-Khaas");return;} let f=getGuests().find(g=>g.pass===e); if(f || params.get('pass')){showCard(f?f.name:"Mehman-e-Khaas");} else{errMsg.innerText=`❌ Ye password save nahi hai`;}}
 function showCard(name){guestName.innerText=name; lockDiv.style.display='none'; mainDiv.classList.add('show');}
 loadCfg();
 </script>

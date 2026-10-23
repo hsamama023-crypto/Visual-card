@@ -23,11 +23,10 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 .btn{width:100%;padding:12px;border-radius:12px;border:none;background:#1a1a1a;color:#e8c765;font-weight:700;cursor:pointer;margin-top:8px}
 .btn-gold{background:linear-gradient(135deg,#b8960c,#e8c765);color:#111}
 .err{color:#b91c1c;font-size:11px;margin-top:8px;min-height:14px;text-align:center}
-/* Welcome Screen */
 .welcome{text-align:center;padding:10px 0}
 .welcome-label{font-size:11px;letter-spacing:3px;color:#8B0000;font-weight:600}
 .welcome-name{font-family:'Great Vibes',cursive;font-size:52px;color:#8B0000;margin:12px 0;line-height:1}
-.welcome-badge{display:inline-block;padding:6px 14px;border-radius:20px;background:#111;color:#e8c765;font-size:10px;letter-spacing:1px;margin:6px 0}
+.welcome-badge{display:inline-block;padding:6px 14px;border-radius:20px;background:#111;color:#e8c765;font-size:11px;letter-spacing:1px;margin:4px 3px}
 .welcome-line{height:1px;background:linear-gradient(90deg,transparent,#e8c765,transparent);margin:14px 0}
 .dua{font-family:'Amiri',serif;color:#8B0000;text-align:center;font-size:13px;margin-top:10px}
 .cardBox{background:#fff;border-radius:18px;padding:16px;border:1px solid rgba(212,175,55,.45)}
@@ -56,30 +55,28 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO</button>
 <div class="err" id="e"></div>
 </div>
-
 <div id="welcomeScreen" style="display:none" class="glass">
 <div class="welcome">
 <div class="welcome-label">THIS SPECIAL INVITATION IS FOR</div>
-<div class="welcome-name" id="welcomeName">Ali Bhai</div>
+<div class="welcome-name" id="welcomeName">Guest Name</div>
 <div class="welcome-line"></div>
-<div id="welcomePersons" class="welcome-badge">👨‍👩‍👧‍👦 Full Family</div>
+<div id="welcomePersons" class="welcome-badge">Full Family</div>
 <div id="welcomeEvent" class="welcome-badge" style="background:#8B0000">BARAT & WALIMA</div>
 <div class="dua">بارك الله لكما وبارك عليكما وجمع بينكما في خير</div>
 <button class="btn btn-gold" onclick="openCards()" style="margin-top:16px">💌 Open Your Invitation Card</button>
 </div>
 </div>
-
 <div id="cards" style="display:none">
-<div style="text-align:center;color:#8B0000;font-weight:700" id="gName"></div>
+<div style="text-align:center;color:#8B0000;font-weight:700;font-size:32px;font-family:'Great Vibes',cursive" id="gName"></div>
+<div id="gName2" style="text-align:center;color:#666;font-size:11px;margin-bottom:8px"></div>
 <div class="dua">May Allah bless you both</div>
 <div style="margin-top:12px"><div class="slider" id="slider">
 <div class="slide" id="slideBarat"><div class="cardBox"><div class="ev ev-barat">BARAT</div><div class="details" style="margin-top:8px">📅 <b>Date:</b> <span id="bDate"></span><br>⏰ <b>Time:</b> <span id="bTime"></span><br>📍 <b>Venue:</b> <span id="bVenue"></span></div></div></div>
 <div class="slide" id="slideWalima"><div class="cardBox"><div class="ev ev-walima">WALIMA</div><div class="details" style="margin-top:8px">📅 <b>Date:</b> <span id="wDate"></span><br>⏰ <b>Time:</b> <span id="wTime"></span><br>📍 <b>Venue:</b> <span id="wVenue"></span></div></div></div>
 </div></div>
-<div class="dots"><span class="active" id="dot1"></span><span id="dot2"></span></div>
+<div class="dots" id="dotsBox"><span class="active" id="dot1"></span><span id="dot2"></span></div>
 <button class="btn" style="margin-top:10px;background:#111;color:#e8c765;border:1px solid rgba(212,175,55,.3)" onclick="location.reload()">🔒 LOCK CARD</button>
 </div>
-
 <div id="admin" style="display:none">
 <h3>⚙️ Admin Panel</h3>
 <input id="c1" class="input" placeholder="Groom Name e.g Zain" style="text-align:left"><input id="c2" class="input" placeholder="Bride Name e.g Aeman" style="text-align:left">
@@ -91,9 +88,9 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <input id="wd" class="input" placeholder="Walima Date" style="text-align:left;margin-top:8px"><input id="wt" class="input" placeholder="Walima Time" style="text-align:left"><input id="wv" class="input" placeholder="Walima Venue" style="text-align:left">
 <button class="btn btn-gold" onclick="saveAll()">Save Settings</button>
 <hr style="margin:12px 0">
-<h4 style="font-size:13px">➕ Add Guest (New Style)</h4>
-<input id="gNameInput" class="input" placeholder="Guest Name e.g Ali Bhai" style="text-align:left">
-<input id="gPassInput" class="input" placeholder="Password e.g Ali123" style="text-align:left">
+<h4 style="font-size:13px">➕ Add Guest</h4>
+<input id="gNameInput" class="input" placeholder="Guest Name" style="text-align:left">
+<input id="gPassInput" class="input" placeholder="Password" style="text-align:left">
 <select id="gEventInput" class="select"><option value="both">Both - Barat & Walima</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
 <select id="gPersonInput" class="select"><option value="Full Family">👨‍👩‍👧‍👦 Full Family</option><option value="1 Person">👤 1 Person</option><option value="2 Persons">👥 2 Persons</option><option value="3 Persons">👥 3 Persons</option></select>
 <button class="btn btn-gold" onclick="addGuestNew()">Add Guest</button>
@@ -128,7 +125,7 @@ let v=document.getElementById('p').value.trim();
 if(!v){document.getElementById('e').innerText="⚠️ Password likhein";return}
 if(v==="1234"){currentGuest={name:"Mehman-e-Khaas",event:"both",persons:"Full Family"};showWelcome(currentGuest);return}
 let f=guests.find(x=>x.pass===v);
-if(f){currentGuest=f;showWelcome(f);}else{document.getElementById('e').innerText="❌ Galat password"}
+if(f){if(!f.event)f.event="both";if(!f.persons)f.persons="Full Family";currentGuest=f;showWelcome(f);}else{document.getElementById('e').innerText="❌ Galat password"}
 }
 function showWelcome(g){
 document.getElementById('lock').style.display='none';
@@ -140,25 +137,30 @@ document.getElementById('welcomeScreen').style.display='block';
 let a=document.getElementById('bgMusic');if(a.src){document.getElementById('musicBtn').style.display='block';setTimeout(()=>{a.volume=0.5;a.play().catch(()=>{});document.getElementById('musicBtn').innerText='🔊'},600)}
 }
 function openCards(){
-if(!currentGuest)return;
+if(!currentGuest) return;
 document.getElementById('welcomeScreen').style.display='none';
 document.getElementById('gName').innerText="Dear "+currentGuest.name+" ❤️";
+document.getElementById('gName2').innerText=currentGuest.persons+" | "+currentGuest.event.toUpperCase();
 document.getElementById('cards').style.display='block';
-let ev=currentGuest.event||"both";
-if(ev==="barat"){document.getElementById('slideWalima').style.display='none';document.getElementById('dot2').style.display='none';}
-else if(ev==="walima"){document.getElementById('slideBarat').style.display='none';document.getElementById('dot1').style.display='none';document.getElementById('dot2').className='active';}
-else{document.getElementById('slideWalima').style.display='block';document.getElementById('slideBarat').style.display='block';}
+let ev=(currentGuest.event||"both").toLowerCase().trim();
+let barat=document.getElementById('slideBarat');
+let walima=document.getElementById('slideWalima');
+let dots=document.getElementById('dotsBox');
+barat.style.display='none';walima.style.display='none';dots.style.display='none';
+if(ev==="barat"){barat.style.display='block';}
+else if(ev==="walima"){walima.style.display='block';}
+else{barat.style.display='block';walima.style.display='block';dots.style.display='flex';}
 }
 function saveAll(){let d={bd:document.getElementById('bd').value||BD,bt:document.getElementById('bt').value||BT,bv:document.getElementById('bv').value||BV,wd:document.getElementById('wd').value||WD,wt:document.getElementById('wt').value||WT,wv:document.getElementById('wv').value||WV,c1:document.getElementById('c1').value||C1,c2:document.getElementById('c2').value||C2};localStorage.setItem('ZAIN_CFG',JSON.stringify(d));location.reload();}
 function addGuestNew(){
 let n=document.getElementById('gNameInput').value.trim();let p=document.getElementById('gPassInput').value.trim();let ev=document.getElementById('gEventInput').value;let per=document.getElementById('gPersonInput').value;
 if(!n||!p){alert("Name & Password likhein");return}
 guests.push({name:n,pass:p,event:ev,persons:per});localStorage.setItem('ZAIN_GUESTS',JSON.stringify(guests));
-document.getElementById('gNameInput').value="";document.getElementById('gPassInput').value="";loadG();alert("Added: "+n);
+document.getElementById('gNameInput').value="";document.getElementById('gPassInput').value="";loadG();alert("Added: "+n+" - "+ev);
 }
 function loadG(){
 document.getElementById('cnt').innerText="Total Guests: "+guests.length;
-let h="";guests.slice(-100).reverse().forEach((g)=>{let idx=guests.indexOf(g);h+=`<div style="background:#2a2a2a;padding:8px;border-radius:8px;margin:4px 0;font-size:11px;display:flex;justify-content:space-between;align-items:center"><span><b>${g.name}</b> — ${g.persons} — ${g.event} — <span style="color:#888">••••</span></span><span><button onclick="shareWa(${idx})" style="background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:6px;font-size:10px">WA</button> <button onclick="delG(${idx})" style="background:#ef4444;color:#fff;border:none;padding:4px 6px;border-radius:6px">X</button></span></div>`;});
+let h="";guests.slice(-100).reverse().forEach((g)=>{let idx=guests.indexOf(g);h+=`<div style="background:#2a2a2a;padding:8px;border-radius:8px;margin:4px 0;font-size:11px;display:flex;justify-content:space-between;align-items:center"><span><b>${g.name}</b> — ${g.persons} — ${g.event}</span><span><button onclick="shareWa(${idx})" style="background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:6px;font-size:10px">WA</button> <button onclick="delG(${idx})" style="background:#ef4444;color:#fff;border:none;padding:4px 6px;border-radius:6px">X</button></span></div>`;});
 document.getElementById('glist').innerHTML=h;
 }
 function delG(i){guests.splice(i,1);localStorage.setItem('ZAIN_GUESTS',JSON.stringify(guests));loadG();}

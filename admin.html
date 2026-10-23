@@ -1,53 +1,189 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin - Visual Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Zain & Aeman</title>
 <style>
-*{box-sizing:border-box} body{background:#0f0f0f;color:#fff;font-family:'Poppins',sans-serif;padding:12px;margin:0}
-.card{background:#1a1a1a;border:2px solid #facc15;border-radius:18px;padding:16px;margin-bottom:16px}
-input,textarea{width:100%;background:#2a2a2a;border:1px solid #444;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
-.btn{background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;width:100%;margin:7px 0;cursor:pointer}
-.btn2{background:#2e2e2e;color:#fff;border:1px solid #555}
-.row{display:flex;gap:8px} label{color:#facc15;font-size:12px;margin-top:10px;display:block;font-weight:600}
-img{max-width:100%;border-radius:12px;margin-top:8px}
-</style></head><body>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
+.card{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;margin-bottom:14px}
+h2{color:#facc15;text-align:center;margin:10px 0}
+label{color:#facc15;font-size:12px;display:block;margin-top:10px;font-weight:600}
+input,textarea{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
+.btn{width:100%;background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;margin:6px 0;cursor:pointer}
+.btn-dark{background:#333;color:#fff;border:1px solid #555}
+img{max-width:100%;border-radius:10px;margin-top:8px}
+.item{background:#2a2a2a;padding:10px;border-radius:10px;margin:6px 0;font-size:13px}
+</style>
+</head>
+<body>
 
-<h2 style="color:#facc15;text-align:center">👑 Admin - Zain ❤️ Aeman</h2>
+<h2>👑 Admin - Zain ❤️ Aeman</h2>
 
 <div class="card">
-<label>🏛️ Venue</label><input id="venue" value="Gujranwala Marquee Palace">
-<label>🖼️ Couple Pic (1 ya zyada)</label><input type="file" id="pic" accept="image/*" multiple>
-<div id="picPrev"></div>
-<label>🎵 MP3 Song</label><input type="file" id="song" accept="audio/*">
-<audio id="songPrev" controls style="width:100%;margin-top:8px"></audio>
-<label>📅 Date</label><input id="date" type="date" value="2026-12-25">
-<label>⏰ Time</label><input id="time" type="time" value="19:00">
-<button class="btn" onclick="saveSettings()">💾 Save Settings</button>
-<p id="saveMsg" style="color:#22c55e;font-size:12px;text-align:center"></p>
+<label>🏛️ Venue</label>
+<input id="venue" placeholder="Gujranwala Marquee Palace" value="Gujranwala Marquee Palace">
+
+<label>🖼️ Couple Pic (Ek ya Zyada)</label>
+<input type="file" id="picInput" accept="image/*" multiple>
+<div id="picPreview"></div>
+
+<label>🎵 MP3 Song</label>
+<input type="file" id="songInput" accept="audio/*">
+<audio id="songPreview" controls style="width:100%;margin-top:8px;display:none"></audio>
+
+<label>📅 Date</label>
+<input id="dateInput" type="date" value="2026-12-25">
+
+<label>⏰ Time</label>
+<input id="timeInput" type="time" value="19:00">
+
+<button class="btn" id="saveBtn">💾 Save Settings</button>
+<p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:6px"></p>
 </div>
 
 <div class="card">
-<h3 style="color:#facc15;margin:0">👑 500 Mehman Add Karo (New System)</h3>
-<div class="row"><input id="gName" placeholder="Naam: Ali"><input id="gPass" placeholder="Pass: 1234"></div>
-<button class="btn" onclick="addSingle()">+ ADD</button>
-<textarea id="bulk" rows="6" placeholder="Ali,1234&#10;Ahmed,5678"></textarea>
-<button class="btn" onclick="addBulk()">🚀 500 ADD KARO</button>
-<button class="btn btn2" onclick="downloadCSV()">📥 Excel CSV Download</button>
-<label>🔍 Search</label><input id="search" placeholder="Search naam..." onkeyup="render()">
-<div id="list" style="margin-top:12px;max-height:400px;overflow:auto"></div>
-<p id="total" style="font-size:13px"></p>
-<button class="btn btn2" onclick="if(confirm('Sab delete?')){localStorage.removeItem('vi_guests_v2');render();}">Sab Delete</button>
+<h3 style="color:#facc15">👑 500 Mehman Add Karo</h3>
+<label>Single Add</label>
+<input id="gName" placeholder="Naam: Ali">
+<input id="gPass" placeholder="Password: 1234">
+<button class="btn" id="addOneBtn">+ ADD</button>
+
+<label style="margin-top:15px">🔥 Bulk Add (Format: Naam,Password har line pe)</label>
+<textarea id="bulkInput" rows="5" placeholder="Ali,1234
+Ahmed,5678"></textarea>
+<button class="btn" id="addBulkBtn">🚀 500 ADD KARO</button>
+<button class="btn btn-dark" id="csvBtn">📥 Excel CSV Download</button>
+
+<label>🔍 Search</label>
+<input id="searchInput" placeholder="Search naam..." >
+
+<div id="guestList" style="margin-top:10px;max-height:400px;overflow:auto"></div>
+<p id="totalCount" style="margin-top:10px;font-size:13px"></p>
+<button class="btn btn-dark" id="clearBtn">Sab Delete</button>
+<button class="btn btn-dark" onclick="location.reload()">Refresh</button>
 </div>
 
 <script>
-let KEY_S='vi_settings_v2', KEY_G='vi_guests_v2';
+// KEYS
+const KEY_S = 'vi_settings_v2';
+const KEY_G = 'vi_guests_v2';
+
+// LOAD
 function loadSettings(){
- let s=JSON.parse(localStorage.getItem(KEY_S)||'{}');
- if(s.venue) venue.value=s.venue;
- if(s.pic && s.pic.length){ picPrev.innerHTML='<img src="'+s.pic[0]+'"><p>'+s.pic.length+' pics saved</p>'; window._pics=s.pic; }
- if(s.song){ songPrev.src=s.song; window._song=s.song; }
+  let s = {};
+  try{ s = JSON.parse(localStorage.getItem(KEY_S) || '{}'); }catch(e){}
+  if(s.venue) document.getElementById('venue').value = s.venue;
+  if(s.date) document.getElementById('dateInput').value = s.date;
+  if(s.time) document.getElementById('timeInput').value = s.time;
+  if(s.pic && s.pic.length){
+    window._pics = s.pic;
+    document.getElementById('picPreview').innerHTML = '<img src="'+s.pic[0]+'"><p style="font-size:11px">'+s.pic.length+' pics saved</p>';
+  }
+  if(s.song){
+    window._song = s.song;
+    let a = document.getElementById('songPreview');
+    a.src = s.song; a.style.display='block';
+  }
 }
-function saveSettings(){
- let pics=window._pics || []; let song=window._song || '';
- let data={venue:venue.value, date:date.value, time:time.value, pic:pics, song:song};
- localStorage.setItem(KEY_S
+
+function getGuests(){ try{return JSON.parse(localStorage.getItem(KEY_G)||'[]')}catch(e){return []} }
+function setGuests(g){ localStorage.setItem(KEY_G, JSON.stringify(g)); }
+
+// SAVE SETTINGS
+document.getElementById('saveBtn').addEventListener('click', function(){
+  let pics = window._pics || [];
+  let song = window._song || '';
+  try{
+    let old = JSON.parse(localStorage.getItem(KEY_S)||'{}');
+    if(!pics.length && old.pic) pics = old.pic;
+    if(!song && old.song) song = old.song;
+  }catch(e){}
+  let data = {
+    venue: document.getElementById('venue').value,
+    date: document.getElementById('dateInput').value,
+    time: document.getElementById('timeInput').value,
+    pic: pics,
+    song: song
+  };
+  localStorage.setItem(KEY_S, JSON.stringify(data));
+  document.getElementById('saveMsg').innerText = '✅ Saved! Card me bhi ajayega';
+  setTimeout(()=>{document.getElementById('saveMsg').innerText='';},2500);
+});
+
+// PIC
+document.getElementById('picInput').addEventListener('change', function(){
+  let files = this.files; if(!files.length) return;
+  let arr=[]; let done=0;
+  for(let i=0;i<files.length;i++){
+    let r=new FileReader();
+    r.onload = function(e){ arr.push(e.target.result); done++; if(done===files.length){ window._pics=arr; document.getElementById('picPreview').innerHTML='<img src="'+arr[0]+'"><p style="font-size:11px">'+arr.length+' pics ready - Save dabao</p>'; } };
+    r.readAsDataURL(files[i]);
+  }
+});
+
+// SONG
+document.getElementById('songInput').addEventListener('change', function(){
+  if(!this.files.length) return;
+  let r=new FileReader();
+  r.onload = function(e){ window._song=e.target.result; let a=document.getElementById('songPreview'); a.src=e.target.result; a.style.display='block'; };
+  r.readAsDataURL(this.files[0]);
+});
+
+// ADD SINGLE
+document.getElementById('addOneBtn').addEventListener('click', function(){
+  let n = document.getElementById('gName').value.trim();
+  let p = document.getElementById('gPass').value.trim();
+  if(!n || !p){ alert('Naam aur Password likho'); return; }
+  let g = getGuests(); g.unshift({name:n, pass:p}); setGuests(g);
+  document.getElementById('gName').value=''; document.getElementById('gPass').value='';
+  render();
+});
+
+// BULK
+document.getElementById('addBulkBtn').addEventListener('click', function(){
+  let txt = document.getElementById('bulkInput').value.trim();
+  if(!txt){ alert('List likho'); return; }
+  let lines = txt.split('\n'); let g = getGuests(); let c=0;
+  lines.forEach(function(l){
+    let parts = l.split(',');
+    if(parts.length>=2){ let nn=parts[0].trim(), pp=parts[1].trim(); if(nn&&pp){ g.unshift({name:nn, pass:pp}); c++; } }
+  });
+  setGuests(g); document.getElementById('bulkInput').value=''; alert(c+' mehman add hogaye'); render();
+});
+
+// RENDER
+function render(){
+  let q = (document.getElementById('searchInput').value || '').toLowerCase();
+  let g = getGuests();
+  let f = g.filter(function(x){ return x.name.toLowerCase().includes(q); });
+  let html='';
+  f.forEach(function(x){
+    let realIdx = g.findIndex(function(y){ return y.name===x.name && y.pass===x.pass; });
+    if(realIdx<0) realIdx=0;
+    let link = location.href.replace('admin.html','card.html')+'?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass);
+    html += '<div class="item"><b>'+x.name+'</b> - '+x.pass+'<br><a href="'+link+'" target="_blank" style="color:#facc15;font-size:10px;word-break:break-all">'+link+'</a><br><button onclick="shareWa('+realIdx+')" style="background:#25D366;color:#fff;border:none;padding:6px 12px;border-radius:6px;margin-top:5px">WhatsApp</button> <button onclick="delOne('+realIdx+')" style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:6px">X</button></div>';
+  });
+  document.getElementById('guestList').innerHTML = html || 'Koi mehman nahi';
+  document.getElementById('totalCount').innerText = 'Total: '+g.length+' mehman';
+}
+window.delOne = function(i){ let g=getGuests(); g.splice(i,1); setGuests(g); render(); }
+window.shareWa = function(i){
+  let g=getGuests()[i];
+  let link = location.href.replace('admin.html','card.html')+'?to='+encodeURIComponent(g.name)+'&pass='+encodeURIComponent(g.pass);
+  let msg = 'Assalam-o-Alaikum '+g.name+' Sahib,%0AZain ❤️ Aeman Shadi Card:%0A'+link+'%0A%0APassword: *'+g.pass+'*';
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+document.getElementById('searchInput').addEventListener('input', render);
+document.getElementById('clearBtn').addEventListener('click', function(){ if(confirm('Sab delete karna hai?')){ localStorage.removeItem(KEY_G); render(); } });
+document.getElementById('csvBtn').addEventListener('click', function(){
+  let g=getGuests(); let csv='Name,Password,Link\n';
+  g.forEach(function(x){ let link=location.href.replace('admin.html','card.html')+'?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass); csv+=x.name+','+x.pass+','+link+'\n'; });
+  let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mehman_list.csv'; a.click();
+});
+
+loadSettings(); render();
+</script>
+</body>
+</html>

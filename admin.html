@@ -11,7 +11,7 @@ body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
 .card{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;margin-bottom:14px}
 h2{color:#facc15;text-align:center;margin:10px 0}
 label{color:#facc15;font-size:12px;display:block;margin-top:10px;font-weight:600}
-input,textarea{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
+input,textarea,select{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
 .btn{width:100%;background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;margin:6px 0;cursor:pointer}
 .btn-dark{background:#333;color:#fff;border:1px solid #555}
 img{max-width:100%;border-radius:10px;margin-top:8px}
@@ -23,10 +23,14 @@ img{max-width:100%;border-radius:10px;margin-top:8px}
 <h2>👑 Admin - Zain ❤️ Aeman 🔴 LIVE</h2>
 
 <div class="card">
+<label>💒 Dulha Dulhan Name (NEW)</label>
+<input id="c1" placeholder="Dulha: Zain" value="Zain">
+<input id="c2" placeholder="Dulhan: Aeman" value="Aeman">
+
 <label>🏛️ Venue</label>
 <input id="venue" placeholder="Gujranwala Marquee Palace" value="Gujranwala Marquee Palace">
 
-<label>🖼️ Couple Pic (Ek ya Zyada)</label>
+<label>🖼️ Couple Pic (Ek ya Zyada) - Choti rakho iPhone ke liye</label>
 <input type="file" id="picInput" accept="image/*" multiple>
 <div id="picPreview"></div>
 
@@ -34,24 +38,35 @@ img{max-width:100%;border-radius:10px;margin-top:8px}
 <input type="file" id="songInput" accept="audio/*">
 <audio id="songPreview" controls style="width:100%;margin-top:8px;display:none"></audio>
 
-<label>📅 Date</label>
-<input id="dateInput" type="date" value="2026-12-25">
+<label>📅 Barat Date & Time</label>
+<input id="bd" placeholder="12 Dec 2026">
+<input id="bt" placeholder="07:00 PM">
+<input id="bv" placeholder="Barat Venue - Al Janat Marquee">
 
-<label>⏰ Time</label>
+<label>📅 Walima Date & Time</label>
+<input id="wd" placeholder="13 Dec 2026">
+<input id="wt" placeholder="01:00 PM">
+<input id="wv" placeholder="Walima Venue - Royal Palace">
+
+<label>📅 Single Date (purana) </label>
+<input id="dateInput" type="date" value="2026-12-25">
+<label>⏰ Single Time (purana)</label>
 <input id="timeInput" type="time" value="19:00">
 
-<button class="btn" id="saveBtn">💾 Save LIVE (Sab ki APK update hogi)</button>
+<button class="btn" id="saveBtn">💾 Save LIVE (iPhone + Android + APK)</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:6px"></p>
 </div>
 
 <div class="card">
-<h3 style="color:#facc15">👑 500 Mehman LIVE Cloud</h3>
+<h3 style="color:#facc15">👑 Mehman LIVE Cloud</h3>
 <label>Single Add</label>
 <input id="gName" placeholder="Naam: Ali">
 <input id="gPass" placeholder="Password: 1234">
+<input id="gPersons" placeholder="Full Family / 2 Persons" value="Full Family">
+<select id="gEvent"><option value="both">Barat & Walima</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
 <button class="btn" id="addOneBtn">+ ADD TO CLOUD</button>
 
-<label style="margin-top:15px">🔥 Bulk Add (Format: Naam,Password har line pe)</label>
+<label style="margin-top:15px">🔥 Bulk Add (Format: Naam,Password)</label>
 <textarea id="bulkInput" rows="5" placeholder="Ali,1234
 Ahmed,5678"></textarea>
 <button class="btn" id="addBulkBtn">🚀 500 ADD KARO (LIVE)</button>
@@ -63,145 +78,129 @@ Ahmed,5678"></textarea>
 <div id="guestList" style="margin-top:10px;max-height:400px;overflow:auto">Loading from Cloud...</div>
 <p id="totalCount" style="margin-top:10px;font-size:13px"></p>
 <button class="btn btn-dark" id="clearBtn">Sab Cloud Se Delete</button>
-<button class="btn btn-dark" onclick="location.reload()">Refresh</button>
 </div>
 
 <script>
-// === SUPABASE CONFIG (Aapka Ready Hai) ===
 const SUPABASE_URL = 'https://saaoukcqwqnxgmcuojjl.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// OLD KEYS (backup)
-const KEY_S = 'vi_settings_v2';
-const KEY_G = 'vi_guests_v2';
 
 window._pics = [];
 window._song = '';
 
 async function loadSettings(){
-  // 1. Cloud se load
   try{
-    let {data, error} = await sb.from('settings').select('*').eq('id',1).single();
+    let {data} = await sb.from('settings').select('*').eq('id',1).single();
     if(data){
-      document.getElementById('venue').value = data.venue || '';
-      if(data.date) document.getElementById('dateInput').value = data.date;
-      if(data.time) document.getElementById('timeInput').value = data.time;
+      if(data.c1) document.getElementById('c1').value=data.c1;
+      if(data.c2) document.getElementById('c2').value=data.c2;
+      if(data.venue) document.getElementById('venue').value=data.venue;
+      if(data.bv) document.getElementById('bv').value=data.bv;
+      if(data.wv) document.getElementById('wv').value=data.wv;
+      if(data.bd) document.getElementById('bd').value=data.bd;
+      if(data.bt) document.getElementById('bt').value=data.bt;
+      if(data.wd) document.getElementById('wd').value=data.wd;
+      if(data.wt) document.getElementById('wt').value=data.wt;
+      if(data.date) document.getElementById('dateInput').value=data.date;
+      if(data.time) document.getElementById('timeInput').value=data.time;
       if(data.pic){
         try{
           let pics = JSON.parse(data.pic);
-          window._pics = pics;
-          document.getElementById('picPreview').innerHTML = '<img src="'+pics[0]+'"><p style="font-size:11px">'+pics.length+' pics from CLOUD</p>';
-        }catch(e){ window._pics = [data.pic]; document.getElementById('picPreview').innerHTML = '<img src="'+data.pic+'">'; }
+          window._pics = Array.isArray(pics)?pics:[data.pic];
+          document.getElementById('picPreview').innerHTML = '<img src="'+window._pics[0]+'"><p style="font-size:11px">'+window._pics.length+' pics from CLOUD</p>';
+        }catch(e){ window._pics=[data.pic]; document.getElementById('picPreview').innerHTML='<img src="'+data.pic+'">'; }
       }
-      if(data.song){
-        window._song = data.song;
-        let a = document.getElementById('songPreview');
-        a.src = data.song; a.style.display='block';
+      if(data.song || data.music){
+        window._song=data.song||data.music;
+        let a=document.getElementById('songPreview'); a.src=window._song; a.style.display='block';
       }
-      return;
     }
-  }catch(e){ console.log('cloud empty', e); }
-  // 2. Local backup
-  let s = {}; try{ s = JSON.parse(localStorage.getItem(KEY_S) || '{}'); }catch(e){}
-  if(s.venue) document.getElementById('venue').value = s.venue;
-  if(s.date) document.getElementById('dateInput').value = s.date;
-  if(s.time) document.getElementById('timeInput').value = s.time;
-  if(s.pic && s.pic.length){ window._pics = s.pic; document.getElementById('picPreview').innerHTML = '<img src="'+s.pic[0]+'"><p style="font-size:11px">'+s.pic.length+' pics saved</p>'; }
-  if(s.song){ window._song = s.song; let a = document.getElementById('songPreview'); a.src = s.song; a.style.display='block'; }
+  }catch(e){ console.log(e); }
 }
 
-// SAVE SETTINGS TO CLOUD
 document.getElementById('saveBtn').addEventListener('click', async function(){
-  let pics = window._pics || [];
-  let song = window._song || '';
-  try{ let old = JSON.parse(localStorage.getItem(KEY_S)||'{}'); if(!pics.length && old.pic) pics = old.pic; if(!song && old.song) song = old.song; }catch(e){}
-  
-  // local backup
-  localStorage.setItem(KEY_S, JSON.stringify({venue: document.getElementById('venue').value, date: document.getElementById('dateInput').value, time: document.getElementById('timeInput').value, pic: pics, song: song}));
-
-  // CLOUD SAVE
-  document.getElementById('saveMsg').innerText = '⏳ Cloud pe save ho raha...';
-  let {error} = await sb.from('settings').upsert({id:1, venue: document.getElementById('venue').value, date: document.getElementById('dateInput').value, time: document.getElementById('timeInput').value, pic: JSON.stringify(pics), song: song});
-  if(error){ document.getElementById('saveMsg').innerText = '❌ Error: '+error.message; }
-  else{ document.getElementById('saveMsg').innerText = '✅ LIVE Saved! Sab ki APK update hogi'; setTimeout(()=>{document.getElementById('saveMsg').innerText='';},3000); }
+  document.getElementById('saveMsg').innerText='⏳ Saving...';
+  let payload={
+    id:1,
+    c1:document.getElementById('c1').value,
+    c2:document.getElementById('c2').value,
+    venue:document.getElementById('venue').value,
+    bv:document.getElementById('bv').value || document.getElementById('venue').value,
+    wv:document.getElementById('wv').value || document.getElementById('venue').value,
+    bd:document.getElementById('bd').value,
+    bt:document.getElementById('bt').value,
+    wd:document.getElementById('wd').value,
+    wt:document.getElementById('wt').value,
+    date:document.getElementById('dateInput').value,
+    time:document.getElementById('timeInput').value,
+    pic: JSON.stringify(window._pics),
+    song: window._song,
+    music: window._song
+  };
+  let {error}=await sb.from('settings').upsert(payload);
+  if(error) document.getElementById('saveMsg').innerText='❌ '+error.message;
+  else document.getElementById('saveMsg').innerText='✅ LIVE Saved! iPhone/Android auto update';
 });
 
-// PIC
 document.getElementById('picInput').addEventListener('change', function(){
-  let files = this.files; if(!files.length) return;
-  let arr=[]; let done=0;
+  let files=this.files; if(!files.length) return;
+  let arr=[],done=0;
   for(let i=0;i<files.length;i++){
     let r=new FileReader();
-    r.onload = function(e){ arr.push(e.target.result); done++; if(done===files.length){ window._pics=arr; document.getElementById('picPreview').innerHTML='<img src="'+arr[0]+'"><p style="font-size:11px">'+arr.length+' pics ready - Save dabao</p>'; } };
+    r.onload=e=>{arr.push(e.target.result); done++; if(done===files.length){ window._pics=arr; document.getElementById('picPreview').innerHTML='<img src="'+arr[0]+'"><p style="font-size:11px">'+arr.length+' pics ready - Save dabao (Choti pic iPhone pe fast chalegi)</p>'; }};
     r.readAsDataURL(files[i]);
   }
 });
-
-// SONG
 document.getElementById('songInput').addEventListener('change', function(){
   if(!this.files.length) return;
   let r=new FileReader();
-  r.onload = function(e){ window._song=e.target.result; let a=document.getElementById('songPreview'); a.src=e.target.result; a.style.display='block'; };
+  r.onload=e=>{ window._song=e.target.result; let a=document.getElementById('songPreview'); a.src=e.target.result; a.style.display='block'; };
   r.readAsDataURL(this.files[0]);
 });
 
-// ADD SINGLE TO CLOUD
 document.getElementById('addOneBtn').addEventListener('click', async function(){
-  let n = document.getElementById('gName').value.trim();
-  let p = document.getElementById('gPass').value.trim();
-  if(!n || !p){ alert('Naam aur Password likho'); return; }
-  await sb.from('guests').insert({name:n, pass:p});
-  document.getElementById('gName').value=''; document.getElementById('gPass').value='';
-  render();
+  let n=document.getElementById('gName').value.trim();
+  let p=document.getElementById('gPass').value.trim();
+  let persons=document.getElementById('gPersons').value.trim()||'Full Family';
+  let ev=document.getElementById('gEvent').value;
+  if(!n||!p){alert('Naam aur Password likho');return;}
+  let {error}=await sb.from('guests').insert({name:n,pass:p,persons:persons,event:ev});
+  if(error) alert(error.message); else{ document.getElementById('gName').value=''; document.getElementById('gPass').value=''; render(); }
 });
-
-// BULK TO CLOUD
 document.getElementById('addBulkBtn').addEventListener('click', async function(){
-  let txt = document.getElementById('bulkInput').value.trim();
-  if(!txt){ alert('List likho'); return; }
-  let lines = txt.split('\n'); let arr=[]; 
-  lines.forEach(function(l){
-    let parts = l.split(',');
-    if(parts.length>=2){ let nn=parts[0].trim(), pp=parts[1].trim(); if(nn&&pp){ arr.push({name:nn, pass:pp}); } }
-  });
-  if(arr.length){ 
-    let {error} = await sb.from('guests').insert(arr);
-    if(error) alert(error.message);
-    else { document.getElementById('bulkInput').value=''; alert(arr.length+' LIVE Cloud pe add hogaye'); render(); }
-  }
+  let txt=document.getElementById('bulkInput').value.trim();
+  if(!txt){alert('List likho');return;}
+  let lines=txt.split('\n'); let arr=[];
+  lines.forEach(l=>{ let parts=l.split(','); if(parts.length>=2){ let nn=parts[0].trim(),pp=parts[1].trim(); if(nn&&pp) arr.push({name:nn,pass:pp,persons:'Full Family',event:'both'}); }});
+  if(arr.length){ let {error}=await sb.from('guests').insert(arr); if(error) alert(error.message); else{ document.getElementById('bulkInput').value=''; alert(arr.length+' added'); render(); } }
 });
-
-// RENDER FROM CLOUD
 async function render(){
-  let q = (document.getElementById('searchInput').value || '').toLowerCase();
-  let {data:g, error} = await sb.from('guests').select('*').order('created_at',{ascending:false});
-  if(error){ document.getElementById('guestList').innerText = 'Error: '+error.message; return; }
-  if(!g) g=[];
-  let f = g.filter(function(x){ return x.name.toLowerCase().includes(q); });
+  let q=(document.getElementById('searchInput').value||'').toLowerCase();
+  let {data:g,error}=await sb.from('guests').select('*').order('created_at',{ascending:false});
+  if(error){ document.getElementById('guestList').innerText='Error: '+error.message; return; }
+  let f=g.filter(x=>x.name.toLowerCase().includes(q));
   let html='';
-  f.forEach(function(x){
-    let link = 'https://hsamama023-crypto.github.io/Visual-card/card.html?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass);
-    html += '<div class="item"><b>'+x.name+'</b> - '+x.pass+'<br><a href="'+link+'" target="_blank" style="color:#facc15;font-size:10px;word-break:break-all">'+link+'</a><br><button onclick="shareWa(\''+x.name.replace(/'/g,"\\'")+'\',\''+x.pass+'\')" style="background:#25D366;color:#fff;border:none;padding:6px 12px;border-radius:6px;margin-top:5px">WhatsApp</button> <button onclick="delOne('+x.id+')" style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:6px">X</button></div>';
+  f.forEach(x=>{
+    let link='https://hsamama023-crypto.github.io/Visual-card/?pass='+encodeURIComponent(x.pass);
+    html+='<div class="item"><b>'+x.name+'</b> - '+x.pass+'<br><small>'+(x.persons||'')+' | '+(x.event||'')+'</small><br><a href="'+link+'" target="_blank" style="color:#facc15;font-size:10px;word-break:break-all">'+link+'</a><br><button onclick="shareWa(\''+x.name.replace(/'/g,"\\'")+'\',\''+x.pass+'\')" style="background:#25D366;color:#fff;border:none;padding:6px 12px;border-radius:6px;margin-top:5px">WhatsApp</button> <button onclick="delOne('+x.id+')" style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:6px">X</button> <button onclick="navigator.clipboard.writeText(\''+link+'\');alert(\'Link Copied\')" style="background:#facc15;color:#000;border:none;padding:6px 12px;border-radius:6px">Copy Link</button></div>';
   });
-  document.getElementById('guestList').innerHTML = html || 'Koi mehman nahi';
-  document.getElementById('totalCount').innerText = 'Total (CLOUD): '+g.length+' mehman';
-  window._lastGuests = g;
+  document.getElementById('guestList').innerHTML=html||'Koi mehman nahi';
+  document.getElementById('totalCount').innerText='Total (CLOUD): '+g.length+' mehman';
+  window._lastGuests=g;
 }
-window.delOne = async function(id){ if(!confirm('Delete?')) return; await sb.from('guests').delete().eq('id',id); render(); }
-window.shareWa = function(name, pass){
-  let link = 'https://hsamama023-crypto.github.io/Visual-card/card.html?to='+encodeURIComponent(name)+'&pass='+encodeURIComponent(pass);
-  let msg = 'Assalam-o-Alaikum '+name+' Sahib,%0AZain ❤️ Aeman Shadi Card:%0A'+link+'%0A%0APassword: *'+pass+'*';
+window.delOne=async function(id){ if(!confirm('Delete?')) return; await sb.from('guests').delete().eq('id',id); render(); }
+window.shareWa=function(name,pass){
+  let link='https://hsamama023-crypto.github.io/Visual-card/?pass='+encodeURIComponent(pass);
+  let msg='Assalam-o-Alaikum '+name+' Sahib,%0AZain ❤️ Aeman Shadi Card:%0A'+link+'%0A%0APassword: *'+pass+'*';
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 document.getElementById('searchInput').addEventListener('input', render);
-document.getElementById('clearBtn').addEventListener('click', async function(){ if(confirm('Sab Cloud se delete karna hai?')){ await sb.from('guests').delete().neq('id',0); render(); } });
+document.getElementById('clearBtn').addEventListener('click', async function(){ if(confirm('Sab Cloud se delete?')){ await sb.from('guests').delete().neq('id',0); render(); } });
 document.getElementById('csvBtn').addEventListener('click', function(){
-  let g=window._lastGuests||[]; let csv='Name,Password,Link\n';
-  g.forEach(function(x){ let link='https://hsamama023-crypto.github.io/Visual-card/card.html?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass); csv+=x.name+','+x.pass+','+link+'\n'; });
+  let g=window._lastGuests||[]; let csv='Name,Password,Persons,Event,Link\n';
+  g.forEach(x=>{ let link='https://hsamama023-crypto.github.io/Visual-card/?pass='+encodeURIComponent(x.pass); csv+=`"${x.name}",${x.pass},${x.persons||''},${x.event||''},${link}\n`; });
   let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mehman_list.csv'; a.click();
 });
-
 loadSettings(); render();
 </script>
 </body>

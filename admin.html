@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Zain & Aeman</title>
+<title>Admin - Zain & Aeman - LIVE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
@@ -19,7 +20,7 @@ img{max-width:100%;border-radius:10px;margin-top:8px}
 </head>
 <body>
 
-<h2>👑 Admin - Zain ❤️ Aeman</h2>
+<h2>👑 Admin - Zain ❤️ Aeman 🔴 LIVE</h2>
 
 <div class="card">
 <label>🏛️ Venue</label>
@@ -39,77 +40,91 @@ img{max-width:100%;border-radius:10px;margin-top:8px}
 <label>⏰ Time</label>
 <input id="timeInput" type="time" value="19:00">
 
-<button class="btn" id="saveBtn">💾 Save Settings</button>
+<button class="btn" id="saveBtn">💾 Save LIVE (Sab ki APK update hogi)</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:6px"></p>
 </div>
 
 <div class="card">
-<h3 style="color:#facc15">👑 500 Mehman Add Karo</h3>
+<h3 style="color:#facc15">👑 500 Mehman LIVE Cloud</h3>
 <label>Single Add</label>
 <input id="gName" placeholder="Naam: Ali">
 <input id="gPass" placeholder="Password: 1234">
-<button class="btn" id="addOneBtn">+ ADD</button>
+<button class="btn" id="addOneBtn">+ ADD TO CLOUD</button>
 
 <label style="margin-top:15px">🔥 Bulk Add (Format: Naam,Password har line pe)</label>
 <textarea id="bulkInput" rows="5" placeholder="Ali,1234
 Ahmed,5678"></textarea>
-<button class="btn" id="addBulkBtn">🚀 500 ADD KARO</button>
+<button class="btn" id="addBulkBtn">🚀 500 ADD KARO (LIVE)</button>
 <button class="btn btn-dark" id="csvBtn">📥 Excel CSV Download</button>
 
 <label>🔍 Search</label>
 <input id="searchInput" placeholder="Search naam..." >
 
-<div id="guestList" style="margin-top:10px;max-height:400px;overflow:auto"></div>
+<div id="guestList" style="margin-top:10px;max-height:400px;overflow:auto">Loading from Cloud...</div>
 <p id="totalCount" style="margin-top:10px;font-size:13px"></p>
-<button class="btn btn-dark" id="clearBtn">Sab Delete</button>
+<button class="btn btn-dark" id="clearBtn">Sab Cloud Se Delete</button>
 <button class="btn btn-dark" onclick="location.reload()">Refresh</button>
 </div>
 
 <script>
-// KEYS
+// === SUPABASE CONFIG (Aapka Ready Hai) ===
+const SUPABASE_URL = 'https://saaoukcqwqnxgmcuojjl.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// OLD KEYS (backup)
 const KEY_S = 'vi_settings_v2';
 const KEY_G = 'vi_guests_v2';
 
-// LOAD
-function loadSettings(){
-  let s = {};
-  try{ s = JSON.parse(localStorage.getItem(KEY_S) || '{}'); }catch(e){}
+window._pics = [];
+window._song = '';
+
+async function loadSettings(){
+  // 1. Cloud se load
+  try{
+    let {data, error} = await sb.from('settings').select('*').eq('id',1).single();
+    if(data){
+      document.getElementById('venue').value = data.venue || '';
+      if(data.date) document.getElementById('dateInput').value = data.date;
+      if(data.time) document.getElementById('timeInput').value = data.time;
+      if(data.pic){
+        try{
+          let pics = JSON.parse(data.pic);
+          window._pics = pics;
+          document.getElementById('picPreview').innerHTML = '<img src="'+pics[0]+'"><p style="font-size:11px">'+pics.length+' pics from CLOUD</p>';
+        }catch(e){ window._pics = [data.pic]; document.getElementById('picPreview').innerHTML = '<img src="'+data.pic+'">'; }
+      }
+      if(data.song){
+        window._song = data.song;
+        let a = document.getElementById('songPreview');
+        a.src = data.song; a.style.display='block';
+      }
+      return;
+    }
+  }catch(e){ console.log('cloud empty', e); }
+  // 2. Local backup
+  let s = {}; try{ s = JSON.parse(localStorage.getItem(KEY_S) || '{}'); }catch(e){}
   if(s.venue) document.getElementById('venue').value = s.venue;
   if(s.date) document.getElementById('dateInput').value = s.date;
   if(s.time) document.getElementById('timeInput').value = s.time;
-  if(s.pic && s.pic.length){
-    window._pics = s.pic;
-    document.getElementById('picPreview').innerHTML = '<img src="'+s.pic[0]+'"><p style="font-size:11px">'+s.pic.length+' pics saved</p>';
-  }
-  if(s.song){
-    window._song = s.song;
-    let a = document.getElementById('songPreview');
-    a.src = s.song; a.style.display='block';
-  }
+  if(s.pic && s.pic.length){ window._pics = s.pic; document.getElementById('picPreview').innerHTML = '<img src="'+s.pic[0]+'"><p style="font-size:11px">'+s.pic.length+' pics saved</p>'; }
+  if(s.song){ window._song = s.song; let a = document.getElementById('songPreview'); a.src = s.song; a.style.display='block'; }
 }
 
-function getGuests(){ try{return JSON.parse(localStorage.getItem(KEY_G)||'[]')}catch(e){return []} }
-function setGuests(g){ localStorage.setItem(KEY_G, JSON.stringify(g)); }
-
-// SAVE SETTINGS
-document.getElementById('saveBtn').addEventListener('click', function(){
+// SAVE SETTINGS TO CLOUD
+document.getElementById('saveBtn').addEventListener('click', async function(){
   let pics = window._pics || [];
   let song = window._song || '';
-  try{
-    let old = JSON.parse(localStorage.getItem(KEY_S)||'{}');
-    if(!pics.length && old.pic) pics = old.pic;
-    if(!song && old.song) song = old.song;
-  }catch(e){}
-  let data = {
-    venue: document.getElementById('venue').value,
-    date: document.getElementById('dateInput').value,
-    time: document.getElementById('timeInput').value,
-    pic: pics,
-    song: song
-  };
-  localStorage.setItem(KEY_S, JSON.stringify(data));
-  document.getElementById('saveMsg').innerText = '✅ Saved! Card me bhi ajayega';
-  setTimeout(()=>{document.getElementById('saveMsg').innerText='';},2500);
+  try{ let old = JSON.parse(localStorage.getItem(KEY_S)||'{}'); if(!pics.length && old.pic) pics = old.pic; if(!song && old.song) song = old.song; }catch(e){}
+  
+  // local backup
+  localStorage.setItem(KEY_S, JSON.stringify({venue: document.getElementById('venue').value, date: document.getElementById('dateInput').value, time: document.getElementById('timeInput').value, pic: pics, song: song}));
+
+  // CLOUD SAVE
+  document.getElementById('saveMsg').innerText = '⏳ Cloud pe save ho raha...';
+  let {error} = await sb.from('settings').upsert({id:1, venue: document.getElementById('venue').value, date: document.getElementById('dateInput').value, time: document.getElementById('timeInput').value, pic: JSON.stringify(pics), song: song});
+  if(error){ document.getElementById('saveMsg').innerText = '❌ Error: '+error.message; }
+  else{ document.getElementById('saveMsg').innerText = '✅ LIVE Saved! Sab ki APK update hogi'; setTimeout(()=>{document.getElementById('saveMsg').innerText='';},3000); }
 });
 
 // PIC
@@ -131,55 +146,59 @@ document.getElementById('songInput').addEventListener('change', function(){
   r.readAsDataURL(this.files[0]);
 });
 
-// ADD SINGLE
-document.getElementById('addOneBtn').addEventListener('click', function(){
+// ADD SINGLE TO CLOUD
+document.getElementById('addOneBtn').addEventListener('click', async function(){
   let n = document.getElementById('gName').value.trim();
   let p = document.getElementById('gPass').value.trim();
   if(!n || !p){ alert('Naam aur Password likho'); return; }
-  let g = getGuests(); g.unshift({name:n, pass:p}); setGuests(g);
+  await sb.from('guests').insert({name:n, pass:p});
   document.getElementById('gName').value=''; document.getElementById('gPass').value='';
   render();
 });
 
-// BULK
-document.getElementById('addBulkBtn').addEventListener('click', function(){
+// BULK TO CLOUD
+document.getElementById('addBulkBtn').addEventListener('click', async function(){
   let txt = document.getElementById('bulkInput').value.trim();
   if(!txt){ alert('List likho'); return; }
-  let lines = txt.split('\n'); let g = getGuests(); let c=0;
+  let lines = txt.split('\n'); let arr=[]; 
   lines.forEach(function(l){
     let parts = l.split(',');
-    if(parts.length>=2){ let nn=parts[0].trim(), pp=parts[1].trim(); if(nn&&pp){ g.unshift({name:nn, pass:pp}); c++; } }
+    if(parts.length>=2){ let nn=parts[0].trim(), pp=parts[1].trim(); if(nn&&pp){ arr.push({name:nn, pass:pp}); } }
   });
-  setGuests(g); document.getElementById('bulkInput').value=''; alert(c+' mehman add hogaye'); render();
+  if(arr.length){ 
+    let {error} = await sb.from('guests').insert(arr);
+    if(error) alert(error.message);
+    else { document.getElementById('bulkInput').value=''; alert(arr.length+' LIVE Cloud pe add hogaye'); render(); }
+  }
 });
 
-// RENDER
-function render(){
+// RENDER FROM CLOUD
+async function render(){
   let q = (document.getElementById('searchInput').value || '').toLowerCase();
-  let g = getGuests();
+  let {data:g, error} = await sb.from('guests').select('*').order('created_at',{ascending:false});
+  if(error){ document.getElementById('guestList').innerText = 'Error: '+error.message; return; }
+  if(!g) g=[];
   let f = g.filter(function(x){ return x.name.toLowerCase().includes(q); });
   let html='';
   f.forEach(function(x){
-    let realIdx = g.findIndex(function(y){ return y.name===x.name && y.pass===x.pass; });
-    if(realIdx<0) realIdx=0;
-    let link = location.href.replace('admin.html','card.html')+'?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass);
-    html += '<div class="item"><b>'+x.name+'</b> - '+x.pass+'<br><a href="'+link+'" target="_blank" style="color:#facc15;font-size:10px;word-break:break-all">'+link+'</a><br><button onclick="shareWa('+realIdx+')" style="background:#25D366;color:#fff;border:none;padding:6px 12px;border-radius:6px;margin-top:5px">WhatsApp</button> <button onclick="delOne('+realIdx+')" style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:6px">X</button></div>';
+    let link = 'https://hsamama023-crypto.github.io/Visual-card/card.html?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass);
+    html += '<div class="item"><b>'+x.name+'</b> - '+x.pass+'<br><a href="'+link+'" target="_blank" style="color:#facc15;font-size:10px;word-break:break-all">'+link+'</a><br><button onclick="shareWa(\''+x.name.replace(/'/g,"\\'")+'\',\''+x.pass+'\')" style="background:#25D366;color:#fff;border:none;padding:6px 12px;border-radius:6px;margin-top:5px">WhatsApp</button> <button onclick="delOne('+x.id+')" style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:6px">X</button></div>';
   });
   document.getElementById('guestList').innerHTML = html || 'Koi mehman nahi';
-  document.getElementById('totalCount').innerText = 'Total: '+g.length+' mehman';
+  document.getElementById('totalCount').innerText = 'Total (CLOUD): '+g.length+' mehman';
+  window._lastGuests = g;
 }
-window.delOne = function(i){ let g=getGuests(); g.splice(i,1); setGuests(g); render(); }
-window.shareWa = function(i){
-  let g=getGuests()[i];
-  let link = location.href.replace('admin.html','card.html')+'?to='+encodeURIComponent(g.name)+'&pass='+encodeURIComponent(g.pass);
-  let msg = 'Assalam-o-Alaikum '+g.name+' Sahib,%0AZain ❤️ Aeman Shadi Card:%0A'+link+'%0A%0APassword: *'+g.pass+'*';
+window.delOne = async function(id){ if(!confirm('Delete?')) return; await sb.from('guests').delete().eq('id',id); render(); }
+window.shareWa = function(name, pass){
+  let link = 'https://hsamama023-crypto.github.io/Visual-card/card.html?to='+encodeURIComponent(name)+'&pass='+encodeURIComponent(pass);
+  let msg = 'Assalam-o-Alaikum '+name+' Sahib,%0AZain ❤️ Aeman Shadi Card:%0A'+link+'%0A%0APassword: *'+pass+'*';
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 document.getElementById('searchInput').addEventListener('input', render);
-document.getElementById('clearBtn').addEventListener('click', function(){ if(confirm('Sab delete karna hai?')){ localStorage.removeItem(KEY_G); render(); } });
+document.getElementById('clearBtn').addEventListener('click', async function(){ if(confirm('Sab Cloud se delete karna hai?')){ await sb.from('guests').delete().neq('id',0); render(); } });
 document.getElementById('csvBtn').addEventListener('click', function(){
-  let g=getGuests(); let csv='Name,Password,Link\n';
-  g.forEach(function(x){ let link=location.href.replace('admin.html','card.html')+'?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass); csv+=x.name+','+x.pass+','+link+'\n'; });
+  let g=window._lastGuests||[]; let csv='Name,Password,Link\n';
+  g.forEach(function(x){ let link='https://hsamama023-crypto.github.io/Visual-card/card.html?to='+encodeURIComponent(x.name)+'&pass='+encodeURIComponent(x.pass); csv+=x.name+','+x.pass+','+link+'\n'; });
   let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mehman_list.csv'; a.click();
 });
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zain & Aeman - Wedding Invitation</title>
+<title>Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
@@ -19,8 +19,7 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 .badge{display:inline-block;margin-top:12px;padding:6px 16px;border-radius:20px;border:1px solid rgba(212,175,55,.6);background:rgba(0,0,0,.35);font-size:9px;letter-spacing:3px;color:#e8c765}
 .mid{padding:0 18px 18px 18px}
 .glass{background:rgba(255,255,255,.95);border:1px solid rgba(212,175,55,.5);border-radius:20px;padding:18px;margin-top:-36px;position:relative;z-index:3;box-shadow:0 12px 30px rgba(0,0,0,.18)}
-.input,.select{width:100%;padding:12px 14px;border-radius:12px;border:2px solid #1a1a1a;background:#fff;text-align:center;font-size:13px;font-weight:600;outline:none;margin-top:6px}
-.select{text-align:left}
+.input{width:100%;padding:12px 14px;border-radius:12px;border:2px solid #1a1a1a;background:#fff;text-align:center;font-size:13px;font-weight:600;outline:none;margin-top:6px}
 .btn{width:100%;padding:12px;border-radius:12px;border:none;background:#1a1a1a;color:#e8c765;font-weight:700;cursor:pointer;margin-top:8px}
 .btn-gold{background:linear-gradient(135deg,#b8960c,#e8c765);color:#111}
 .err{color:#b91c1c;font-size:11px;margin-top:8px;min-height:14px;text-align:center}
@@ -35,7 +34,6 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 .ev-barat{background:#8B0000}.ev-walima{background:#111}
 .details{background:#fffaf0;border-radius:12px;padding:12px;border-left:4px solid #e8c765;text-align:left;font-size:12.5px;line-height:2.1}
 .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
-.slider::-webkit-scrollbar{display:none}
 .slide{min-width:100%;scroll-snap-align:start;padding:4px}
 .dots{display:flex;justify-content:center;gap:8px;margin:12px 0 4px 0}
 .dots span{width:26px;height:6px;border-radius:10px;background:#e9e1b8}.dots span.active{background:#d4af37;width:30px}
@@ -47,7 +45,7 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 </head>
 <body>
 <div class="main">
-<div class="top"><img id="bgPic" src="" alt="" style="display:none"><div class="top-content"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="couple" id="coupleHead">Zain & Aeman</div><div class="badge">PRIVATE WEDDING INVITATION</div></div></div>
+<div class="top"><img id="bgPic" src="" style="display:none"><div class="top-content"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="couple" id="coupleHead">He & She</div><div class="badge">PRIVATE WEDDING INVITATION</div></div></div>
 <div class="mid">
 <div id="lock" class="glass">
 <div style="color:#8B0000;font-weight:700;font-size:18px;text-align:center">🔐 Private Invitation</div>
@@ -79,94 +77,59 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <button class="btn" style="margin-top:10px;background:#111;color:#e8c765;border:1px solid rgba(212,175,55,.3)" onclick="location.reload()">🔒 LOCK CARD</button>
 </div>
 </div>
-<div class="foot" id="foot">ZAIN & AEMAN • 2026</div>
+<div class="foot" id="foot">HE & SHE • 2026</div>
 </div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
 <div id="lockModal" class="modal"><div class="modal-box" style="text-align:center"><h3 style="color:#d4af37">🔒 Admin Lock</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input" style="margin-top:10px"><button class="btn btn-gold" id="unlockBtn" style="margin-top:10px">Unlock</button><button class="btn" style="background:#333;color:#fff;margin-top:6px" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p></div></div>
 <audio id="bgMusic" loop></audio><button id="musicBtn" onclick="toggleMusic()" style="position:fixed;bottom:20px;left:20px;z-index:999;width:48px;height:48px;border-radius:50%;border:2px solid #e8c765;background:rgba(0,0,0,.75);color:#e8c765;font-size:20px;display:none">🎵</button>
 <script>
-// === SUPABASE LIVE ===
 const SUPABASE_URL = 'https://saaoukcqwqnxgmcuojjl.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const ADMIN_PASS='Zain@2026';
+const ADMIN_PASS='Admin@2026';
 function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
-document.getElementById('unlockBtn').addEventListener('click',()=>{
-  if(document.getElementById('lockPass').value===ADMIN_PASS){
-    closeLock();
-    window.location.href='admin.html';
-  }else{document.getElementById('lockMsg').innerText='❌ Galat Password'}
-});
-
-let BD="12 Dec 2026",BT="07:00 PM",BV="Al Janat Marquee, Gujranwala";
-let WD="13 Dec 2026",WT="01:00 PM",WV="Royal Palace, Gujranwala";
-let C1="Zain",C2="Aeman";
+document.getElementById('unlockBtn').addEventListener('click',()=>{if(document.getElementById('lockPass').value===ADMIN_PASS){closeLock();window.location.href='admin.html';}else{document.getElementById('lockMsg').innerText='❌ Galat Password'}});
+let BD="12 Dec 2026",BT="07:00 PM",BV="Venue";
+let WD="13 Dec 2026",WT="01:00 PM",WV="Venue";
+let C1="He",C2="She";
 let currentGuest=null;
-
 async function loadConfig(){
   try{
     let {data} = await sb.from('settings').select('*').eq('id',1).single();
     if(data){
-      if(data.c1) C1=data.c1; if(data.c2) C2=data.c2;
+      if(data.c1 && data.c2){ C1=data.c1; C2=data.c2; } else { C1="He"; C2="She"; }
       if(data.bd) BD=data.bd; if(data.bt) BT=data.bt; if(data.bv) BV=data.bv;
       if(data.wd) WD=data.wd; if(data.wt) WT=data.wt; if(data.wv) WV=data.wv;
       apply();
-      // pic - can be JSON array or single
       let picSrc = data.pic;
       if(picSrc){
-        try{
-          let arr = JSON.parse(picSrc);
-          if(Array.isArray(arr) && arr.length) picSrc = arr[0];
-        }catch(e){}
-        if(picSrc && picSrc.startsWith('data:')){
-          let im=document.getElementById('bgPic'); im.src=picSrc; im.style.display='block';
-        } else if(picSrc){
-          let im=document.getElementById('bgPic'); im.src=picSrc; im.style.display='block';
-        }
+        try{let arr = JSON.parse(picSrc); if(Array.isArray(arr) && arr.length) picSrc = arr[0];}catch(e){}
+        if(picSrc){let im=document.getElementById('bgPic'); im.src=picSrc; im.style.display='block';}
       }
       let music = data.music || data.song;
-      if(music){
-        document.getElementById('bgMusic').src=music;
-      }
-    }
-  }catch(e){ console.log(e); }
+      if(music){document.getElementById('bgMusic').src=music;}
+    } else { apply(); }
+  }catch(e){ apply(); }
 }
-
 function apply(){
   document.getElementById('coupleHead').innerText=C1+" & "+C2;
   document.getElementById('foot').innerText=(C1+" & "+C2).toUpperCase()+" • 2026";
-  document.getElementById('bDate').innerText=BD;
-  document.getElementById('bTime').innerText=BT;
-  document.getElementById('bVenue').innerText=BV;
-  document.getElementById('wDate').innerText=WD;
-  document.getElementById('wTime').innerText=WT;
-  document.getElementById('wVenue').innerText=WV;
+  document.title = C1+" & "+C2+" - Wedding Invitation";
+  document.getElementById('bDate').innerText=BD; document.getElementById('bTime').innerText=BT; document.getElementById('bVenue').innerText=BV;
+  document.getElementById('wDate').innerText=WD; document.getElementById('wTime').innerText=WT; document.getElementById('wVenue').innerText=WV;
 }
-
-// LIVE UNLOCK - Cloud se check
 async function unlock(){
   let v=document.getElementById('p').value.trim();
   let eEl=document.getElementById('e');
   if(!v){eEl.innerText="⚠️ Password likhein"; return}
-  eEl.innerText="⏳ Cloud se check ho raha...";
-  if(v==="1234"){
-    currentGuest={name:"Mehman-e-Khaas",event:"both",persons:"Full Family"};
-    showWelcome(currentGuest); return;
-  }
+  eEl.innerText="⏳ Cloud se check...";
+  if(v==="1234"){currentGuest={name:"Mehman-e-Khaas",event:"both",persons:"Full Family"}; showWelcome(currentGuest); return;}
   let {data, error} = await sb.from('guests').select('*').eq('pass', v).maybeSingle();
   if(error){ eEl.innerText="❌ Error: "+error.message; return; }
-  if(data){
-    if(!data.event) data.event="both";
-    if(!data.persons) data.persons="Full Family";
-    currentGuest=data;
-    showWelcome(data);
-  }else{
-    eEl.innerText="❌ Galat password (Cloud me nahi mila)";
-  }
+  if(data){if(!data.event) data.event="both"; if(!data.persons) data.persons="Full Family"; currentGuest=data; showWelcome(data);}
+  else{eEl.innerText="❌ Galat password";}
 }
-
 function showWelcome(g){
 document.getElementById('lock').style.display='none';
 document.getElementById('welcomeName').innerText=g.name;
@@ -183,22 +146,13 @@ document.getElementById('gName').innerText="Dear "+currentGuest.name+" ❤️";
 document.getElementById('gName2').innerText=currentGuest.persons+" | "+currentGuest.event.toUpperCase();
 document.getElementById('cards').style.display='block';
 let ev=(currentGuest.event||"both").toLowerCase().trim();
-let barat=document.getElementById('slideBarat');
-let walima=document.getElementById('slideWalima');
-let dots=document.getElementById('dotsBox');
+let barat=document.getElementById('slideBarat'); let walima=document.getElementById('slideWalima'); let dots=document.getElementById('dotsBox');
 barat.style.display='none';walima.style.display='none';dots.style.display='none';
-if(ev==="barat"){barat.style.display='block';}
-else if(ev==="walima"){walima.style.display='block';}
-else{barat.style.display='block';walima.style.display='block';dots.style.display='flex';}
+if(ev==="barat"){barat.style.display='block';} else if(ev==="walima"){walima.style.display='block';} else{barat.style.display='block';walima.style.display='block';dots.style.display='flex';}
 }
 function toggleMusic(){let a=document.getElementById('bgMusic');if(!a.src)return;if(a.paused){a.play();document.getElementById('musicBtn').innerText='🔊'}else{a.pause();document.getElementById('musicBtn').innerText='🔇'}}
-
 document.getElementById('slider')?.addEventListener('scroll',()=>{let s=document.getElementById('slider');let idx=s.scrollLeft > s.clientWidth/2 ? 1:0;document.getElementById('dot1').className=idx===0?'active':'';document.getElementById('dot2').className=idx===1?'active':''});
-
-// Auto unlock via URL ?pass=xxxx
-let ps=new URLSearchParams(location.search);
-if(ps.get('pass')){document.getElementById('p').value=ps.get('pass'); setTimeout(unlock,600)}
-
+let ps=new URLSearchParams(location.search); if(ps.get('pass')){document.getElementById('p').value=ps.get('pass'); setTimeout(unlock,600)}
 loadConfig();
 </script>
 </body>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zain & Aeman - Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:14px;font-family:'Poppins',sans-serif}
@@ -77,27 +78,6 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <div class="dots" id="dotsBox"><span class="active" id="dot1"></span><span id="dot2"></span></div>
 <button class="btn" style="margin-top:10px;background:#111;color:#e8c765;border:1px solid rgba(212,175,55,.3)" onclick="location.reload()">🔒 LOCK CARD</button>
 </div>
-<div id="admin" style="display:none">
-<h3>⚙️ Admin Panel</h3>
-<input id="c1" class="input" placeholder="Groom Name e.g Zain" style="text-align:left"><input id="c2" class="input" placeholder="Bride Name e.g Aeman" style="text-align:left">
-<input type="file" id="picUp" accept="image/*" style="margin-top:8px;font-size:12px"><button class="btn" style="padding:6px;background:#b91c1c;color:#fff" onclick="removePic()">Remove Pic</button>
-<hr style="margin:10px 0"><h4 style="font-size:12px">🎵 Music</h4><input type="file" id="musicUp" accept="audio/*" style="font-size:11px;margin-top:6px"><input id="musicUrl" class="input" placeholder="MP3 link" style="text-align:left;font-size:11px"><div style="display:flex;gap:6px"><button class="btn" style="padding:8px;background:#111;color:#e8c765" onclick="saveMusic()">Save</button><button class="btn" style="padding:8px;background:#b91c1c" onclick="removeMusic()">Remove</button></div>
-<audio id="preview" controls style="width:100%;margin-top:8px;display:none"></audio>
-<hr style="margin:12px 0">
-<input id="bd" class="input" placeholder="Barat Date" style="text-align:left"><input id="bt" class="input" placeholder="Barat Time" style="text-align:left"><input id="bv" class="input" placeholder="Barat Venue" style="text-align:left">
-<input id="wd" class="input" placeholder="Walima Date" style="text-align:left;margin-top:8px"><input id="wt" class="input" placeholder="Walima Time" style="text-align:left"><input id="wv" class="input" placeholder="Walima Venue" style="text-align:left">
-<button class="btn btn-gold" onclick="saveAll()">Save Settings</button>
-<hr style="margin:12px 0">
-<h4 style="font-size:13px">➕ Add Guest</h4>
-<input id="gNameInput" class="input" placeholder="Guest Name" style="text-align:left">
-<input id="gPassInput" class="input" placeholder="Password" style="text-align:left">
-<select id="gEventInput" class="select"><option value="both">Both - Barat & Walima</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
-<select id="gPersonInput" class="select"><option value="Full Family">👨‍👩‍👧‍👦 Full Family</option><option value="1 Person">👤 1 Person</option><option value="2 Persons">👥 2 Persons</option><option value="3 Persons">👥 3 Persons</option></select>
-<button class="btn btn-gold" onclick="addGuestNew()">Add Guest</button>
-<div id="cnt" style="font-size:11px;margin-top:8px"></div>
-<div id="glist" style="max-height:220px;overflow:auto;margin-top:6px"></div>
-<button class="btn" style="background:#fff;border:1px solid #ddd;color:#333;margin-top:8px" onclick="location.href=location.pathname">Exit Admin</button>
-</div>
 </div>
 <div class="foot" id="foot">ZAIN & AEMAN • 2026</div>
 </div>
@@ -105,28 +85,88 @@ body{background:radial-gradient(1200px 800px at 50% -10%, #2a2a2a 0%, #000 60%);
 <div id="lockModal" class="modal"><div class="modal-box" style="text-align:center"><h3 style="color:#d4af37">🔒 Admin Lock</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input" style="margin-top:10px"><button class="btn btn-gold" id="unlockBtn" style="margin-top:10px">Unlock</button><button class="btn" style="background:#333;color:#fff;margin-top:6px" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p></div></div>
 <audio id="bgMusic" loop></audio><button id="musicBtn" onclick="toggleMusic()" style="position:fixed;bottom:20px;left:20px;z-index:999;width:48px;height:48px;border-radius:50%;border:2px solid #e8c765;background:rgba(0,0,0,.75);color:#e8c765;font-size:20px;display:none">🎵</button>
 <script>
+// === SUPABASE LIVE ===
+const SUPABASE_URL = 'https://saaoukcqwqnxgmcuojjl.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const ADMIN_PASS='Zain@2026';
 function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
-document.getElementById('unlockBtn').addEventListener('click',()=>{if(document.getElementById('lockPass').value===ADMIN_PASS){closeLock();document.getElementById('lock').style.display='none';document.getElementById('welcomeScreen').style.display='none';document.getElementById('cards').style.display='none';document.getElementById('admin').style.display='block';loadG();}else{document.getElementById('lockMsg').innerText='❌ Galat Password';}});
-let cfg=JSON.parse(localStorage.getItem('ZAIN_CFG')||'{}');
-let BD=cfg.bd||"12 Dec 2026",BT=cfg.bt||"07:00 PM",BV=cfg.bv||"Al Janat Marquee, Gujranwala";
-let WD=cfg.wd||"13 Dec 2026",WT=cfg.wt||"01:00 PM",WV=cfg.wv||"Royal Palace, Gujranwala";
-let C1=cfg.c1||"Zain",C2=cfg.c2||"Aeman";
-function apply(){document.getElementById('coupleHead').innerText=C1+" & "+C2;document.getElementById('foot').innerText=(C1+" & "+C2).toUpperCase()+" • 2026";document.getElementById('bDate').innerText=BD;document.getElementById('bTime').innerText=BT;document.getElementById('bVenue').innerText=BV;document.getElementById('wDate').innerText=WD;document.getElementById('wTime').innerText=WT;document.getElementById('wVenue').innerText=WV;document.getElementById('c1').value=C1;document.getElementById('c2').value=C2;document.getElementById('bd').value=BD;document.getElementById('bt').value=BT;document.getElementById('bv').value=BV;document.getElementById('wd').value=WD;document.getElementById('wt').value=WT;document.getElementById('wv').value=WV;let pic=localStorage.getItem('ZAIN_PIC');if(pic){let im=document.getElementById('bgPic');im.src=pic;im.style.display='block'}let music=localStorage.getItem('ZAIN_MUSIC');if(music){document.getElementById('bgMusic').src=music;document.getElementById('preview').src=music;document.getElementById('preview').style.display='block';}}
-apply();
-let guests=JSON.parse(localStorage.getItem('ZAIN_GUESTS')||'[]');
+document.getElementById('unlockBtn').addEventListener('click',()=>{
+  if(document.getElementById('lockPass').value===ADMIN_PASS){
+    closeLock();
+    window.location.href='admin.html';
+  }else{document.getElementById('lockMsg').innerText='❌ Galat Password'}
+});
+
+let BD="12 Dec 2026",BT="07:00 PM",BV="Al Janat Marquee, Gujranwala";
+let WD="13 Dec 2026",WT="01:00 PM",WV="Royal Palace, Gujranwala";
+let C1="Zain",C2="Aeman";
 let currentGuest=null;
-let ps=new URLSearchParams(location.search);
-if(ps.get('pass')){document.getElementById('p').value=ps.get('pass');setTimeout(unlock,400)}
-if(ps.get('admin')===ADMIN_PASS){document.getElementById('lock').style.display='none';document.getElementById('admin').style.display='block';loadG();}
-function unlock(){
-let v=document.getElementById('p').value.trim();
-if(!v){document.getElementById('e').innerText="⚠️ Password likhein";return}
-if(v==="1234"){currentGuest={name:"Mehman-e-Khaas",event:"both",persons:"Full Family"};showWelcome(currentGuest);return}
-let f=guests.find(x=>x.pass===v);
-if(f){if(!f.event)f.event="both";if(!f.persons)f.persons="Full Family";currentGuest=f;showWelcome(f);}else{document.getElementById('e').innerText="❌ Galat password"}
+
+async function loadConfig(){
+  try{
+    let {data} = await sb.from('settings').select('*').eq('id',1).single();
+    if(data){
+      if(data.c1) C1=data.c1; if(data.c2) C2=data.c2;
+      if(data.bd) BD=data.bd; if(data.bt) BT=data.bt; if(data.bv) BV=data.bv;
+      if(data.wd) WD=data.wd; if(data.wt) WT=data.wt; if(data.wv) WV=data.wv;
+      apply();
+      // pic - can be JSON array or single
+      let picSrc = data.pic;
+      if(picSrc){
+        try{
+          let arr = JSON.parse(picSrc);
+          if(Array.isArray(arr) && arr.length) picSrc = arr[0];
+        }catch(e){}
+        if(picSrc && picSrc.startsWith('data:')){
+          let im=document.getElementById('bgPic'); im.src=picSrc; im.style.display='block';
+        } else if(picSrc){
+          let im=document.getElementById('bgPic'); im.src=picSrc; im.style.display='block';
+        }
+      }
+      let music = data.music || data.song;
+      if(music){
+        document.getElementById('bgMusic').src=music;
+      }
+    }
+  }catch(e){ console.log(e); }
 }
+
+function apply(){
+  document.getElementById('coupleHead').innerText=C1+" & "+C2;
+  document.getElementById('foot').innerText=(C1+" & "+C2).toUpperCase()+" • 2026";
+  document.getElementById('bDate').innerText=BD;
+  document.getElementById('bTime').innerText=BT;
+  document.getElementById('bVenue').innerText=BV;
+  document.getElementById('wDate').innerText=WD;
+  document.getElementById('wTime').innerText=WT;
+  document.getElementById('wVenue').innerText=WV;
+}
+
+// LIVE UNLOCK - Cloud se check
+async function unlock(){
+  let v=document.getElementById('p').value.trim();
+  let eEl=document.getElementById('e');
+  if(!v){eEl.innerText="⚠️ Password likhein"; return}
+  eEl.innerText="⏳ Cloud se check ho raha...";
+  if(v==="1234"){
+    currentGuest={name:"Mehman-e-Khaas",event:"both",persons:"Full Family"};
+    showWelcome(currentGuest); return;
+  }
+  let {data, error} = await sb.from('guests').select('*').eq('pass', v).maybeSingle();
+  if(error){ eEl.innerText="❌ Error: "+error.message; return; }
+  if(data){
+    if(!data.event) data.event="both";
+    if(!data.persons) data.persons="Full Family";
+    currentGuest=data;
+    showWelcome(data);
+  }else{
+    eEl.innerText="❌ Galat password (Cloud me nahi mila)";
+  }
+}
+
 function showWelcome(g){
 document.getElementById('lock').style.display='none';
 document.getElementById('welcomeName').innerText=g.name;
@@ -151,27 +191,15 @@ if(ev==="barat"){barat.style.display='block';}
 else if(ev==="walima"){walima.style.display='block';}
 else{barat.style.display='block';walima.style.display='block';dots.style.display='flex';}
 }
-function saveAll(){let d={bd:document.getElementById('bd').value||BD,bt:document.getElementById('bt').value||BT,bv:document.getElementById('bv').value||BV,wd:document.getElementById('wd').value||WD,wt:document.getElementById('wt').value||WT,wv:document.getElementById('wv').value||WV,c1:document.getElementById('c1').value||C1,c2:document.getElementById('c2').value||C2};localStorage.setItem('ZAIN_CFG',JSON.stringify(d));location.reload();}
-function addGuestNew(){
-let n=document.getElementById('gNameInput').value.trim();let p=document.getElementById('gPassInput').value.trim();let ev=document.getElementById('gEventInput').value;let per=document.getElementById('gPersonInput').value;
-if(!n||!p){alert("Name & Password likhein");return}
-guests.push({name:n,pass:p,event:ev,persons:per});localStorage.setItem('ZAIN_GUESTS',JSON.stringify(guests));
-document.getElementById('gNameInput').value="";document.getElementById('gPassInput').value="";loadG();alert("Added: "+n+" - "+ev);
-}
-function loadG(){
-document.getElementById('cnt').innerText="Total Guests: "+guests.length;
-let h="";guests.slice(-100).reverse().forEach((g)=>{let idx=guests.indexOf(g);h+=`<div style="background:#2a2a2a;padding:8px;border-radius:8px;margin:4px 0;font-size:11px;display:flex;justify-content:space-between;align-items:center"><span><b>${g.name}</b> — ${g.persons} — ${g.event}</span><span><button onclick="shareWa(${idx})" style="background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:6px;font-size:10px">WA</button> <button onclick="delG(${idx})" style="background:#ef4444;color:#fff;border:none;padding:4px 6px;border-radius:6px">X</button></span></div>`;});
-document.getElementById('glist').innerHTML=h;
-}
-function delG(i){guests.splice(i,1);localStorage.setItem('ZAIN_GUESTS',JSON.stringify(guests));loadG();}
-function shareWa(i){let g=guests[i];let link=location.href.split('?')[0]+'?pass='+encodeURIComponent(g.pass);let m=`Assalam-o-Alaikum ${g.name} Sahib,%0A*${g.persons}* ke liye Dawat%0AEvent: ${g.event}%0ACard: ${link}%0APass: *${g.pass}*`;window.open('https://wa.me/?text='+m,'_blank');}
-document.getElementById('slider')?.addEventListener('scroll',()=>{let s=document.getElementById('slider');let idx=s.scrollLeft > s.clientWidth/2 ? 1:0;document.getElementById('dot1').className=idx===0?'active':'';document.getElementById('dot2').className=idx===1?'active':''});
-document.getElementById('picUp')?.addEventListener('change',e=>{let file=e.target.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{localStorage.setItem('ZAIN_PIC',r.result);apply();alert("✅ Pic saved!")};r.readAsDataURL(file);});
-function removePic(){localStorage.removeItem('ZAIN_PIC');document.getElementById('bgPic').style.display='none';alert("Removed")}
 function toggleMusic(){let a=document.getElementById('bgMusic');if(!a.src)return;if(a.paused){a.play();document.getElementById('musicBtn').innerText='🔊'}else{a.pause();document.getElementById('musicBtn').innerText='🔇'}}
-function saveMusic(){let url=document.getElementById('musicUrl').value.trim();if(url){localStorage.setItem('ZAIN_MUSIC',url);document.getElementById('bgMusic').src=url;alert("✅ Music saved!");return}alert("File ya link do")}
-document.getElementById('musicUp')?.addEventListener('change',e=>{let file=e.target.files[0];if(!file)return;if(file.size>5000000){alert("5MB se kam rakho");return}let r=new FileReader();r.onload=()=>{localStorage.setItem('ZAIN_MUSIC',r.result);document.getElementById('bgMusic').src=r.result;let pv=document.getElementById('preview');pv.src=r.result;pv.style.display='block';alert("✅ Music saved!")};r.readAsDataURL(file);});
-function removeMusic(){localStorage.removeItem('ZAIN_MUSIC');document.getElementById('bgMusic').src="";document.getElementById('musicBtn').style.display='none';document.getElementById('preview').style.display='none';document.getElementById('musicUrl').value="";alert("Music removed")}
+
+document.getElementById('slider')?.addEventListener('scroll',()=>{let s=document.getElementById('slider');let idx=s.scrollLeft > s.clientWidth/2 ? 1:0;document.getElementById('dot1').className=idx===0?'active':'';document.getElementById('dot2').className=idx===1?'active':''});
+
+// Auto unlock via URL ?pass=xxxx
+let ps=new URLSearchParams(location.search);
+if(ps.get('pass')){document.getElementById('p').value=ps.get('pass'); setTimeout(unlock,600)}
+
+loadConfig();
 </script>
 </body>
 </html>

@@ -4,27 +4,36 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin - LIVE Bug Free</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
-<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}.card{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;margin-bottom:14px}h2{color:#facc15;text-align:center;margin:10px 0}label{color:#facc15;font-size:12px;display:block;margin-top:10px;font-weight:600}input,textarea,select{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}.btn{width:100%;background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;margin:6px 0;cursor:pointer}.item{background:#2a2a2a;padding:10px;border-radius:10px;margin:6px 0;font-size:13px}</style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
+.card{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;margin-bottom:14px}
+h2{color:#facc15;text-align:center;margin:10px 0}
+label{color:#facc15;font-size:12px;display:block;margin-top:10px;font-weight:600}
+input,textarea,select{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
+.btn{width:100%;background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;margin:6px 0;cursor:pointer}
+.item{background:#2a2a2a;padding:10px;border-radius:10px;margin:6px 0;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+</style>
 </head>
 <body>
-<h2>👑 Admin - LIVE - Bug Free</h2>
+<h2>👑 Admin - LIVE</h2>
 <div class="card">
-<label>💒 Dulha Dulhan Name (Purana Khatam, Naya Ayega)</label>
-<input id="c1" placeholder="Dulha Name"><input id="c2" placeholder="Dulhan Name">
-<label>🏛️ Venue</label><input id="venue" placeholder="Gujranwala Marquee Palace">
+<label>💒 Dulha Dulhan Name (Aap Jo Likho Ge Wahi Ayega)</label>
+<input id="c1" placeholder="Dulha Name Likho"><input id="c2" placeholder="Dulhan Name Likho">
+<label>🏛️ Venue</label><input id="venue" placeholder="Venue Likho">
 <label>🖼️ Couple Pic</label><input type="file" id="picInput" accept="image/*"><div id="picPreview"></div>
 <label>🎵 MP3 Song</label><input type="file" id="songInput" accept="audio/*"><audio id="songPreview" controls style="width:100%;margin-top:8px;display:none"></audio>
 <label>📅 Barat</label><input id="bd" placeholder="12 Dec 2026"><input id="bt" placeholder="07:00 PM"><input id="bv" placeholder="Barat Venue">
 <label>📅 Walima</label><input id="wd" placeholder="13 Dec 2026"><input id="wt" placeholder="01:00 PM"><input id="wv" placeholder="Walima Venue">
-<button class="btn" id="saveBtn">💾 Save LIVE (Purana Khatam)</button>
+<button class="btn" id="saveBtn">💾 Save LIVE</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:6px"></p>
 </div>
 <div class="card">
-<h3 style="color:#facc15">👑 Mehman LIVE Cloud (Khud Delete Karo)</h3>
+<h3 style="color:#facc15">👑 Mehman List (Khud Delete Karo)</h3>
 <input id="gName" placeholder="Naam: Ali"><input id="gPass" placeholder="Password: 1234">
 <input id="gPersons" placeholder="Full Family" value="Full Family">
 <select id="gEvent"><option value="both">Barat & Walima</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
-<button class="btn" id="addOneBtn">+ ADD TO CLOUD</button>
+<button class="btn" id="addOneBtn">+ ADD</button>
 <textarea id="bulkInput" rows="4" placeholder="Ali,1234&#10;Ahmed,5678"></textarea>
 <button class="btn" id="addBulkBtn">🚀 Bulk Add</button>
 <input id="searchInput" placeholder="Search...">
@@ -35,13 +44,13 @@
 const sb = supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 window._pics = []; window._song = '';
 function compressImage(file, cb){const r=new FileReader(); r.onload=e=>{const img=new Image(); img.onload=()=>{const canvas=document.createElement('canvas'); const maxW=700; const scale=Math.min(1, maxW/img.width); canvas.width=img.width*scale; canvas.height=img.height*scale; canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height); cb(canvas.toDataURL('image/jpeg',0.6));}; img.src=e.target.result;}; r.readAsDataURL(file);}
-async function loadSettings(){try{let {data} = await sb.from('settings').select('*').eq('id',1).single(); if(data){if(data.c1) document.getElementById('c1').value=data.c1; if(data.c2) document.getElementById('c2').value=data.c2; if(data.venue) document.getElementById('venue').value=data.venue; if(data.bv) document.getElementById('bv').value=data.bv; if(data.wv) document.getElementById('wv').value=data.wv; if(data.bd) document.getElementById('bd').value=data.bd; if(data.bt) document.getElementById('bt').value=data.bt; if(data.wd) document.getElementById('wd').value=data.wd; if(data.wt) document.getElementById('wt').value=data.wt; if(data.pic){try{let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) document.getElementById('picPreview').innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:10px"><p style="font-size:11px;color:#22c55e">Loaded '+Math.round(window._pics[0].length/1024)+'KB</p>';}catch(e){ window._pics=[data.pic]; }} if(data.song||data.music){ window._song=data.song||data.music; let a=document.getElementById('songPreview'); a.src=window._song; a.style.display='block'; }}}catch(e){}}
-document.getElementById('picInput').addEventListener('change', function(){if(!this.files[0]) return; document.getElementById('picPreview').innerHTML='⏳ Compressing...'; compressImage(this.files[0], (compressed)=>{window._pics=[compressed]; document.getElementById('picPreview').innerHTML='<img src="'+compressed+'" style="max-width:100%;border-radius:10px"><p style="font-size:11px;color:#22c55e">Ready '+Math.round(compressed.length/1024)+'KB</p>';});});
+async function loadSettings(){try{let {data} = await sb.from('settings').select('*').eq('id',1).single(); if(data){if(data.c1) document.getElementById('c1').value=data.c1; if(data.c2) document.getElementById('c2').value=data.c2; if(data.venue) document.getElementById('venue').value=data.venue; if(data.bv) document.getElementById('bv').value=data.bv; if(data.wv) document.getElementById('wv').value=data.wv; if(data.bd) document.getElementById('bd').value=data.bd; if(data.bt) document.getElementById('bt').value=data.bt; if(data.wd) document.getElementById('wd').value=data.wd; if(data.wt) document.getElementById('wt').value=data.wt; if(data.pic){try{let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) document.getElementById('picPreview').innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:10px">';}catch(e){}} if(data.song||data.music){ window._song=data.song||data.music; let a=document.getElementById('songPreview'); a.src=window._song; a.style.display='block'; }}}catch(e){}}
+document.getElementById('picInput').addEventListener('change', function(){if(!this.files[0]) return; compressImage(this.files[0], (compressed)=>{window._pics=[compressed]; document.getElementById('picPreview').innerHTML='<img src="'+compressed+'" style="max-width:100%;border-radius:10px">';});});
 document.getElementById('songInput').addEventListener('change', function(){if(!this.files[0]) return; let r=new FileReader(); r.onload=e=>{ window._song=e.target.result; let a=document.getElementById('songPreview'); a.src=e.target.result; a.style.display='block'; }; r.readAsDataURL(this.files[0]);});
-document.getElementById('saveBtn').addEventListener('click', async function(){let c1=document.getElementById('c1').value.trim(); let c2=document.getElementById('c2').value.trim(); if(!c1||!c2){ alert('Dono naam likho!'); return; } document.getElementById('saveMsg').innerText='⏳ Saving...'; let payload={id:1, c1:c1, c2:c2, venue:document.getElementById('venue').value, bv:document.getElementById('bv').value||document.getElementById('venue').value, wv:document.getElementById('wv').value||document.getElementById('venue').value, bd:document.getElementById('bd').value, bt:document.getElementById('bt').value, wd:document.getElementById('wd').value, wt:document.getElementById('wt').value, pic: JSON.stringify(window._pics), song: window._song, music: window._song}; let {error}=await sb.from('settings').upsert(payload); document.getElementById('saveMsg').innerText= error ? '❌ '+error.message : '✅ Saved! Ab App me "'+c1+' & '+c2+'" ayega - Purana Khatam';});
+document.getElementById('saveBtn').addEventListener('click', async function(){let c1=document.getElementById('c1').value.trim(); let c2=document.getElementById('c2').value.trim(); if(!c1||!c2){ alert('Dono naam likho!'); return; } document.getElementById('saveMsg').innerText='⏳ Saving...'; let payload={id:1, c1:c1, c2:c2, venue:document.getElementById('venue').value, bv:document.getElementById('bv').value||document.getElementById('venue').value, wv:document.getElementById('wv').value||document.getElementById('venue').value, bd:document.getElementById('bd').value, bt:document.getElementById('bt').value, wd:document.getElementById('wd').value, wt:document.getElementById('wt').value, pic: JSON.stringify(window._pics), song: window._song, music: window._song}; let {error}=await sb.from('settings').upsert(payload); document.getElementById('saveMsg').innerText= error ? '❌ '+error.message : '✅ Saved! "'+c1+' & '+c2+'"';});
 document.getElementById('addOneBtn').addEventListener('click', async function(){let n=document.getElementById('gName').value.trim(); let p=document.getElementById('gPass').value.trim(); if(!n||!p){alert('Naam Password likho');return;} await sb.from('guests').insert({name:n,pass:p,persons:document.getElementById('gPersons').value,event:document.getElementById('gEvent').value}); render();});
 document.getElementById('addBulkBtn').addEventListener('click', async function(){let txt=document.getElementById('bulkInput').value.trim(); if(!txt) return; let arr=[]; txt.split('\n').forEach(l=>{ let sp=l.split(','); if(sp.length>=2) arr.push({name:sp[0].trim(),pass:sp[1].trim(),persons:'Full Family',event:'both'}); }); if(arr.length) await sb.from('guests').insert(arr); render();});
-async function render(){let q=(document.getElementById('searchInput').value||'').toLowerCase(); let {data:g}=await sb.from('guests').select('*').order('created_at',{ascending:false}); if(!g) return; let f=g.filter(x=>x.name.toLowerCase().includes(q)); document.getElementById('guestList').innerHTML=f.map(x=>'<div class="item"><b>'+x.name+'</b> - '+x.pass+' <button onclick="delOne('+x.id+')" style="float:right;background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:5px">X</button></div>').join(''); document.getElementById('totalCount').innerText='Total: '+g.length;}
+async function render(){let q=(document.getElementById('searchInput').value||'').toLowerCase(); let {data:g}=await sb.from('guests').select('*').order('created_at',{ascending:false}); if(!g) return; let f=g.filter(x=>x.name.toLowerCase().includes(q)); document.getElementById('guestList').innerHTML=f.map(x=>'<div class="item"><span><b>'+x.name+'</b> - '+x.pass+'</span><button onclick="delOne('+x.id+')" style="float:right;background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:5px">X</button></div>').join(''); document.getElementById('totalCount').innerText='Total: '+g.length;}
 window.delOne=async id=>{ if(!confirm('Delete?')) return; await sb.from('guests').delete().eq('id',id); render(); }
 document.getElementById('searchInput').addEventListener('input', render);
 loadSettings(); render();

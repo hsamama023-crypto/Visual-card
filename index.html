@@ -20,6 +20,10 @@ body{background:#000;min-height:100vh;display:flex;justify-content:center;align-
 .input{width:100%;padding:12px;border-radius:12px;border:2px solid #1a1a1a;text-align:center;font-weight:600;margin-top:6px}
 .btn{width:100%;padding:12px;border-radius:12px;border:none;background:#1a1a1a;color:#e8c765;font-weight:700;cursor:pointer;margin-top:8px}
 .btn-gold{background:linear-gradient(135deg,#b8960c,#e8c765);color:#111}
+.event-box{background:linear-gradient(180deg,#fff,#fdf6d8);border:1px solid #e8c765;border-radius:16px;padding:14px;margin-top:12px;text-align:center}
+.event-title{font-weight:700;color:#b8960c;letter-spacing:2px;font-size:12px}
+.event-date{font-weight:600;margin-top:6px}
+.event-venue{font-size:13px;color:#555;margin-top:4px}
 .foot{background:#0f0f0f;color:#a08a5a;padding:12px;text-align:center;font-size:9px;letter-spacing:2px;min-height:36px}
 .admin-float{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:linear-gradient(135deg,#b8960c,#d4af37);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:999;border:2px solid #fff}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:10000;padding:14px}
@@ -37,7 +41,25 @@ body{background:#000;min-height:100vh;display:flex;justify-content:center;align-
 <div id="e" style="color:#b91c1c;font-size:11px;margin-top:8px;text-align:center"></div>
 </div>
 <div id="welcomeScreen" style="display:none" class="glass"><div style="text-align:center"><div id="welcomeName" style="font-family:'Great Vibes';font-size:48px;color:#8B0000"></div><button class="btn btn-gold" onclick="openCards()">💌 Open Card</button></div></div>
-<div id="cards" style="display:none" class="glass"><div id="gName" style="text-align:center;color:#8B0000;font-size:28px;font-family:'Great Vibes'"></div><button class="btn" onclick="location.reload()" style="margin-top:10px;background:#111">🔒 LOCK</button></div>
+
+<div id="cards" style="display:none" class="glass">
+<div id="gName" style="text-align:center;color:#8B0000;font-size:28px;font-family:'Great Vibes'"></div>
+
+<div class="event-box">
+<div class="event-title">BARAT</div>
+<div class="event-date" id="bDateTime"></div>
+<div class="event-venue" id="bVenue"></div>
+</div>
+
+<div class="event-box">
+<div class="event-title">WALIMA</div>
+<div class="event-date" id="wDateTime"></div>
+<div class="event-venue" id="wVenue"></div>
+</div>
+
+<button class="btn" onclick="location.reload()" style="margin-top:12px;background:#111">🔒 LOCK</button>
+</div>
+
 </div>
 <div class="foot" id="foot"></div>
 </div>
@@ -46,24 +68,38 @@ body{background:#000;min-height:100vh;display:flex;justify-content:center;align-
 <script>
 const sb = supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 const ADMIN_PASS='Admin@2026';
+let SETTINGS = null;
 function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
 document.getElementById('unlockBtn').addEventListener('click',()=>{if(document.getElementById('lockPass').value===ADMIN_PASS){closeLock();location.href='admin.html';}else{document.getElementById('lockMsg').innerText='❌ Galat Password'}});
 
-// SIRF ADMIN WALA NAAM - AUR KUCH NAHI
 async function loadConfig(){
   try{
     let {data} = await sb.from('settings').select('*').eq('id',1).single();
-    if(data && data.c1 && data.c2){
-      let full = data.c1.trim() + " & " + data.c2.trim();
-      document.getElementById('coupleHead').innerText = full;
-      document.getElementById('foot').innerText = full.toUpperCase() + " • 2026";
-      document.title = full + " - Wedding Invitation";
+    if(data){
+      SETTINGS = data;
+      if(data.c1 && data.c2){
+        let full = data.c1.trim() + " & " + data.c2.trim();
+        document.getElementById('coupleHead').innerText = full;
+        document.getElementById('foot').innerText = full.toUpperCase() + " • 2026";
+        document.title = full + " - Wedding Invitation";
+      }
       if(data.pic){
         try{let arr=JSON.parse(data.pic); let pic=Array.isArray(arr)?arr[0]:arr; if(pic){let im=document.getElementById('bgPic'); im.src=pic; im.style.display='block';}}catch(e){}
       }
+      // Barat Walima data ready karo - har column naam support karega
+      let bd = data.bd || data.barat_date || "";
+      let bt = data.bt || data.barat_time || "";
+      let bv = data.bv || data.barat_venue || data.venue || "";
+      let wd = data.wd || data.walima_date || "";
+      let wt = data.wt || data.walima_time || "";
+      let wv = data.wv || data.walima_venue || data.venue || "";
+
+      document.getElementById('bDateTime').innerText = bd + " • " + bt;
+      document.getElementById('bVenue').innerText = bv;
+      document.getElementById('wDateTime').innerText = wd + " • " + wt;
+      document.getElementById('wVenue').innerText = wv;
     }
-    // Agar admin ne naam nahi dala to khali rahega - koi He & She / Ahmed nahi ayega
   }catch(e){ console.log(e); }
 }
 async function unlock(){

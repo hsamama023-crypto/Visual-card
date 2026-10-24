@@ -2,78 +2,78 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salman & Hira - Wedding Invitation</title>
+<title>Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:14px;font-family:'Poppins',sans-serif}
-.main{width:100%;max-width:420px;background:linear-gradient(180deg,#fffef7,#fdf6d8);border-radius:28px;overflow:hidden;border:2px solid #e8c765;box-shadow:0 20px 60px rgba(232,199,101,.35);position:relative}
-.top{height:300px;background:#0f0f0f;position:relative;overflow:hidden;display:flex;justify-content:center;align-items:center}
+.main{width:100%;max-width:420px;background:linear-gradient(180deg,#fffef7,#fdf6d8);border-radius:28px;overflow:hidden;border:2px solid #e8c765}
+.top{height:300px;background:#0f0f0f;position:relative;display:flex;justify-content:center;align-items:center}
 .top img{width:100%;height:100%;object-fit:cover;opacity:.55;position:absolute;top:0;left:0}
 .top-content{position:relative;z-index:2;text-align:center;color:#fff;padding:20px;width:100%}
 .bism{font-family:'Amiri',serif;font-size:22px;color:#ffdf8a}
-.couple{font-family:'Great Vibes',cursive;font-size:62px;color:#ffda6b;line-height:.9;margin-top:10px}
+.couple{font-family:'Great Vibes',cursive;font-size:62px;color:#ffda6b;line-height:.9;margin-top:10px;min-height:70px}
 .badge{display:inline-block;margin-top:12px;padding:6px 16px;border-radius:20px;border:1px solid rgba(212,175,55,.6);background:rgba(0,0,0,.35);font-size:9px;letter-spacing:3px;color:#e8c765}
 .mid{padding:0 18px 18px 18px}
-.glass{background:rgba(255,255,255,.95);border:1px solid rgba(212,175,55,.5);border-radius:20px;padding:18px;margin-top:-36px;position:relative;z-index:3;box-shadow:0 12px 30px rgba(0,0,0,.18)}
-.input{width:100%;padding:12px 14px;border-radius:12px;border:2px solid #1a1a1a;background:#fff;text-align:center;font-size:13px;font-weight:600;outline:none;margin-top:6px}
+.glass{background:#fff;border-radius:20px;padding:18px;margin-top:-36px;position:relative;z-index:3}
+.input{width:100%;padding:12px;border-radius:12px;border:2px solid #1a1a1a;text-align:center;font-weight:600;margin-top:6px}
 .btn{width:100%;padding:12px;border-radius:12px;border:none;background:#1a1a1a;color:#e8c765;font-weight:700;cursor:pointer;margin-top:8px}
 .btn-gold{background:linear-gradient(135deg,#b8960c,#e8c765);color:#111}
-.foot{background:#0f0f0f;color:#a08a5a;padding:12px;text-align:center;font-size:9px;letter-spacing:2px}
-.admin-float{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:linear-gradient(135deg,#b8960c,#d4af37);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 15px rgba(0,0,0,.5);cursor:pointer;z-index:999;border:2px solid #fff}
+.foot{background:#0f0f0f;color:#a08a5a;padding:12px;text-align:center;font-size:9px;letter-spacing:2px;min-height:36px}
+.admin-float{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:linear-gradient(135deg,#b8960c,#d4af37);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:999;border:2px solid #fff}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:10000;padding:14px}
 .modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:20px;width:100%;max-width:380px;color:#fff}
 </style>
 </head>
 <body>
 <div class="main">
-<div class="top"><img id="bgPic" src="" style="display:none"><div class="top-content"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="couple" id="coupleHead">Salman & Hira</div><div class="badge">PRIVATE WEDDING INVITATION</div></div></div>
+<div class="top"><img id="bgPic" src="" style="display:none"><div class="top-content"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="couple" id="coupleHead"></div><div class="badge">PRIVATE WEDDING INVITATION</div></div></div>
 <div class="mid">
 <div id="lock" class="glass">
 <div style="color:#8B0000;font-weight:700;font-size:18px;text-align:center">🔐 Private Invitation</div>
-<div style="font-size:11px;color:#6b6b6b;margin:6px 0 12px 0;text-align:center">Har mehman ka alag password hai</div>
 <input id="p" class="input" type="password" placeholder="🔑 Password likhein">
 <button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO</button>
-<div id="e" style="color:#b91c1c;font-size:11px;margin-top:8px;text-align:center;min-height:14px"></div>
+<div id="e" style="color:#b91c1c;font-size:11px;margin-top:8px;text-align:center"></div>
 </div>
-<div id="welcomeScreen" style="display:none" class="glass"><div style="text-align:center"><div style="font-size:11px;letter-spacing:3px;color:#8B0000">THIS SPECIAL INVITATION IS FOR</div><div style="font-family:'Great Vibes';font-size:52px;color:#8B0000;margin:12px 0" id="welcomeName">Guest</div><button class="btn btn-gold" onclick="openCards()">💌 Open Card</button></div></div>
-<div id="cards" style="display:none" class="glass"><div id="gName" style="text-align:center;color:#8B0000;font-size:28px;font-family:'Great Vibes'"></div><div style="text-align:center;font-size:12px;color:#666" id="bVenue">Venue</div><button class="btn" onclick="location.reload()" style="margin-top:10px;background:#111">🔒 LOCK</button></div>
+<div id="welcomeScreen" style="display:none" class="glass"><div style="text-align:center"><div id="welcomeName" style="font-family:'Great Vibes';font-size:48px;color:#8B0000"></div><button class="btn btn-gold" onclick="openCards()">💌 Open Card</button></div></div>
+<div id="cards" style="display:none" class="glass"><div id="gName" style="text-align:center;color:#8B0000;font-size:28px;font-family:'Great Vibes'"></div><button class="btn" onclick="location.reload()" style="margin-top:10px;background:#111">🔒 LOCK</button></div>
 </div>
-<div class="foot" id="foot">SALMAN & HIRA • 2026</div>
+<div class="foot" id="foot"></div>
 </div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
-<div id="lockModal" class="modal"><div class="modal-box" style="text-align:center"><h3 style="color:#d4af37">🔒 Admin Lock</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input" style="margin-top:10px"><button class="btn btn-gold" id="unlockBtn" style="margin-top:10px">Unlock</button><button class="btn" style="background:#333;color:#fff" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p></div></div>
+<div id="lockModal" class="modal"><div class="modal-box" style="text-align:center"><h3 style="color:#d4af37">🔒 Admin Lock</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input"><button class="btn btn-gold" id="unlockBtn" style="margin-top:10px">Unlock</button><button class="btn" style="background:#333;color:#fff" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p></div></div>
 <script>
 const sb = supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 const ADMIN_PASS='Admin@2026';
 function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
-document.getElementById('unlockBtn').addEventListener('click',()=>{if(document.getElementById('lockPass').value===ADMIN_PASS){closeLock();window.location.href='admin.html';}else{document.getElementById('lockMsg').innerText='❌ Galat Password'}});
+document.getElementById('unlockBtn').addEventListener('click',()=>{if(document.getElementById('lockPass').value===ADMIN_PASS){closeLock();location.href='admin.html';}else{document.getElementById('lockMsg').innerText='❌ Galat Password'}});
+
+// SIRF ADMIN WALA NAAM - AUR KUCH NAHI
 async function loadConfig(){
   try{
     let {data} = await sb.from('settings').select('*').eq('id',1).single();
     if(data && data.c1 && data.c2){
-      let full = data.c1+" & "+data.c2;
+      let full = data.c1.trim() + " & " + data.c2.trim();
       document.getElementById('coupleHead').innerText = full;
-      document.getElementById('foot').innerText = full.toUpperCase()+" • 2026";
+      document.getElementById('foot').innerText = full.toUpperCase() + " • 2026";
       document.title = full + " - Wedding Invitation";
+      if(data.pic){
+        try{let arr=JSON.parse(data.pic); let pic=Array.isArray(arr)?arr[0]:arr; if(pic){let im=document.getElementById('bgPic'); im.src=pic; im.style.display='block';}}catch(e){}
+      }
     }
-    if(data && data.pic){
-      try{let arr=JSON.parse(data.pic); let pic=Array.isArray(arr)?arr[0]:arr; if(pic){document.getElementById('bgPic').src=pic; document.getElementById('bgPic').style.display='block';}}catch(e){}
-    }
-    if(data && data.bv) document.getElementById('bVenue').innerText = data.bv;
-  }catch(e){ console.log("load error", e); }
+    // Agar admin ne naam nahi dala to khali rahega - koi He & She / Ahmed nahi ayega
+  }catch(e){ console.log(e); }
 }
 async function unlock(){
   let v=document.getElementById('p').value.trim();
   if(!v){document.getElementById('e').innerText="Password likhein"; return}
-  document.getElementById('e').innerText="⏳ Checking...";
   let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle();
-  if(data){document.getElementById('lock').style.display='none'; document.getElementById('welcomeName').innerText=data.name; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText="";}
+  if(data){document.getElementById('lock').style.display='none'; document.getElementById('welcomeName').innerText=data.name; document.getElementById('welcomeScreen').style.display='block';}
   else{document.getElementById('e').innerText="❌ Galat Password";}
 }
-function openCards(){document.getElementById('welcomeScreen').style.display='none'; document.getElementById('cards').style.display='block';}
+function openCards(){document.getElementById('welcomeScreen').style.display='none'; document.getElementById('gName').innerText="Dear "+document.getElementById('welcomeName').innerText+" ❤️"; document.getElementById('cards').style.display='block';}
 loadConfig();
 </script>
 </body>

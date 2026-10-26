@@ -2,83 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - LIVE Bug Free</title>
+<title>Admin - Islamic Arch FINAL</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
+*{box-sizing:border-box;margin:0;padding:0} body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
 .card{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;margin-bottom:14px}
-h2{color:#facc15;text-align:center;margin:10px 0}
-label{color:#facc15;font-size:12px;display:block;margin-top:10px;font-weight:600}
+h2{color:#facc15;text-align:center;margin:10px 0} h3{color:#facc15;margin-bottom:8px}
+label{color:#facc15;font-size:11px;display:block;margin-top:12px;font-weight:700;letter-spacing:1px}
 input,textarea,select{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
 .btn{width:100%;background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;margin:6px 0;cursor:pointer}
-.item{background:#2a2a2a;padding:10px;border-radius:10px;margin:6px 0;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.btn:active{transform:scale(.97)} .btn-red{background:#ef4444;color:#fff} .btn-green{background:#22c55e;color:#fff}
+.item{background:#2a2a2a;padding:10px;border-radius:10px;margin:6px 0;font-size:13px;display:flex;align-items:center;gap:8px;border:1px solid #333}
+.item.selected{border-color:#facc15;background:#3a3410}
+.item input[type=checkbox]{width:18px;height:18px}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tools button{flex:1;min-width:90px;padding:8px;border-radius:8px;border:none;font-weight:700;font-size:11px;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
+.modal-box{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;width:100%;max-width:400px}
 </style>
 </head>
 <body>
-<h2>👑 Admin - LIVE</h2>
+<h2>👑 Admin - Islamic Arch FINAL</h2>
+
 <div class="card">
-<label>💒 Dulha Dulhan Name</label>
-<input id="c1" placeholder="Hasan"><input id="c2" placeholder="Hira">
-<label>🏛️ Venue</label><input id="venue" placeholder="Gujranwala">
-<label>🖼️ Couple Pic</label><input type="file" id="picInput" accept="image/*"><div id="picPreview"></div>
-<label>📅 Barat</label><input id="bd" placeholder="12 Dec 2026"><input id="bt" placeholder="07:00 PM"><input id="bv" placeholder="Barat Venue">
-<label>📅 Walima</label><input id="wd" placeholder="13 Dec 2026"><input id="wt" placeholder="01:00 PM"><input id="wv" placeholder="Walima Venue">
-<button class="btn" id="saveBtn">💾 Save LIVE</button>
+<h3>💒 Couple & Venue Setup</h3>
+<label>Dulha Name (He)</label><input id="c1" placeholder="Hasan">
+<label>Dulhan Name (She)</label><input id="c2" placeholder="Hira">
+<label>🏠 Host / Family Name (Dua me ayega)</label><input id="host" placeholder="Hasan Family">
+<label>📞 RSVP Phone (Call + WhatsApp)</label><input id="phone" placeholder="0300-1234567">
+<label>🏛️ Barat Venue Full Address (Map ke liye)</label><input id="bv" placeholder="Grand Hall, Gujranwala">
+<label>🏛️ Walima Venue Full Address</label><input id="wv" placeholder="Royal Venue, Gujranwala">
+<label>📅 Barat Date (Countdown ke liye - YYYY-MM-DD)</label><input id="bd" type="date">
+<label>⏰ Barat Time</label><input id="bt" placeholder="07:00 PM">
+<label>📅 Walima Date</label><input id="wd" type="date">
+<label>⏰ Walima Time</label><input id="wt" placeholder="01:00 PM">
+<label>🖼️ Couple Pic (Optional - Arch me nahi, admin me save hogi)</label>
+<input type="file" id="picInput" accept="image/*"><div id="picPreview" style="margin-top:8px"></div>
+<button class="btn" id="saveBtn">💾 Save LIVE - Islamic Arch</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:6px"></p>
 </div>
 <div class="card">
-<h3 style="color:#facc15">👑 Mehman List</h3>
+<h3>👑 Mehman List - Select Fix</h3>
+<div class="tools">
+<button style="background:#facc15" onclick="selectAll()">✅ Select All</button>
+<button style="background:#333;color:#fff" onclick="clearSelect()">❌ Clear</button>
+<button style="background:#ef4444;color:#fff" onclick="deleteSelected()">🗑️ Delete Selected</button>
+<button style="background:#22c55e;color:#fff" onclick="copySelectedLinks()">🔗 Copy Links</button>
+</div>
+<p id="selectedInfo" style="color:#facc15;font-size:12px;margin-top:8px">Selected: 0</p>
+
+<label>Add Single Guest</label>
 <input id="gName" placeholder="Naam: Ali"><input id="gPass" placeholder="Password: 1234">
 <input id="gPersons" placeholder="Full Family" value="Full Family">
 <select id="gEvent"><option value="both">Barat & Walima (Dono)</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
-<button class="btn" id="addOneBtn">+ ADD</button>
-<textarea id="bulkInput" rows="3" placeholder="Ali,1234,walima&#10;Ahmed,5678,barat&#10;Umar,9999,both"></textarea>
-<button class="btn" id="addBulkBtn">🚀 Bulk Add</button>
-<input id="searchInput" placeholder="Search...">
-<div id="guestList" style="margin-top:10px;max-height:400px;overflow:auto"></div>
-<p id="totalCount"></p>
+<button class="btn" id="addOneBtn">+ ADD GUEST</button>
+
+<label>Bulk Add (Format: Name,Password,Event)</label>
+<textarea id="bulkInput" rows="4" placeholder="Ali,1234,walima
+Ahmed,5678,barat
+Umar,9999,both"></textarea>
+<button class="btn" id="addBulkBtn" style="background:#333;color:#facc15">🚀 Bulk Add</button>
+
+<label>Search</label><input id="searchInput" placeholder="Search name or password...">
+<div id="guestList" style="margin-top:10px;max-height:500px;overflow:auto"></div>
+<p id="totalCount" style="margin-top:8px;font-size:12px;color:#aaa"></p>
 </div>
-<button onclick="location.href='index.html'" style="width:100%;padding:10px;background:#333;color:#fff;border:none;border-radius:8px">⬅️ Card Dekho</button>
+
+<button onclick="location.href='index.html'" style="width:100%;padding:12px;background:#333;color:#fff;border:none;border-radius:10px">⬅️ Card Dekho - Final Arch Design</button>
+
+<div id="editModal" class="modal"><div class="modal-box">
+<h3 style="color:#facc15;text-align:center">✏️ Edit Guest</h3>
+<input id="editName"><input id="editPass"><select id="editEvent"><option value="both">Both</option><option value="barat">Barat</option><option value="walima">Walima</option></select>
+<button class="btn" id="saveEditBtn">Save Edit</button>
+<button class="btn" style="background:#333;color:#fff" onclick="closeEdit()">Cancel</button>
+</div></div>
+
 <script>
-const sb = supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
-window._pics=[]; window._song='';
-function compressImage(file,cb){const r=new FileReader(); r.onload=e=>{const img=new Image(); img.onload=()=>{const canvas=document.createElement('canvas'); const maxW=500; const scale=Math.min(1,maxW/img.width); canvas.width=img.width*scale; canvas.height=img.height*scale; canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height); cb(canvas.toDataURL('image/jpeg',0.5));}; img.src=e.target.result;}; r.readAsDataURL(file);}
-async function loadSettings(){try{let {data}=await sb.from('settings').select('*').eq('id',1).single(); if(data){ if(data.c1) c1.value=data.c1; if(data.c2) c2.value=data.c2; if(data.venue) venue.value=data.venue; if(data.bv) bv.value=data.bv; if(data.wv) wv.value=data.wv; if(data.bd) bd.value=data.bd; if(data.bt) bt.value=data.bt; if(data.wd) wd.value=data.wd; if(data.wt) wt.value=data.wt; if(data.pic){try{let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:10px">';}catch{}} }}catch(e){}}
-picInput.addEventListener('change',function(){if(!this.files[0]) return; compressImage(this.files[0],c=>{window._pics=[c]; picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:10px">';});});
+const sb=supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
+window._pics=[]; let selectedIds=new Set(); let editingId=null; let allGuests=[];
+function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=500;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.5));};img.src=e.target.result;};r.readAsDataURL(file);}
+async function loadSettings(){try{let {data}=await sb.from('settings').select('*').eq('id',1).single();if(data){if(data.c1)c1.value=data.c1;if(data.c2)c2.value=data.c2;if(data.host)host.value=data.host;if(data.phone)phone.value=data.phone;if(data.bv)bv.value=data.bv;if(data.wv)wv.value=data.wv;if(data.bd)bd.value=data.bd;if(data.bt)bt.value=data.bt;if(data.wd)wd.value=data.wd;if(data.wt)wt.value=data.wt;if(data.pic){try{let pics=JSON.parse(data.pic);window._pics=Array.isArray(pics)?pics:[data.pic];if(window._pics[0])picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:10px">';}catch{}}}}catch(e){}}
+picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:10px">';});});
 saveBtn.addEventListener('click',async()=>{
-  let c1v=c1.value.trim(), c2v=c2.value.trim(); if(!c1v||!c2v){alert('Dono naam likho');return;}
-  saveMsg.innerText='⏳ Saving...';
-  let payload={id:1,c1:c1v,c2:c2v,venue:venue.value,bd:bd.value,bt:bt.value,bv:bv.value||venue.value,wd:wd.value,wt:wt.value,wv:wv.value||venue.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value||venue.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value||venue.value};
-  if(window._pics[0] && window._pics[0].length<500000) payload.pic=JSON.stringify(window._pics);
-  let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'});
-  saveMsg.innerText=error?'❌ '+error.message:'✅ Saved! '+c1v+' & '+c2v;
+ let c1v=c1.value.trim(),c2v=c2.value.trim();if(!c1v||!c2v){alert('Dono naam likho');return;} saveMsg.innerText='⏳ Saving...';
+ let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,venue:bv.value};
+ if(window._pics[0]&&window._pics[0].length<500000)payload.pic=JSON.stringify(window._pics);
+ let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Saved! '+c1v+' & '+c2v+' | Phone:'+phone.value;
 });
-addOneBtn.addEventListener('click',async()=>{
-  let n=gName.value.trim(), p=gPass.value.trim(); if(!n||!p){alert('Naam Password');return;}
-  let {error}=await sb.from('guests').insert({name:n,pass:p,persons:gPersons.value,event:gEvent.value});
-  if(error) alert(error.message); else {gName.value=''; gPass.value=''; render();}
-});
-addBulkBtn.addEventListener('click',async()=>{
-  let txt=bulkInput.value.trim(); if(!txt) return; let arr=[];
-  txt.split('\n').forEach(l=>{
-    let sp=l.split(','); if(sp.length>=2){
-      let ev=sp[2]?sp[2].trim().toLowerCase():'both';
-      if(!['barat','walima','both'].includes(ev)) ev='both';
-      arr.push({name:sp[0].trim(),pass:sp[1].trim(),event:ev,persons:'Full Family'});
-    }
-  });
-  if(arr.length){let {error}=await sb.from('guests').insert(arr); if(error) alert(error.message); else render();}
-});
+addOneBtn.addEventListener('click',async()=>{let n=gName.value.trim(),p=gPass.value.trim();if(!n||!p){alert('Naam Password');return;}let {error}=await sb.from('guests').insert({name:n,pass:p,persons:gPersons.value,event:gEvent.value});if(error)alert(error.message);else{gName.value='';gPass.value='';render();}});
+addBulkBtn.addEventListener('click',async()=>{let txt=bulkInput.value.trim();if(!txt)return;let arr=[];txt.split('\n').forEach(l=>{let sp=l.split(',');if(sp.length>=2){let ev=sp[2]?sp[2].trim().toLowerCase():'both';if(!['barat','walima','both'].includes(ev))ev='both';arr.push({name:sp[0].trim(),pass:sp[1].trim(),event:ev,persons:'Full Family'});}});if(arr.length){let {error}=await sb.from('guests').insert(arr);if(error)alert(error.message);else{bulkInput.value='';render();}}});
+function toggleSelect(id){if(selectedIds.has(id))selectedIds.delete(id);else selectedIds.add(id);updateUI();}
+function selectAll(){allGuests.forEach(g=>selectedIds.add(g.id));updateUI();} function clearSelect(){selectedIds.clear();updateUI();}
+function updateUI(){document.getElementById('selectedInfo').innerText='Selected: '+selectedIds.size;render();}
+async function deleteSelected(){if(selectedIds.size==0){alert('Koi select nahi');return;}if(!confirm(selectedIds.size+' delete karna hai?'))return;let {error}=await sb.from('guests').delete().in('id',Array.from(selectedIds));if(error)alert(error.message);else{selectedIds.clear();render();}}
+function copySelectedLinks(){if(selectedIds.size==0){alert('Select karo');return;}let base=location.href.replace('admin.html','index.html');let links=allGuests.filter(g=>selectedIds.has(g.id)).map(g=>`${g.name}: ${base} - Password: ${g.pass} (${g.event})`).join('\n');navigator.clipboard.writeText(links);alert('✅ Copied '+selectedIds.size+' links!');}
+window.editGuest=(id)=>{let g=allGuests.find(x=>x.id==id);if(!g)return;editingId=id;editName.value=g.name;editPass.value=g.pass;editEvent.value=g.event;document.getElementById('editModal').style.display='flex';}
+function closeEdit(){document.getElementById('editModal').style.display='none';}
+saveEditBtn.addEventListener('click',async()=>{if(!editingId)return;let {error}=await sb.from('guests').update({name:editName.value,pass:editPass.value,event:editEvent.value}).eq('id',editingId);if(error)alert(error.message);else{closeEdit();render();}});
+window.delOne=async id=>{if(!confirm('Delete?'))return;await sb.from('guests').delete().eq('id',id);render();}
+window.copyLink=(pass)=>{let base=location.href.replace('admin.html','index.html');navigator.clipboard.writeText(base+'? No, password se khulega: '+pass);alert('Copied!');}
 async function render(){
-  let q=searchInput.value.toLowerCase();
-  let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});
-  if(!g) return;
-  let f=g.filter(x=>x.name.toLowerCase().includes(q));
-  guestList.innerHTML=f.map(x=>`<div class="item"><span><b>${x.name}</b> - ${x.pass} - <span style="color:#facc15">${x.event}</span></span><button onclick="delOne(${x.id})" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:5px">X</button></div>`).join('');
-  totalCount.innerText='Total: '+g.length;
+ let q=searchInput.value.toLowerCase();
+ let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});
+ if(!g)return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q));
+ guestList.innerHTML=f.map(x=>`
+ <div class="item ${selectedIds.has(x.id)?'selected':''}">
+ <input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect(${x.id})">
+ <span style="flex:1"><b>${x.name}</b> - ${x.pass} - <span style="color:#facc15">${x.event}</span></span>
+ <button onclick="editGuest(${x.id})" style="background:#333;color:#facc15;border:none;padding:5px 8px;border-radius:5px">✏️</button>
+ <button onclick="copyLink('${x.pass}')" style="background:#22c55e;color:#fff;border:none;padding:5px 8px;border-radius:5px">🔗</button>
+ <button onclick="delOne(${x.id})" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:5px">X</button>
+ </div>`).join('');
+ totalCount.innerText='Total: '+g.length;
 }
-window.delOne=async id=>{if(!confirm('Delete?')) return; await sb.from('guests').delete().eq('id',id); render();}
 searchInput.addEventListener('input',render);
 loadSettings(); render();
 </script>

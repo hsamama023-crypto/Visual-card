@@ -8,133 +8,83 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:14px;font-family:'Poppins',sans-serif}
-.main{width:100%;max-width:420px;background:linear-gradient(180deg,#fffef7,#fdf6d8);border-radius:28px;overflow:hidden;border:2px solid #e8c765}
-.top{height:300px;background:#0f0f0f;position:relative;display:flex;justify-content:center;align-items:center}
-.top img{width:100%;height:100%;object-fit:cover;opacity:.55;position:absolute;top:0;left:0}
-.top-content{position:relative;z-index:2;text-align:center;color:#fff;padding:20px;width:100%}
+.main{width:100%;max-width:420px;background:linear-gradient(180deg,#fffef7,#fdf6d8);border-radius:28px;overflow:hidden;border:2px solid #e8c765;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.top{min-height:340px;height:auto;background:#0f0f0f;position:relative;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.top img{width:100%;height:100%;min-height:340px;object-fit:cover;object-position:center top;opacity:0;position:absolute;top:0;left:0;transition:opacity .8s}
+.top img.loaded{opacity:.65}
+.top::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1}
+.top-content{position:relative;z-index:2;text-align:center;color:#fff;padding:28px 20px;width:100%}
 .bism{font-family:'Amiri',serif;font-size:22px;color:#ffdf8a}
-.couple{font-family:'Great Vibes',cursive;font-size:62px;color:#ffda6b;line-height:.9;margin-top:10px;min-height:70px}
-.badge{display:inline-block;margin-top:12px;padding:6px 16px;border-radius:20px;border:1px solid rgba(212,175,55,.6);background:rgba(0,0,0,.35);font-size:9px;letter-spacing:3px;color:#e8c765}
+.couple{font-family:'Great Vibes',cursive;font-size:52px;color:#ffda6b;line-height:1.05;margin-top:10px;min-height:70px;word-wrap:break-word;white-space:normal;padding:0 10px}
+.badge{display:inline-block;margin-top:14px;padding:7px 18px;border-radius:20px;border:1px solid rgba(212,175,55,.7);background:rgba(0,0,0,.45);font-size:9px;letter-spacing:3px;color:#e8c765}
 .mid{padding:0 18px 18px 18px}
-.glass{background:#fff;border-radius:20px;padding:18px;margin-top:-36px;position:relative;z-index:3;box-shadow:0 10px 30px rgba(0,0,0,.15)}
-.input{width:100%;padding:12px;border-radius:12px;border:2px solid #1a1a1a;text-align:center;font-weight:600;margin-top:6px}
-.btn{width:100%;padding:12px;border-radius:12px;border:none;background:#1a1a1a;color:#e8c765;font-weight:700;cursor:pointer;margin-top:8px}
+.glass{background:#fff;border-radius:20px;padding:18px;margin-top:-36px;position:relative;z-index:3;box-shadow:0 12px 35px rgba(0,0,0,.2)}
+.input{width:100%;padding:13px;border-radius:12px;border:2px solid #1a1a1a;text-align:center;font-weight:600;margin-top:8px}
+.btn{width:100%;padding:13px;border-radius:12px;border:none;background:#1a1a1a;color:#e8c765;font-weight:700;cursor:pointer;margin-top:10px}
 .btn-gold{background:linear-gradient(135deg,#b8960c,#e8c765);color:#111}
 .event-box{background:linear-gradient(180deg,#fff,#fdf6d8);border:1px solid #e8c765;border-radius:16px;padding:14px;margin-top:12px;text-align:center}
 .event-title{font-weight:700;color:#b8960c;letter-spacing:2px;font-size:12px}
-.event-date{font-weight:600;margin-top:6px;font-size:16px;color:#111}
+.event-date{font-weight:600;margin-top:6px;font-size:15px;color:#111}
 .event-venue{font-size:13px;color:#555;margin-top:4px}
 .foot{background:#0f0f0f;color:#a08a5a;padding:12px;text-align:center;font-size:9px;letter-spacing:2px;min-height:36px}
 .admin-float{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:linear-gradient(135deg,#b8960c,#d4af37);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:999;border:2px solid #fff}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:10000;padding:14px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:10000;padding:14px}
 .modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:20px;width:100%;max-width:380px;color:#fff}
-/* === ENVELOPE + ROSHNI - ADDED DESIGN === */
 #envelopeStage{display:none}
-.envelope-wrapper{position:relative;width:100%;height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.roshni{position:absolute;width:300px;height:300px;background:radial-gradient(circle, rgba(255,223,138,.9) 0%, rgba(232,199,101,.5) 30%, transparent 70%);filter:blur(8px);opacity:0;transition:opacity .8s, transform .8s;transform:scale(.2);pointer-events:none;z-index:1;border-radius:50%}
-.roshni.on{opacity:1;transform:scale(1.6)}
-.rays{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0;transition:.8s}
-.rays.on{opacity:1}
-.ray{position:absolute;top:50%;left:50%;width:2px;height:140px;background:linear-gradient(to bottom, rgba(255,220,100,.9), transparent);transform-origin:bottom;filter:blur(.5px)}
-.envelope{position:relative;width:310px;height:200px;z-index:3;cursor:pointer;transition:transform .4s}
-.envelope:hover{transform:scale(1.02)}
-.env-back{position:absolute;inset:0;background:#e8b4b8;background-image:radial-gradient(#f2c2c4 1px, transparent 1px);background-size:18px 18px;border-radius:0 0 16px 16px;box-shadow:0 12px 30px rgba(0,0,0,.2)}
-.env-flap{position:absolute;top:0;left:0;width:100%;height:65%;background:#efbec1;background-image:radial-gradient(#f7d0d3 1px, transparent 1px);background-size:18px 18px;clip-path:polygon(0 0,100% 0,50% 90%);transform-origin:top;transition:transform .9s cubic-bezier(.68,-.55,.27,1.55);z-index:5;border-radius:16px 16px 0 0}
+.env-wrap{position:relative;width:100%;height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#1a1a1a 0%,#000 60%,#111 100%);border-radius:20px;overflow:hidden}
+.roshni{position:absolute;width:320px;height:320px;background:radial-gradient(circle,rgba(255,243,150,1) 0%,rgba(255,223,100,.85) 25%,rgba(232,199,101,.35) 50%,transparent 75%);filter:blur(6px);opacity:0;transition:all 1s;transform:scale(.15);pointer-events:none;z-index:2;border-radius:50%}
+.roshni.on{opacity:1;transform:scale(1.8)}
+.rays{position:absolute;width:100%;height:100%;pointer-events:none;z-index:2;opacity:0;transition:.8s}
+.rays.on{opacity:1;animation:rotateRays 18s linear infinite}
+.ray{position:absolute;top:50%;left:50%;width:2.5px;height:180px;background:linear-gradient(to bottom,rgba(255,235,120,.95),transparent);transform-origin:bottom}
+@keyframes rotateRays{100%{transform:rotate(360deg)}}
+.envelope{position:relative;width:310px;height:200px;z-index:5;cursor:pointer;filter:drop-shadow(0 15px 30px rgba(0,0,0,.6))}
+.env-back{position:absolute;inset:0;background:linear-gradient(145deg,#f6c1c4,#e8a0a5);border-radius:0 0 16px 16px}
+.env-flap{position:absolute;top:0;left:0;width:100%;height:62%;background:linear-gradient(145deg,#f9c8cb,#eea0a5);clip-path:polygon(0 0,100% 0,50% 92%);transform-origin:top;transition:.95s cubic-bezier(.68,-.55,.27,1.55);z-index:7}
 .envelope.open .env-flap{transform:rotateX(180deg);z-index:0}
-.env-left{position:absolute;left:0;top:0;width:0;height:0;border-top:100px solid transparent;border-bottom:100px solid transparent;border-left:155px solid #eec2c5;z-index:2;border-radius:0 0 0 16px}
-.env-right{position:absolute;right:0;top:0;width:0;height:0;border-top:100px solid transparent;border-bottom:100px solid transparent;border-right:155px solid #e8b0b4;z-index:2;border-radius:0 0 16px 0}
-.letter{position:absolute;left:50%;bottom:10px;transform:translateX(-50%) translateY(15px);width:88%;height:180px;background:linear-gradient(180deg,#ffffff,#fffaf0);border-radius:14px;box-shadow:0 15px 40px rgba(0,0,0,.25);z-index:2;transition:all .9s cubic-bezier(.34,1.56,.64,1);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;opacity:0;border:1.5px solid #e8c765;text-align:center;overflow:hidden}
-.envelope.open .letter{transform:translateX(-50%) translateY(-90px);opacity:1;height:320px}
-.envelope.full .letter{transform:translateX(-50%) translateY(-140px) scale(1.03);height:380px;box-shadow:0 20px 50px rgba(184,150,12,.35)}
-.seal{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:64px;height:64px;background:radial-gradient(circle at 30% 30%,#ffdf8a,#b8960c);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;z-index:10;box-shadow:0 4px 18px rgba(184,150,12,.7), inset 0 2px 6px rgba(255,255,255,.7);border:2.5px solid #fff;cursor:pointer;transition:all .5s}
-.seal.broken{transform:translate(-50%,-50%) scale(0) rotate(180deg);opacity:0}
-.hint{margin-top:18px;background:rgba(0,0,0,.08);padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:1.5px;color:#b8960c;animation:blink 1.5s infinite;z-index:6;position:relative}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
-.sparkle{position:absolute;width:6px;height:6px;background:#ffdf8a;border-radius:50%;pointer-events:none;opacity:0}
-@keyframes sparkleAnim{0%{transform:translateY(0) scale(0);opacity:1}100%{transform:translateY(-120px) scale(1.5);opacity:0}}
+.env-left{position:absolute;left:0;top:0;width:0;height:0;border-top:100px solid transparent;border-bottom:100px solid transparent;border-left:155px solid #eec2c5;z-index:3}
+.env-right{position:absolute;right:0;top:0;width:0;height:0;border-top:100px solid transparent;border-bottom:100px solid transparent;border-right:155px solid #e8b0b4;z-index:3}
+.letter{position:absolute;left:50%;bottom:12px;transform:translateX(-50%) translateY(20px);width:88%;height:175px;background:linear-gradient(180deg,#fff,#fffaf0);border-radius:4px;box-shadow:0 15px 40px rgba(0,0,0,.4);z-index:4;transition:all 1s cubic-bezier(.34,1.56,.64,1);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;opacity:0;border:2px solid #d4af37;text-align:center}
+.envelope.open .letter{transform:translateX(-50%) translateY(-88px);opacity:1;height:300px}
+.envelope.full .letter{transform:translateX(-50%) translateY(-155px) scale(1.05);height:400px}
+.seal{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:68px;height:68px;background:radial-gradient(circle at 30% 30%,#ffef9a,#d4af37 45%,#8c6d0c);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;z-index:12;box-shadow:0 8px 28px rgba(184,150,12,.9);border:2.8px solid #fff;cursor:pointer;animation:heartBeat 1.3s infinite}
+.seal.broken{transform:translate(-50%,-50%) scale(0) rotate(200deg);opacity:0}
+@keyframes heartBeat{0%,100%{transform:translate(-50%,-50%) scale(1)}15%{transform:translate(-50%,-50%) scale(1.18)}}
+.hint{margin-top:22px;background:rgba(255,255,255,.92);padding:8px 18px;border-radius:30px;font-size:11px;color:#8B0000;font-weight:600;z-index:10;position:relative;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.6}}
+.sparkle{position:absolute;width:7px;height:7px;background:#ffdf8a;border-radius:50%;pointer-events:none;opacity:0}
+@keyframes sparkleAnim{0%{transform:translateY(0) scale(0);opacity:1}100%{transform:translateY(-160px) scale(1.6);opacity:0}}
+.petal{position:absolute;pointer-events:none;z-index:9;animation:fall linear infinite}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(600px) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
 <div class="main">
-<div class="top"><img id="bgPic" src="" style="display:none"><div class="top-content"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="couple" id="coupleHead"></div><div class="badge">PRIVATE WEDDING INVITATION</div></div></div>
+<div class="top"><img id="bgPic" alt="Couple"><div class="top-content"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="couple" id="coupleHead">Loading...</div><div class="badge">PRIVATE WEDDING INVITATION</div></div></div>
 <div class="mid">
-<div id="lock" class="glass">
-<div style="color:#8B0000;font-weight:700;font-size:18px;text-align:center">🔐 Private Invitation</div>
-<input id="p" class="input" type="password" placeholder="🔑 Password likhein">
-<button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO</button>
-<div id="e" style="color:#b91c1c;font-size:11px;margin-top:8px;text-align:center"></div>
+<div id="lock" class="glass"><div style="color:#8B0000;font-weight:700;font-size:18px;text-align:center">🔐 Private Invitation</div><input id="p" class="input" type="password" placeholder="🔑 Password likhein"><button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO</button><div id="e" style="color:#b91c1c;font-size:11px;margin-top:8px;text-align:center"></div></div>
+<div id="welcomeScreen" style="display:none" class="glass"><div style="text-align:center"><div id="welcomeName" style="font-family:'Great Vibes';font-size:48px;color:#8B0000"></div><div id="welcomeEvent" style="font-size:12px;color:#b8960c;letter-spacing:2px;margin-top:4px"></div><button class="btn btn-gold" onclick="showEnvelope()">💌 ENVELOPE KHOLO</button></div></div>
+<div id="envelopeStage" class="glass" style="background:#000;text-align:center;padding:0;overflow:hidden"><div class="env-wrap" id="envWrap"><div class="roshni" id="roshni"></div><div class="rays" id="rays"></div><div id="petals"></div><div class="envelope" id="envelope" onclick="openEnvelope()"><div class="env-back"></div><div class="env-left"></div><div class="env-right"></div><div class="letter" id="letter"><div style="font-size:8px;letter-spacing:3px;color:#b8960c">YOU ARE INVITED</div><div id="cardCouple" style="font-family:'Great Vibes';font-size:32px;color:#8B0000;margin:8px 0;line-height:1"></div><div id="letterGuest" style="font-weight:700;color:#333;font-size:14px"></div></div><div class="env-flap"></div><div class="seal" id="seal">💛</div></div><div class="hint" id="hint">👆 DIL PAR TAP KARO ✨</div></div><button id="toDetails" class="btn btn-gold" style="display:none;margin:16px 18px 0 18px;width:calc(100% - 36px)" onclick="openCards()">✨ Details Dekhein</button></div>
+<div id="cards" style="display:none" class="glass"><div id="gName" style="text-align:center;color:#8B0000;font-size:28px;font-family:'Great Vibes'"></div><div class="event-box" id="baratBox"><div class="event-title">💒 BARAT</div><div class="event-date" id="bDateTime"></div><div class="event-venue" id="bVenue"></div></div><div class="event-box" id="walimaBox"><div class="event-title">🎉 WALIMA</div><div class="event-date" id="wDateTime"></div><div class="event-venue" id="wVenue"></div></div><button class="btn" onclick="location.reload()" style="margin-top:12px;background:#111">🔒 LOCK</button></div>
 </div>
-<div id="welcomeScreen" style="display:none" class="glass"><div style="text-align:center"><div id="welcomeName" style="font-family:'Great Vibes';font-size:48px;color:#8B0000"></div><div id="welcomeEvent" style="font-size:12px;color:#b8960c;letter-spacing:2px;margin-top:4px"></div><button class="btn btn-gold" onclick="showEnvelope()">💌 ENVELOPE KHOLO</button><p style="font-size:10px;color:#999;margin-top:8px">Aapke liye ek khaas roshni hai ✨</p></div></div>
-
-<div id="envelopeStage" class="glass" style="background:linear-gradient(180deg,#fffef7,#fff6d8);text-align:center">
-<div class="envelope-wrapper" id="envWrap">
-<div class="roshni" id="roshni"></div>
-<div class="rays" id="rays"></div>
-<div class="envelope" id="envelope" onclick="openEnvelope()">
-<div class="env-back"></div>
-<div class="env-left"></div>
-<div class="env-right"></div>
-<div class="letter" id="letter">
-<div style="font-size:9px;letter-spacing:3px;color:#b8960c">YOU ARE INVITED TO THE WEDDING OF</div>
-<div id="cardCouple" style="font-family:'Great Vibes';font-size:36px;color:#8B0000;margin:6px 0;line-height:1"></div>
-<div style="width:40px;height:2px;background:linear-gradient(90deg,#b8960c,#e8c765);margin:8px auto;border-radius:2px"></div>
-<div id="letterGuest" style="font-weight:600;color:#333;font-size:14px"></div>
-<div style="font-size:11px;color:#666;margin-top:8px">Tap below to see full details ↓</div>
-</div>
-<div class="env-flap"></div>
-<div class="seal" id="seal">💛</div>
-</div>
-<div class="hint" id="hint">👆 SEAL PAR TAP KARO - ROSHNI NIKLEGI</div>
-</div>
-<button id="toDetails" class="btn btn-gold" style="display:none;margin-top:14px" onclick="openCards()">✨ Details Dekhein</button>
-</div>
-
-<div id="cards" style="display:none" class="glass">
-<div id="gName" style="text-align:center;color:#8B0000;font-size:28px;font-family:'Great Vibes'"></div>
-<div class="event-box" id="baratBox">
-<div class="event-title">💒 BARAT</div>
-<div class="event-date" id="bDateTime"></div>
-<div class="event-venue" id="bVenue"></div>
-</div>
-<div class="event-box" id="walimaBox">
-<div class="event-title">🎉 WALIMA</div>
-<div class="event-date" id="wDateTime"></div>
-<div class="event-venue" id="wVenue"></div>
-</div>
-<button class="btn" onclick="location.reload()" style="margin-top:12px;background:#111">🔒 LOCK</button>
-</div>
-
-</div>
-<div class="foot" id="foot"></div>
+<div class="foot" id="foot">WEDDING • 2026</div>
 </div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
 <div id="lockModal" class="modal"><div class="modal-box" style="text-align:center"><h3 style="color:#d4af37">🔒 Admin Lock</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input"><button class="btn btn-gold" id="unlockBtn" style="margin-top:10px">Unlock</button><button class="btn" style="background:#333;color:#fff" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:12px;margin-top:8px"></p></div></div>
 <script>
 const sb = supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 const ADMIN_PASS='Admin@2026';
-let SETTINGS=null; let currentGuestEvent='both';
+let SETTINGS=null, currentGuestEvent='both';
 function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
 document.getElementById('unlockBtn').addEventListener('click',()=>{if(document.getElementById('lockPass').value===ADMIN_PASS){closeLock();location.href='admin.html';}else{document.getElementById('lockMsg').innerText='❌ Galat Password'}});
-function createRays(){
-  let cont=document.getElementById('rays'); cont.innerHTML='';
-  for(let i=0;i<12;i++){let d=document.createElement('div'); d.className='ray'; d.style.transform=`translate(-50%,-100%) rotate(${i*30}deg)`; cont.appendChild(d);}
-}
-createRays();
-function sparkles(){
-  let wrap=document.getElementById('envWrap');
-  for(let i=0;i<18;i++){
-    let s=document.createElement('div'); s.className='sparkle';
-    s.style.left=(50 + (Math.random()-0.5)*60)+'%'; s.style.top='50%';
-    s.style.animation=`sparkleAnim ${1+Math.random()}s ease-out ${i*0.08}s forwards`;
-    wrap.appendChild(s); setTimeout(()=>s.remove(),2000);
-  }
-}
+function createRays(){let c=document.getElementById('rays'); c.innerHTML=''; for(let i=0;i<14;i++){let d=document.createElement('div'); d.className='ray'; d.style.transform=`translate(-50%,-100%) rotate(${i*(360/14)}deg)`; c.appendChild(d);}} createRays();
+function sparkles(n=18){let wrap=document.getElementById('envWrap'); for(let i=0;i<n;i++){let s=document.createElement('div'); s.className='sparkle'; s.style.left=(50+(Math.random()-0.5)*70)+'%'; s.style.top='52%'; s.style.animation=`sparkleAnim ${0.8+Math.random()*1.2}s ease-out ${i*0.06}s forwards`; wrap.appendChild(s); setTimeout(()=>s.remove(),2200);}}
+function createPetals(){let cont=document.getElementById('petals'); let emojis=['🌸','💖','✨','🌹','💛']; for(let i=0;i<20;i++){let p=document.createElement('div'); p.className='petal'; p.innerText=emojis[Math.floor(Math.random()*emojis.length)]; p.style.left=Math.random()*100+'%'; p.style.top='-30px'; p.style.fontSize=(10+Math.random()*16)+'px'; p.style.animationDuration=(4+Math.random()*5)+'s'; p.style.animationDelay=(Math.random()*4)+'s'; cont.appendChild(p);}}
 async function loadConfig(){
   try{
     let {data}=await sb.from('settings').select('*').eq('id',1).single();
     if(data){
-      SETTINGS=data;
       if(data.c1 && data.c2){
         let full=data.c1.trim()+" & "+data.c2.trim();
         document.getElementById('coupleHead').innerText=full;
@@ -143,8 +93,9 @@ async function loadConfig(){
         document.title=full+" - Wedding Invitation";
       }
       if(data.pic){
-        let pic=null; try{let arr=JSON.parse(data.pic); pic=Array.isArray(arr)?arr[0]:arr;}catch(e){pic=data.pic;}
-        if(pic){let im=document.getElementById('bgPic'); im.src=pic; im.style.display='block';}
+        let picUrl=null;
+        try{let arr=JSON.parse(data.pic); picUrl=Array.isArray(arr)?arr[0]:arr;}catch(e){picUrl=data.pic;}
+        if(picUrl){let im=document.getElementById('bgPic'); im.src=picUrl.trim(); im.style.display='block'; im.onload=()=>im.classList.add('loaded'); setTimeout(()=>im.classList.add('loaded'),800);}
       }
       let bd=data.bd||data.barat_date||""; let bt=data.bt||data.barat_time||""; let bv=data.bv||data.barat_venue||data.venue||"";
       let wd=data.wd||data.walima_date||""; let wt=data.wt||data.walima_time||""; let wv=data.wv||data.walima_venue||data.venue||"";
@@ -155,46 +106,11 @@ async function loadConfig(){
     }
   }catch(e){console.log(e);}
 }
-async function unlock(){
-  let v=document.getElementById('p').value.trim();
-  if(!v){document.getElementById('e').innerText="Password likhein";return}
-  document.getElementById('e').innerText="Checking...";
-  let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle();
-  if(data){
-    currentGuestEvent=(data.event||'both').toLowerCase();
-    document.getElementById('lock').style.display='none';
-    document.getElementById('welcomeName').innerText=data.name;
-    document.getElementById('letterGuest').innerText="For "+data.name+" ❤️";
-    document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA';
-    document.getElementById('welcomeScreen').style.display='block';
-    document.getElementById('e').innerText="";
-  }else{document.getElementById('e').innerText="❌ Galat Password";}
-}
-function showEnvelope(){
-  document.getElementById('welcomeScreen').style.display='none';
-  document.getElementById('envelopeStage').style.display='block';
-}
+async function unlock(){let v=document.getElementById('p').value.trim(); if(!v){document.getElementById('e').innerText="Password likhein"; return} document.getElementById('e').innerText="Checking..."; let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle(); if(data){currentGuestEvent=(data.event||'both').toLowerCase(); document.getElementById('lock').style.display='none'; document.getElementById('welcomeName').innerText=data.name; document.getElementById('letterGuest').innerText="For "+data.name+" ❤️"; document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA'; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText="";}else{document.getElementById('e').innerText="❌ Galat Password";}}
+function showEnvelope(){document.getElementById('welcomeScreen').style.display='none'; document.getElementById('envelopeStage').style.display='block'; createPetals();}
 let opened=false;
-function openEnvelope(){
-  if(opened) return; opened=true;
-  document.getElementById('seal').classList.add('broken');
-  document.getElementById('hint').style.display='none';
-  document.getElementById('roshni').classList.add('on');
-  document.getElementById('rays').classList.add('on');
-  sparkles();
-  setTimeout(()=>{document.getElementById('envelope').classList.add('open'); sparkles();},350);
-  setTimeout(()=>{document.getElementById('envelope').classList.add('full'); document.getElementById('toDetails').style.display='block'; sparkles();},1100);
-}
-function openCards(){
-  document.getElementById('envelopeStage').style.display='none';
-  document.getElementById('gName').innerText="Dear "+document.getElementById('welcomeName').innerText+" ❤️";
-  document.getElementById('cards').style.display='block';
-  let baratBox=document.getElementById('baratBox'); let walimaBox=document.getElementById('walimaBox');
-  if(currentGuestEvent==='barat'){baratBox.style.display='block'; walimaBox.style.display='none';}
-  else if(currentGuestEvent==='walima'){baratBox.style.display='none'; walimaBox.style.display='block';}
-  else{baratBox.style.display='block'; walimaBox.style.display='block';}
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+function openEnvelope(){if(opened) return; opened=true; document.getElementById('seal').classList.add('broken'); document.getElementById('hint').style.display='none'; document.getElementById('roshni').classList.add('on'); document.getElementById('rays').classList.add('on'); sparkles(22); setTimeout(()=>{document.getElementById('envelope').classList.add('open'); sparkles(18);},380); setTimeout(()=>{document.getElementById('envelope').classList.add('full'); document.getElementById('toDetails').style.display='block'; sparkles(24);},1150);}
+function openCards(){document.getElementById('envelopeStage').style.display='none'; document.getElementById('gName').innerText="Dear "+document.getElementById('welcomeName').innerText+" ❤️"; document.getElementById('cards').style.display='block'; let baratBox=document.getElementById('baratBox'); let walimaBox=document.getElementById('walimaBox'); if(currentGuestEvent==='barat'){baratBox.style.display='block'; walimaBox.style.display='none';} else if(currentGuestEvent==='walima'){baratBox.style.display='none'; walimaBox.style.display='block';} else{baratBox.style.display='block'; walimaBox.style.display='block';}}
 loadConfig();
 </script>
 </body>

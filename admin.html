@@ -2,76 +2,85 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Islamic Arch FINAL</title>
+<title>Admin - Premium FINAL</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0} body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:12px}
-.card{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;margin-bottom:14px}
-h2{color:#facc15;text-align:center;margin:10px 0} h3{color:#facc15;margin-bottom:8px}
-label{color:#facc15;font-size:11px;display:block;margin-top:12px;font-weight:700;letter-spacing:1px}
-input,textarea,select{width:100%;background:#2a2a2a;border:1px solid #555;color:#fff;padding:12px;border-radius:10px;margin:6px 0}
-.btn{width:100%;background:#facc15;color:#000;font-weight:700;padding:13px;border:none;border-radius:12px;margin:6px 0;cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0} body{background:#050505;color:#fff;font-family:Poppins,sans-serif;padding:12px}
+.card{background:linear-gradient(180deg,#1e1e1e,#141414);border:2px solid #d4af37;border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+h2{color:#ffec8a;text-align:center;margin:14px 0;font-size:22px;letter-spacing:2px} h3{color:#d4af37;margin-bottom:10px;font-size:14px;letter-spacing:1.5px}
+label{color:#d4af37;font-size:10px;display:block;margin-top:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+input,textarea,select{width:100%;background:#222;border:1.5px solid #333;color:#fff;padding:12px;border-radius:12px;margin:6px 0;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#d4af37}
+.btn{width:100%;background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e);color:#1a1200;font-weight:800;padding:14px;border:none;border-radius:14px;margin:6px 0;cursor:pointer;letter-spacing:1px}
 .btn:active{transform:scale(.97)} .btn-red{background:#ef4444;color:#fff} .btn-green{background:#22c55e;color:#fff}
-.item{background:#2a2a2a;padding:10px;border-radius:10px;margin:6px 0;font-size:13px;display:flex;align-items:center;gap:8px;border:1px solid #333}
-.item.selected{border-color:#facc15;background:#3a3410}
+.item{background:#222;padding:12px;border-radius:12px;margin:7px 0;font-size:13px;display:flex;align-items:center;gap:8px;border:1.5px solid #333}
+.item.selected{border-color:#d4af37;background:#2e2810}
 .item input[type=checkbox]{width:18px;height:18px}
-.tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.tools button{flex:1;min-width:90px;padding:8px;border-radius:8px;border:none;font-weight:700;font-size:11px;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
-.modal-box{background:#1e1e1e;border:2px solid #facc15;border-radius:16px;padding:16px;width:100%;max-width:400px}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tools button{flex:1;min-width:90px;padding:10px;border-radius:10px;border:none;font-weight:800;font-size:11px;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
+.modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:18px;width:100%;max-width:400px}
+.music-box{background:linear-gradient(180deg,#111,#000);border:1.5px solid #d4af37;border-radius:14px;padding:14px;margin-top:14px}
 </style>
 </head>
 <body>
-<h2>👑 Admin - Islamic Arch FINAL</h2>
+<h2>👑 PREMIUM ADMIN FINAL</h2>
 
 <div class="card">
 <h3>💒 Couple & Venue Setup</h3>
 <label>Dulha Name (He)</label><input id="c1" placeholder="Hasan">
 <label>Dulhan Name (She)</label><input id="c2" placeholder="Hira">
-<label>🏠 Host / Family Name (Dua me ayega)</label><input id="host" placeholder="Hasan Family">
-<label>📞 RSVP Phone (Call + WhatsApp)</label><input id="phone" placeholder="0300-1234567">
-<label>🏛️ Barat Venue Full Address (Map ke liye)</label><input id="bv" placeholder="Grand Hall, Gujranwala">
-<label>🏛️ Walima Venue Full Address</label><input id="wv" placeholder="Royal Venue, Gujranwala">
-<label>📅 Barat Date (Countdown ke liye - YYYY-MM-DD)</label><input id="bd" type="date">
+<label>🏠 Host / Family Name</label><input id="host" placeholder="Hasan Family">
+<label>📞 RSVP Phone (Call + WhatsApp)</label><input id="phone" placeholder="03001234567">
+<label>🏛️ Barat Venue</label><input id="bv" placeholder="Grand Hall, Gujranwala">
+<label>🏛️ Walima Venue</label><input id="wv" placeholder="Royal Venue, Gujranwala">
+<label>📅 Barat Date</label><input id="bd" type="date">
 <label>⏰ Barat Time</label><input id="bt" placeholder="07:00 PM">
 <label>📅 Walima Date</label><input id="wd" type="date">
 <label>⏰ Walima Time</label><input id="wt" placeholder="01:00 PM">
-<label>🖼️ Couple Pic (Optional - Arch me nahi, admin me save hogi)</label>
+<label>🖼️ Couple Pic</label>
 <input type="file" id="picInput" accept="image/*"><div id="picPreview" style="margin-top:8px"></div>
-<button class="btn" id="saveBtn">💾 Save LIVE - Islamic Arch</button>
-<p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:6px"></p>
+
+<div class="music-box">
+<div style="color:#ffec8a;font-weight:800;letter-spacing:2px;font-size:12px">🎵 PREMIUM NIKAH MUSIC - ROSHNI EFFECT KE SAATH</div>
+<label>MP3 Link (Supabase Storage se)</label>
+<input id="songUrl" type="text" placeholder="https://...mp3">
+<div style="font-size:10px;color:#888;margin-top:6px">Supabase > Storage > Create Bucket 'songs' (Public ON) > Upload MP3 > Copy URL > Yahan paste</div>
+<audio id="previewAudio" controls style="width:100%;margin-top:10px;display:none"></audio>
+<button onclick="previewSong()" style="margin-top:8px;padding:7px 14px;border-radius:20px;background:#222;color:#ffec8a;border:1px solid #d4af37;font-size:11px;font-weight:700">▶️ Preview Suno</button>
+<div style="font-size:10px;color:#d4af37;margin-top:8px">✅ Card khulte hi roshni + ye song auto bajega, upar 🎶 button se band bhi kar sakte hain</div>
 </div>
+
+<button class="btn" id="saveBtn">💾 Save LIVE - Premium + Music + Roshni</button>
+<p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:8px"></p>
+</div>
+
 <div class="card">
-<h3>👑 Mehman List - Select Fix</h3>
+<h3>👑 Mehman List - Premium Select</h3>
 <div class="tools">
-<button style="background:#facc15" onclick="selectAll()">✅ Select All</button>
+<button style="background:#d4af37" onclick="selectAll()">✅ All</button>
 <button style="background:#333;color:#fff" onclick="clearSelect()">❌ Clear</button>
-<button style="background:#ef4444;color:#fff" onclick="deleteSelected()">🗑️ Delete Selected</button>
+<button style="background:#ef4444;color:#fff" onclick="deleteSelected()">🗑️ Delete</button>
 <button style="background:#22c55e;color:#fff" onclick="copySelectedLinks()">🔗 Copy Links</button>
 </div>
-<p id="selectedInfo" style="color:#facc15;font-size:12px;margin-top:8px">Selected: 0</p>
-
+<p id="selectedInfo" style="color:#ffec8a;font-size:12px;margin-top:10px">Selected: 0</p>
 <label>Add Single Guest</label>
 <input id="gName" placeholder="Naam: Ali"><input id="gPass" placeholder="Password: 1234">
 <input id="gPersons" placeholder="Full Family" value="Full Family">
 <select id="gEvent"><option value="both">Barat & Walima (Dono)</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
 <button class="btn" id="addOneBtn">+ ADD GUEST</button>
-
-<label>Bulk Add (Format: Name,Password,Event)</label>
-<textarea id="bulkInput" rows="4" placeholder="Ali,1234,walima
-Ahmed,5678,barat
-Umar,9999,both"></textarea>
-<button class="btn" id="addBulkBtn" style="background:#333;color:#facc15">🚀 Bulk Add</button>
-
+<label>Bulk Add (Name,Password,Event)</label>
+<textarea id="bulkInput" rows="4" placeholder="Ali,1234,walima&#10;Ahmed,5678,barat"></textarea>
+<button class="btn" id="addBulkBtn" style="background:#222;color:#d4af37;border:1px solid #d4af37">🚀 Bulk Add</button>
 <label>Search</label><input id="searchInput" placeholder="Search name or password...">
 <div id="guestList" style="margin-top:10px;max-height:500px;overflow:auto"></div>
 <p id="totalCount" style="margin-top:8px;font-size:12px;color:#aaa"></p>
 </div>
 
-<button onclick="location.href='index.html'" style="width:100%;padding:12px;background:#333;color:#fff;border:none;border-radius:10px">⬅️ Card Dekho - Final Arch Design</button>
+<button onclick="location.href='index.html'" style="width:100%;padding:14px;background:#111;color:#ffec8a;border:1.5px solid #d4af37;border-radius:14px;font-weight:700">⬅️ Premium Card Dekho</button>
 
 <div id="editModal" class="modal"><div class="modal-box">
-<h3 style="color:#facc15;text-align:center">✏️ Edit Guest</h3>
+<h3 style="color:#ffec8a;text-align:center">✏️ Edit Guest</h3>
 <input id="editName"><input id="editPass"><select id="editEvent"><option value="both">Both</option><option value="barat">Barat</option><option value="walima">Walima</option></select>
 <button class="btn" id="saveEditBtn">Save Edit</button>
 <button class="btn" style="background:#333;color:#fff" onclick="closeEdit()">Cancel</button>
@@ -81,13 +90,14 @@ Umar,9999,both"></textarea>
 const sb=supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 window._pics=[]; let selectedIds=new Set(); let editingId=null; let allGuests=[];
 function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=500;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.5));};img.src=e.target.result;};r.readAsDataURL(file);}
-async function loadSettings(){try{let {data}=await sb.from('settings').select('*').eq('id',1).single();if(data){if(data.c1)c1.value=data.c1;if(data.c2)c2.value=data.c2;if(data.host)host.value=data.host;if(data.phone)phone.value=data.phone;if(data.bv)bv.value=data.bv;if(data.wv)wv.value=data.wv;if(data.bd)bd.value=data.bd;if(data.bt)bt.value=data.bt;if(data.wd)wd.value=data.wd;if(data.wt)wt.value=data.wt;if(data.pic){try{let pics=JSON.parse(data.pic);window._pics=Array.isArray(pics)?pics:[data.pic];if(window._pics[0])picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:10px">';}catch{}}}}catch(e){}}
-picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:10px">';});});
+function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('MP3 Link dalo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
+async function loadSettings(){try{let {data}=await sb.from('settings').select('*').eq('id',1).single();if(data){if(data.c1)c1.value=data.c1;if(data.c2)c2.value=data.c2;if(data.host)host.value=data.host;if(data.phone)phone.value=data.phone;if(data.bv)bv.value=data.bv;if(data.wv)wv.value=data.wv;if(data.bd)bd.value=data.bd;if(data.bt)bt.value=data.bt;if(data.wd)wd.value=data.wd;if(data.wt)wt.value=data.wt;if(data.song){songUrl.value=data.song;previewAudio.src=data.song;previewAudio.style.display='block';}if(data.pic){try{let pics=JSON.parse(data.pic);window._pics=Array.isArray(pics)?pics:[data.pic];if(window._pics[0])picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';}catch{}}}}catch(e){}}
+picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';});});
 saveBtn.addEventListener('click',async()=>{
- let c1v=c1.value.trim(),c2v=c2.value.trim();if(!c1v||!c2v){alert('Dono naam likho');return;} saveMsg.innerText='⏳ Saving...';
- let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,venue:bv.value};
+ let c1v=c1.value.trim(),c2v=c2.value.trim();if(!c1v||!c2v){alert('Dono naam likho');return;} saveMsg.innerText='⏳ Saving Premium...';
+ let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,venue:bv.value,song:songUrl.value.trim()||null};
  if(window._pics[0]&&window._pics[0].length<500000)payload.pic=JSON.stringify(window._pics);
- let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Saved! '+c1v+' & '+c2v+' | Phone:'+phone.value;
+ let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Premium Saved! '+c1v+' & '+c2v+' | Song: '+(payload.song?'ON':'OFF');
 });
 addOneBtn.addEventListener('click',async()=>{let n=gName.value.trim(),p=gPass.value.trim();if(!n||!p){alert('Naam Password');return;}let {error}=await sb.from('guests').insert({name:n,pass:p,persons:gPersons.value,event:gEvent.value});if(error)alert(error.message);else{gName.value='';gPass.value='';render();}});
 addBulkBtn.addEventListener('click',async()=>{let txt=bulkInput.value.trim();if(!txt)return;let arr=[];txt.split('\n').forEach(l=>{let sp=l.split(',');if(sp.length>=2){let ev=sp[2]?sp[2].trim().toLowerCase():'both';if(!['barat','walima','both'].includes(ev))ev='both';arr.push({name:sp[0].trim(),pass:sp[1].trim(),event:ev,persons:'Full Family'});}});if(arr.length){let {error}=await sb.from('guests').insert(arr);if(error)alert(error.message);else{bulkInput.value='';render();}}});
@@ -100,23 +110,10 @@ window.editGuest=(id)=>{let g=allGuests.find(x=>x.id==id);if(!g)return;editingId
 function closeEdit(){document.getElementById('editModal').style.display='none';}
 saveEditBtn.addEventListener('click',async()=>{if(!editingId)return;let {error}=await sb.from('guests').update({name:editName.value,pass:editPass.value,event:editEvent.value}).eq('id',editingId);if(error)alert(error.message);else{closeEdit();render();}});
 window.delOne=async id=>{if(!confirm('Delete?'))return;await sb.from('guests').delete().eq('id',id);render();}
-window.copyLink=(pass)=>{let base=location.href.replace('admin.html','index.html');navigator.clipboard.writeText(base+'? No, password se khulega: '+pass);alert('Copied!');}
-async function render(){
- let q=searchInput.value.toLowerCase();
- let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});
- if(!g)return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q));
- guestList.innerHTML=f.map(x=>`
- <div class="item ${selectedIds.has(x.id)?'selected':''}">
- <input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect(${x.id})">
- <span style="flex:1"><b>${x.name}</b> - ${x.pass} - <span style="color:#facc15">${x.event}</span></span>
- <button onclick="editGuest(${x.id})" style="background:#333;color:#facc15;border:none;padding:5px 8px;border-radius:5px">✏️</button>
- <button onclick="copyLink('${x.pass}')" style="background:#22c55e;color:#fff;border:none;padding:5px 8px;border-radius:5px">🔗</button>
- <button onclick="delOne(${x.id})" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:5px">X</button>
- </div>`).join('');
- totalCount.innerText='Total: '+g.length;
-}
+window.copyLink=(pass)=>{let base=location.href.replace('admin.html','index.html');navigator.clipboard.writeText(base+'? Password se khulega: '+pass);alert('Copied!');}
+async function render(){let q=searchInput.value.toLowerCase();let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});if(!g)return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q));guestList.innerHTML=f.map(x=>`<div class="item ${selectedIds.has(x.id)?'selected':''}"><input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect(${x.id})"><span style="flex:1"><b>${x.name}</b> - ${x.pass} - <span style="color:#ffec8a">${x.event}</span></span><button onclick="editGuest(${x.id})" style="background:#333;color:#d4af37;border:none;padding:5px 8px;border-radius:6px">✏️</button><button onclick="copyLink('${x.pass}')" style="background:#22c55e;color:#fff;border:none;padding:5px 8px;border-radius:6px">🔗</button><button onclick="delOne(${x.id})" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:6px">X</button></div>`).join('');totalCount.innerText='Total: '+g.length;}
 searchInput.addEventListener('input',render);
 loadSettings(); render();
 </script>
 </body>
-</html>
+ </html>

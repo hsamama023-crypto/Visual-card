@@ -45,7 +45,13 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 <div style="color:#ffec8a;font-weight:800;letter-spacing:2px;font-size:12px">🎵 PREMIUM NIKAH MUSIC - ROSHNI EFFECT KE SAATH</div>
 <label>MP3 Link (Supabase Storage se)</label>
 <input id="songUrl" type="text" placeholder="https://...mp3">
-<div style="font-size:10px;color:#888;margin-top:6px">Supabase > Storage > Create Bucket 'songs' (Public ON) > Upload MP3 > Copy URL > Yahan paste</div>
+
+<!-- NEW: FILE SE DIRECT ADD -->
+<label style="color:#ffec8a">📁 FILE SE SONG ADD KARO (NEW)</label>
+<input type="file" id="songFileInput" accept="audio/*,.mp3">
+<div id="songUploadStatus" style="font-size:11px;color:#a3e635;margin-top:6px"></div>
+
+<div style="font-size:10px;color:#888;margin-top:6px">Supabase > Storage > Create Bucket 'songs' (Public ON) > Upload MP3 > Copy URL > Yahan paste - Ya upar File se direct upload karo</div>
 <audio id="previewAudio" controls style="width:100%;margin-top:10px;display:none"></audio>
 <button onclick="previewSong()" style="margin-top:8px;padding:7px 14px;border-radius:20px;background:#222;color:#ffec8a;border:1px solid #d4af37;font-size:11px;font-weight:700">▶️ Preview Suno</button>
 <div style="font-size:10px;color:#d4af37;margin-top:8px">✅ Card khulte hi roshni + ye song auto bajega, upar 🎶 button se band bhi kar sakte hain</div>
@@ -90,7 +96,25 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 const sb=supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 window._pics=[]; let selectedIds=new Set(); let editingId=null; let allGuests=[];
 function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=500;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.5));};img.src=e.target.result;};r.readAsDataURL(file);}
-function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('MP3 Link dalo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
+function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('MP3 Link dalo ya File upload karo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
+
+// === NEW: FILE UPLOAD TO SUPABASE STORAGE ===
+document.getElementById('songFileInput').addEventListener('change', async (e)=>{
+ let file=e.target.files[0]; if(!file) return;
+ let st=document.getElementById('songUploadStatus');
+ if(file.size > 15*1024*1024){ st.innerText='❌ File 15MB se choti rakho'; return; }
+ st.innerText='⏳ Uploading: '+file.name+'...';
+ try{
+  let fname=Date.now()+'_'+file.name.replace(/\s+/g,'_');
+  let {error}=await sb.storage.from('songs').upload(fname, file, {upsert:true, cacheControl:'3600'});
+  if(error) throw error;
+  let {data}=sb.storage.from('songs').getPublicUrl(fname);
+  document.getElementById('songUrl').value=data.publicUrl;
+  st.innerText='✅ Upload Ho Gaya! Link auto fill ho gaya';
+  previewSong();
+ }catch(err){ st.innerText='❌ Upload Fail: '+err.message+' - Bucket songs ko Public karo'; console.log(err); }
+});
+
 async function loadSettings(){try{let {data}=await sb.from('settings').select('*').eq('id',1).single();if(data){if(data.c1)c1.value=data.c1;if(data.c2)c2.value=data.c2;if(data.host)host.value=data.host;if(data.phone)phone.value=data.phone;if(data.bv)bv.value=data.bv;if(data.wv)wv.value=data.wv;if(data.bd)bd.value=data.bd;if(data.bt)bt.value=data.bt;if(data.wd)wd.value=data.wd;if(data.wt)wt.value=data.wt;if(data.song){songUrl.value=data.song;previewAudio.src=data.song;previewAudio.style.display='block';}if(data.pic){try{let pics=JSON.parse(data.pic);window._pics=Array.isArray(pics)?pics:[data.pic];if(window._pics[0])picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';}catch{}}}}catch(e){}}
 picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';});});
 saveBtn.addEventListener('click',async()=>{
@@ -111,9 +135,9 @@ function closeEdit(){document.getElementById('editModal').style.display='none';}
 saveEditBtn.addEventListener('click',async()=>{if(!editingId)return;let {error}=await sb.from('guests').update({name:editName.value,pass:editPass.value,event:editEvent.value}).eq('id',editingId);if(error)alert(error.message);else{closeEdit();render();}});
 window.delOne=async id=>{if(!confirm('Delete?'))return;await sb.from('guests').delete().eq('id',id);render();}
 window.copyLink=(pass)=>{let base=location.href.replace('admin.html','index.html');navigator.clipboard.writeText(base+'? Password se khulega: '+pass);alert('Copied!');}
-async function render(){let q=searchInput.value.toLowerCase();let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});if(!g)return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q));guestList.innerHTML=f.map(x=>`<div class="item ${selectedIds.has(x.id)?'selected':''}"><input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect(${x.id})"><span style="flex:1"><b>${x.name}</b> - ${x.pass} - <span style="color:#ffec8a">${x.event}</span></span><button onclick="editGuest(${x.id})" style="background:#333;color:#d4af37;border:none;padding:5px 8px;border-radius:6px">✏️</button><button onclick="copyLink('${x.pass}')" style="background:#22c55e;color:#fff;border:none;padding:5px 8px;border-radius:6px">🔗</button><button onclick="delOne(${x.id})" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:6px">X</button></div>`).join('');totalCount.innerText='Total: '+g.length;}
+async function render(){let q=searchInput.value.toLowerCase();let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});if(!g)return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q));guestList.innerHTML=f.map(x=>`<div class="item ${selectedIds.has(x.id)?'selected':''}"><input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect('${x.id}')"><span style="flex:1"><b>${x.name}</b> - ${x.pass} - <span style="color:#ffec8a">${x.event}</span></span><button onclick="editGuest('${x.id}')" style="background:#333;color:#d4af37;border:none;padding:5px 8px;border-radius:6px">✏️</button><button onclick="copyLink('${x.pass}')" style="background:#22c55e;color:#fff;border:none;padding:5px 8px;border-radius:6px">🔗</button><button onclick="delOne('${x.id}')" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:6px">X</button></div>`).join('');totalCount.innerText='Total: '+g.length;}
 searchInput.addEventListener('input',render);
 loadSettings(); render();
 </script>
 </body>
- </html>
+</html>

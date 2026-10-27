@@ -155,53 +155,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 </div></div><div class="foot" id="foot">Hamza & Noor • Royal Black Gold 2026</div></div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
 <div id="lockModal" class="modal"><div class="modal-box"><h3 style="color:#ffec8a;margin-bottom:10px">🔒 Admin Access</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input"><button class="btn btn-gold" id="unlockBtn">Unlock</button><button class="btn" style="background:#222;color:#fff;margin-top:8px" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:11px;margin-top:6px"></p></div></div>
-<script>
-const SUPA_URL='https://saaoukcqwqnxgmcuojjl.supabase.co';
-const SUPA_KEY='sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
-let sb; try{ sb=supabase.createClient(SUPA_URL,SUPA_KEY);}catch(e){}
-let currentGuestEvent='both', currentGuestData=null, isMusicPlaying=false;
-let FW_TITLE='NIKAH CEREMONY', FW_SUB='QABOOL HAI', FW_ENABLED=true, GATE_SONG=true, CONFETTI_ENABLED=true, QURAN_ENABLED=true, CALLIGRAPHY_ENABLED=true, DUA_WALL_ENABLED=true;
-const ADMIN_PASS='Admin@2026';
-function openLock(){document.getElementById('lockModal').style.display='flex';}
-function closeLock(){document.getElementById('lockModal').style.display='none';}
-function playQuran(){ let a=document.getElementById('quranAudio'); if(a){ a.volume=0.9; a.play().catch(()=>{}); } }
-
-// CONFETTI - 10
-const confettiCanvas=document.getElementById('confettiCanvas'); const confCtx=confettiCanvas.getContext('2d');
-function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeConfetti); resizeConfetti();
-function triggerGoldConfetti(){
-  if(!CONFETTI_ENABLED) return;
-  confettiCanvas.style.display='block'; let confettis=[];
-  for(let i=0;i<140;i++){ confettis.push({x:Math.random()*confettiCanvas.width,y:-20-Math.random()*300,vx:(Math.random()-0.5)*5,vy:1+Math.random()*5,r:3+Math.random()*6,color:['#ffec8a','#d4af37','#ffd700','#fff8c0'][Math.floor(Math.random()*4)],rot:Math.random()*360,rotV:(Math.random()-0.5)*12}); }
-  let start=Date.now();
-  (function anim(){
-    confCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
-    let alive=false;
-    confettis.forEach(c=>{ c.x+=c.vx; c.y+=c.vy; c.rot+=c.rotV; c.vy+=0.05; if(c.y<confettiCanvas.height+30){ alive=true; confCtx.save(); confCtx.translate(c.x,c.y); confCtx.rotate(c.rot*Math.PI/180); confCtx.fillStyle=c.color; confCtx.shadowBlur=10; confCtx.shadowColor=c.color; confCtx.fillRect(-c.r/2,-c.r/2,c.r,c.r*1.8); confCtx.restore(); } });
-    if(alive && Date.now()-start<7500) requestAnimationFrame(anim); else confettiCanvas.style.display='none';
-  })();
-}
-
-// FIREWORKS - NO BLACK SCREEN FIX
-const fwCanvas=document.getElementById('fireworks'); const fwCtx=fwCanvas.getContext('2d'); let fwParticles=[], fwActive=false;
-function resizeFW(){ fwCanvas.width=window.innerWidth; fwCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeFW); resizeFW();
-function createFirework(x,y){
-  let golds=['#ffec8a','#d4af37','#fff8c0','#ffb700'];
-  for(let i=0;i<80;i++){ let a=Math.random()*Math.PI*2; let sp=1+Math.random()*10; fwParticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.008+Math.random()*0.01,color:golds[Math.floor(Math.random()*golds.length)],size:1.2+Math.random()*3.5}); }
-}
-function triggerFireworks(){ if(!FW_ENABLED) return; fwCanvas.style.display='block'; fwActive=true; fwParticles=[]; let c=0; let iv=setInterval(()=>{ let x=Math.random()*fwCanvas.width*0.7+fwCanvas.width*0.15; let y=Math.random()*fwCanvas.height*0.4+fwCanvas.height*0.05; createFirework(x,y); c++; if(c>20) clearInterval(iv); },250); setTimeout(()=>{ fwActive=false; setTimeout(()=>{ fwCanvas.style.display='none'; fwParticles=[]; },3500); clearInterval(iv); },8000); }
-function animateFW(){ if(fwActive||fwParticles.length>0){ fwCtx.fillStyle='rgba(0,0,0,0.25)'; fwCtx.fillRect(0,0,fwCanvas.width,fwCanvas.height); for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.991; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=16; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } fwCtx.globalAlpha=1; fwCtx.shadowBlur=0; } requestAnimationFrame(animateFW); } animateFW();
-function showCoupleFireworksText(){
-  if(!FW_ENABLED) return; document.querySelectorAll('.fw-text').forEach(e=>e.remove());
-  let con=document.createElement('div'); con.className='fw-text';
-  con.style.cssText=`position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:0.7s cubic-bezier(.34,1.56,.64,1);background:radial-gradient(ellipse at center,#151515,#000);border:2.5px solid #d4af37;border-radius:26px;padding:22px 30px;box-shadow:0 0 35px rgba(212,175,55,.8),0 0 90px rgba(212,175,55,.4);min-width:280px`;
-  con.innerHTML=`<div style="font-family:'Great Vibes';font-size:54px;color:#ffec8a;line-height:1.1;text-shadow:0 0 20px #d4af37">Hamza<br>& Noor</div><div style="height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:14px 0"></div><div style="font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:800">💍 ${FW_TITLE} 💍</div><div style="font-size:12px;letter-spacing:3px;color:#ffec8a;margin-top:8px;font-weight:700">✨ ${FW_SUB} ✨</div>`;
-  document.body.appendChild(con); setTimeout(()=>{con.style.opacity='1';con.style.transform='translate(-50%,-50%) scale(1.06)';},80); setTimeout(()=>{con.style.opacity='0';con.style.transform='translate(-50%,-50%) scale(0.9)';setTimeout(()=>con.remove(),600);},3400);
-}
-let gateOpened=false;
-function openGate(){
-  if(gateOpened) return; gateOpened=true;
-  if(QURAN_ENABLED){ let q=document.getElementById('quranAudio'); if(q){ q.volume=0.85; q.play().catch(()=>{}); } }
+dio'); if(q){ q.volume=0.85; q.play().catch(()=>{}); } }
   if(GATE_SONG){ let audio=document.getElementById('bgMusic'); if(audio&&audio.src){ audio.volume=0.45; audio.play().then(()=>{ document.getElementById('musicBtn').style.display='flex'; isMusicPlaying=true; }).catch(()=>{}); } else if(window.autoPlaySong){ window.autoPlaySong(); } }
   document.getElementById('nikkahTitle').classList.add('show');
   document.getElementById('gateScreen').classList.add('open');
@@ -220,7 +174,96 @@ function formatFamily(c,t){ c=parseInt(c)||1; if(t&&t.toLowerCase().includes('fa
 function animateName(name){ let el=document.getElementById('welcomeName'); if(!el) return; if(!CALLIGRAPHY_ENABLED){ el.innerText=name; el.style.width='100%'; return; } el.style.width='0'; el.innerText=name; el.classList.remove('calligraphy'); void el.offsetWidth; el.classList.add('calligraphy'); }
 async function loadDuas(){ if(!DUA_WALL_ENABLED) return; try{ let {data}=await sb.from('duas').select('*').order('created_at',{ascending:false}).limit(20); let list=document.getElementById('duasList'); if(!list) return; list.innerHTML=''; if(data){ data.forEach(d=>{ let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${d.name||'Mehman'}:</b> ${d.message}`; list.appendChild(div); }); } }catch(e){} }
 async function submitDua(){ let msg=document.getElementById('duaInput').value.trim(); if(!msg) return alert('Dua likhein'); let name=currentGuestData?currentGuestData.name:'Mehman'; try{ await sb.from('duas').insert([{name:name,message:msg}]); loadDuas(); }catch(e){ let list=document.getElementById('duasList'); let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${name}:</b> ${msg}`; list.prepend(div); } document.getElementById('duaInput').value=''; triggerGoldConfetti(); alert('🤲 JazakAllah! Dua save ho gayi'); }
-async function loadConfig(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); if(!data) return; let f=(data.c1||'')+(data.c1&&data.c2?' & ':'')+(data.c2||''); if(f){ document.getElementById('coupleHead').innerText=f; document.getElementById('cardCouple').innerText=f; document.getElementById('foot').innerText=(data.footer_text||f.toUpperCase()+' • ROYAL BLACK 2026'); } if(data.host){ document.getElementById('hostName').innerText='Host: '+data.host; document.getElementById('hostDisplay').innerText='Host: '+data.host; } if(data.pic){ try{ let pics=JSON.parse(data.pic); let url=Array.isArray(pics)?pics[0]:pics; if(url){ document.getElementById('couplePic').src=url; document.getElementById('gPic').src=url; document.getElementById('gPic').style.display='block'; } }catch(e){ if(data.pic){ document.getElementById('couplePic').src=data.pic; } } } document.getElementById('bDateTime').innerText=(data.bd||data.barat_date||'')+' '+(data.bt||data.barat_time||''); document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; document.getElementById('wDateTime').innerText=(data.wd||data.walima_date||'')+' '+(data.wt||data.walima_time||''); document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; if(data.md||data.mehndi_date){ document.getElementById('mehndiBox').style.display='block'; document.getElementById('mDateTime').innerText=(data.md||data.mehndi_date||'')+' '+(data.mt||data.mehndi_time||''); document.getElementById('mVenue').innerText=data.mv||data.mehndi_venue||''; if(data.mv||data.mehndi_venue) document.getElementById('mMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.mv||data.mehndi_venue); } if(data.bv||data.barat_venue) document.getElementById('bMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.bv||data.barat_venue||data.venue); if(data.wv||data.walima_venue) document.getElementById('wMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.wv||data.walima_venue); if(data.dua_text) document.getElementById('duaBox').innerHTML=data.dua_text; if(data.thanks_text) document.getElementById('thanksBox').innerText=data.thanks_text; if(data.phone){ document.getElementById('rsvpPhone').href='tel:'+data.phone; document.getElementById('rsvp1').innerText=data.phone; document.getElementById('rsvpWhats').href='https://wa.me/'+data.phone.replace(/[^0-9]/g,''); } if(data.song){ let audio=document.getElementById('bgMusic'); audio.src=data.song; audio.volume=0.85; document.getElementById('musicBtn').style.display='flex'; window.autoPlaySong=()=>{ if(!GATE_SONG) return; audio.play().then(()=>{document.getElementById('musicBtn').innerText='🎶';isMusicPlaying=true;}).catch(()=>{}); }; } if(data.quran_url){ document.getElementById('quranAudio').src=data.quran_url; } FW_TITLE=data.fireworks_title||'NIKAH CEREMONY'; FW_SUB=data.fireworks_subtitle||'QABOOL HAI'; FW_ENABLED=data.fireworks_enabled!==false; GATE_SONG=data.gate_song_enabled!==false; CONFETTI_ENABLED=data.confetti_enabled!==false; QURAN_ENABLED=data.quran_enabled!==false; CALLIGRAPHY_ENABLED=data.calligraphy_enabled!==false; DUA_WALL_ENABLED=data.dua_wall_enabled!==false; let dateStr=data.bd||data.barat_date||data.wd||data.walima_date; if(dateStr){ let t=new Date(dateStr); setInterval(()=>{ let diff=t-new Date(); if(diff<=0) return; let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText=v;}; g('cdD',Math.floor(diff/86400000)); g('cdH',Math.floor(diff%86400000/3600000)); g('cdM',Math.floor(diff%3600000/60000)); g('cdS',Math.floor(diff%60000/1000)); },1000); } }catch(e){ console.log(e); } loadDuas(); }
+async function loadConfig(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); if(!data) return; let f=(data.c1||'')+(data.c1&&data.c2?' & ':'')+(data.c2||''); if(f){ document.getElementById('coupleHead').innerText=f; document.getElementById('cardCouple').innerText=f; document.getElementById('foot').innerText=(data.footer_text||f.toUpperCase()+' • ROYAL BLACK 2026'); } if(data.host){ document.getElementById('hostName').innerText='Host: '+data.host; document.getElementById('hostDisplay').innerText='Host: '+data.host; } if(data.pic){ try{ let pics=JSON.parse(data.pic); let url=Array.isArray(pics)?pics[0]:pics; if(url){ document.getElementById('couplePic').src=url; document.getElementById('gPic').src=url; document.getElementById('gPic').style.display='block'; } }catch(e){ if(data.pic){ document.getElementById('couplePic').src=data.pic; } } } document.getElementById('bDateTime').innerText=(data.bd||data.barat_date||'')+' '+(data.bt||data.barat_time||''); document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; document.getElementById('wDateTime').innerText=(data.wd||data.walima_date||'')+' '+(data.wt||data.walima_time||''); document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; if(data.md||data.mehndi_date){ document.getElementById('mehndiBox').style.display='block'; document.getElementById('mDateTime').innerText=(data.md||data.mehnd
+  <script>
+const SUPA_URL='https://saaoukcqwqnxgmcuojjl.supabase.co';
+const SUPA_KEY='sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
+let sb; try{ sb=supabase.createClient(SUPA_URL,SUPA_KEY);}catch(e){}
+let currentGuestEvent='both', currentGuestData=null, isMusicPlaying=false;
+let FW_TITLE='NIKAH CEREMONY', FW_SUB='QABOOL HAI', FW_ENABLED=true, GATE_SONG=true, CONFETTI_ENABLED=true, QURAN_ENABLED=true, CALLIGRAPHY_ENABLED=true, DUA_WALL_ENABLED=true;
+const ADMIN_PASS='Admin@2026';
+function openLock(){document.getElementById('lockModal').style.display='flex';}
+function closeLock(){document.getElementById('lockModal').style.display='none';}
+function playQuran(){ let a=document.getElementById('quranAudio'); if(a){ a.volume=0.9; a.play().catch(()=>{}); } }
+
+// CONFETTI
+const confettiCanvas=document.getElementById('confettiCanvas'); const confCtx=confettiCanvas.getContext('2d');
+function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeConfetti); resizeConfetti();
+function triggerGoldConfetti(){
+  if(!CONFETTI_ENABLED) return;
+  confettiCanvas.style.display='block'; let confettis=[];
+  for(let i=0;i<140;i++){ confettis.push({x:Math.random()*confettiCanvas.width,y:-20-Math.random()*300,vx:(Math.random()-0.5)*5,vy:1+Math.random()*5,r:3+Math.random()*6,color:['#ffec8a','#d4af37','#ffd700','#fff8c0'][Math.floor(Math.random()*4)],rot:Math.random()*360,rotV:(Math.random()-0.5)*12}); }
+  let start=Date.now();
+  (function anim(){
+    confCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+    let alive=false;
+    confettis.forEach(c=>{ c.x+=c.vx; c.y+=c.vy; c.rot+=c.rotV; c.vy+=0.05; if(c.y<confettiCanvas.height+30){ alive=true; confCtx.save(); confCtx.translate(c.x,c.y); confCtx.rotate(c.rot*Math.PI/180); confCtx.fillStyle=c.color; confCtx.shadowBlur=10; confCtx.shadowColor=c.color; confCtx.fillRect(-c.r/2,-c.r/2,c.r,c.r*1.8); confCtx.restore(); } });
+    if(alive && Date.now()-start<7500) requestAnimationFrame(anim); else { confCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); confettiCanvas.style.display='none'; }
+  })();
+}
+
+// FIREWORKS - BLACK SCREEN BUG FIXED
+const fwCanvas=document.getElementById('fireworks'); const fwCtx=fwCanvas.getContext('2d'); let fwParticles=[], fwActive=false;
+fwCanvas.style.background='transparent';
+function resizeFW(){ fwCanvas.width=window.innerWidth; fwCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeFW); resizeFW();
+function createFirework(x,y){
+  let golds=['#ffec8a','#d4af37','#fff8c0','#ffb700'];
+  for(let i=0;i<75;i++){ let a=Math.random()*Math.PI*2; let sp=1+Math.random()*9; fwParticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.008+Math.random()*0.01,color:golds[Math.floor(Math.random()*golds.length)],size:1.2+Math.random()*3.2}); }
+}
+function triggerFireworks(){ 
+  if(!FW_ENABLED) return; 
+  fwCanvas.style.display='block'; fwCanvas.style.background='transparent'; fwActive=true; fwParticles=[]; 
+  let c=0; let iv=setInterval(()=>{ let x=Math.random()*fwCanvas.width*0.7+fwCanvas.width*0.15; let y=Math.random()*fwCanvas.height*0.4+fwCanvas.height*0.05; createFirework(x,y); c++; if(c>18) clearInterval(iv); },280); 
+  setTimeout(()=>{ fwActive=false; fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); fwCanvas.style.display='none'; fwParticles=[]; clearInterval(iv); },7000); 
+}
+function animateFW(){ 
+  if(fwActive){
+    fwCtx.fillStyle='rgba(0,0,0,0.18)'; fwCtx.fillRect(0,0,fwCanvas.width,fwCanvas.height); 
+    for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.991; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=14; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } 
+    fwCtx.globalAlpha=1; fwCtx.shadowBlur=0; 
+  } else {
+    fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+  }
+  requestAnimationFrame(animateFW); 
+} animateFW();
+
+function showCoupleFireworksText(){
+  if(!FW_ENABLED) return; document.querySelectorAll('.fw-text').forEach(e=>e.remove());
+  let con=document.createElement('div'); con.className='fw-text';
+  con.style.cssText=`position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:0.6s cubic-bezier(.34,1.56,.64,1);background:radial-gradient(ellipse at center,#151515,#000);border:2.5px solid #d4af37;border-radius:26px;padding:22px 30px;box-shadow:0 0 35px rgba(212,175,55,.8);min-width:280px`;
+  con.innerHTML=`<div style="font-family:'Great Vibes';font-size:54px;color:#ffec8a;line-height:1.1;text-shadow:0 0 20px #d4af37">Hamza<br>& Noor</div><div style="height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:14px 0"></div><div style="font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:800">💍 ${FW_TITLE} 💍</div><div style="font-size:12px;letter-spacing:3px;color:#ffec8a;margin-top:8px;font-weight:700">✨ ${FW_SUB} ✨</div>`;
+  document.body.appendChild(con); setTimeout(()=>{con.style.opacity='1';con.style.transform='translate(-50%,-50%) scale(1.05)';},80); setTimeout(()=>{con.style.opacity='0';setTimeout(()=>con.remove(),500);},3000);
+}
+
+let gateOpened=false;
+function openGate(){
+  if(gateOpened) return; gateOpened=true;
+  if(QURAN_ENABLED){ let q=document.getElementById('quranAudio'); if(q){ q.volume=0.85; q.play().catch(()=>{}); } }
+  if(GATE_SONG){ let audio=document.getElementById('bgMusic'); if(audio&&audio.src){ audio.volume=0.45; audio.play().then(()=>{ document.getElementById('musicBtn').style.display='flex'; isMusicPlaying=true; }).catch(()=>{}); } else if(window.autoPlaySong){ window.autoPlaySong(); } }
+  document.getElementById('nikkahTitle').classList.add('show');
+  document.getElementById('gateScreen').classList.add('open');
+  // FIX: Gate band hote hi foran hide, fireworks uske BAAD main page pe
+  setTimeout(()=>{
+    document.getElementById('gateIntro').style.transition='opacity 0.4s ease';
+    document.getElementById('gateIntro').style.opacity='0';
+    setTimeout(()=>{ 
+      document.getElementById('gateIntro').style.display='none'; 
+      // Ab fireworks main card pe chalega, black screen nahi
+      triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText();
+      fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+    },400);
+  },2600);
+}
+document.getElementById('gateScreen').addEventListener('click',openGate);
+setTimeout(()=>{ document.getElementById('nikkahTitle').classList.add('show'); },600);
+setTimeout(()=>{ if(!gateOpened) openGate(); },4200);
+
+function toggleMusic(){let a=document.getElementById('bgMusic');let b=document.getElementById('musicBtn');if(!a||!a.src)return;if(isMusicPlaying){a.pause();b.innerText='🔇';isMusicPlaying=false;}else{a.play().catch(()=>{});b.innerText='🎶';isMusicPlaying=true;}}
+function formatFamily(c,t){ c=parseInt(c)||1; if(t&&t.toLowerCase().includes('family')) return `👨‍👩‍👧‍👦 Full Family - ${c} Persons`; if(c==1) return `👤 1 Person`; if(c==2) return `👥 2 Persons`; return `👥 ${c} Persons`; }
+function animateName(name){ let el=document.getElementById('welcomeName'); if(!el) return; if(!CALLIGRAPHY_ENABLED){ el.innerText=name; el.style.width='100%'; return; } el.style.width='0'; el.innerText=name; el.classList.remove('calligraphy'); void el.offsetWidth; el.classList.add('calligraphy'); }
+async function loadDuas(){ if(!DUA_WALL_ENABLED) return; try{ let {data}=await sb.from('duas').select('*').order('created_at',{ascending:false}).limit(20); let list=document.getElementById('duasList'); if(!list) return; list.innerHTML=''; if(data){ data.forEach(d=>{ let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${d.name||'Mehman'}:</b> ${d.message}`; list.appendChild(div); }); } }catch(e){} }
+async function submitDua(){ let msg=document.getElementById('duaInput').value.trim(); if(!msg) return alert('Dua likhein'); let name=currentGuestData?currentGuestData.name:'Mehman'; try{ await sb.from('duas').insert([{name:name,message:msg}]); loadDuas(); }catch(e){ let list=document.getElementById('duasList'); let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${name}:</b> ${msg}`; list.prepend(div); } document.getElementById('duaInput').value=''; triggerGoldConfetti(); alert('🤲 JazakAllah! Dua save ho gayi'); }
+async function loadConfig(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); if(!data) return; let f=(data.c1||'')+(data.c1&&data.c2?' & ':'')+(data.c2||''); if(f){ document.getElementById('coupleHead').innerText=f; document.getElementById('cardCouple').innerText=f; document.getElementById('foot').innerText=(data.footer_text||f.toUpperCase()+' • ROYAL BLACK 2026'); } if(data.host){ document.getElementById('hostName').innerText='Host: '+data.host; document.getElementById('hostDisplay').innerText='Host: '+data.host; } if(data.pic){ try{ let pics=JSON.parse(data.pic); let url=Array.isArray(pics)?pics[0]:pics; if(url){ document.getElementById('couplePic').src=url; document.getElementById('gPic').src=url; document.getElementById('gPic').style.display='block'; } }catch(e){ if(data.pic) document.getElementById('couplePic').src=data.pic; } } document.getElementById('bDateTime').innerText=(data.bd||data.barat_date||'')+' '+(data.bt||data.barat_time||''); document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; document.getElementById('wDateTime').innerText=(data.wd||data.walima_date||'')+' '+(data.wt||data.walima_time||''); document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; if(data.md||data.mehndi_date){ document.getElementById('mehndiBox').style.display='block'; document.getElementById('mDateTime').innerText=(data.md||data.mehndi_date||'')+' '+(data.mt||data.mehndi_time||''); document.getElementById('mVenue').innerText=data.mv||data.mehndi_venue||''; if(data.mv||data.mehndi_venue) document.getElementById('mMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.mv||data.mehndi_venue); } if(data.bv||data.barat_venue) document.getElementById('bMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.bv||data.barat_venue||data.venue); if(data.wv||data.walima_venue) document.getElementById('wMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.wv||data.walima_venue); if(data.dua_text) document.getElementById('duaBox').innerHTML=data.dua_text; if(data.thanks_text) document.getElementById('thanksBox').innerText=data.thanks_text; if(data.phone){ document.getElementById('rsvpPhone').href='tel:'+data.phone; document.getElementById('rsvp1').innerText=data.phone; document.getElementById('rsvpWhats').href='https://wa.me/'+data.phone.replace(/[^0-9]/g,''); } if(data.song){ let audio=document.getElementById('bgMusic'); audio.src=data.song; audio.volume=0.85; document.getElementById('musicBtn').style.display='flex'; window.autoPlaySong=()=>{ if(!GATE_SONG) return; audio.play().then(()=>{document.getElementById('musicBtn').innerText='🎶';isMusicPlaying=true;}).catch(()=>{}); }; } if(data.quran_url){ document.getElementById('quranAudio').src=data.quran_url; } FW_TITLE=data.fireworks_title||'NIKAH CEREMONY'; FW_SUB=data.fireworks_subtitle||'QABOOL HAI'; FW_ENABLED=data.fireworks_enabled!==false; GATE_SONG=data.gate_song_enabled!==false; CONFETTI_ENABLED=data.confetti_enabled!==false; QURAN_ENABLED=data.quran_enabled!==false; CALLIGRAPHY_ENABLED=data.calligraphy_enabled!==false; DUA_WALL_ENABLED=data.dua_wall_enabled!==false; let dateStr=data.bd||data.barat_date||data.wd||data.walima_date; if(dateStr){ let t=new Date(dateStr); setInterval(()=>{ let diff=t-new Date(); if(diff<=0) return; let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText=v;}; g('cdD',Math.floor(diff/86400000)); g('cdH',Math.floor(diff%86400000/3600000)); g('cdM',Math.floor(diff%3600000/60000)); g('cdS',Math.floor(diff%60000/1000)); },1000); } }catch(e){} loadDuas(); }
 async function unlock(){ let v=document.getElementById('p').value.trim(); if(!v) return; document.getElementById('e').innerText='Checking...'; try{ let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle(); if(data){ currentGuestData=data; currentGuestEvent=(data.event||'both').toLowerCase(); let count=data.count||data.guest_count||1; let familyType=data.family_type||data.type||''; document.getElementById('lock').style.display='none'; animateName(data.name); document.getElementById('familyInfo').innerHTML=`<span class="family-badge">${formatFamily(count,familyType)}</span>`; document.getElementById('letterGuest').innerText='For '+data.name+' ❤️'; document.getElementById('letterFamily').innerText=formatFamily(count,familyType); document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA'; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText=''; triggerGoldConfetti(); }else{ document.getElementById('e').innerText='❌ Galat Password'; } }catch{} }
 function showEnvelope(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('envelopeStage').style.display='block';}
 let opened=false;function openEnvelope(){if(opened)return;opened=true;document.getElementById('seal').classList.add('broken');document.getElementById('hint').style.display='none';document.getElementById('roshni').classList.add('on'); triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText(); setTimeout(()=>{document.getElementById('envelope').classList.add('open');},450);setTimeout(()=>{document.getElementById('envelope').classList.add('full');document.getElementById('toDetails').style.display='block';if(window.autoPlaySong)window.autoPlaySong();},1400);}

@@ -8,42 +8,51 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;display:flex;justify-content:center;padding:8px;font-family:'Poppins',sans-serif}
-.main{width:100%;max-width:420px;background:#050505;border-radius:30px;overflow:hidden;border:2px solid #d4af37;box-shadow:0 0 60px rgba(212,175,55,.35),inset 0 0 20px rgba(212,175,55,.1)}
-#fireworks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99999;display:none}
+.main{width:100%;max-width:420px;background:#050505;border-radius:30px;overflow:hidden;border:2px solid #d4af37;box-shadow:0 0 60px rgba(212,175,55,.35)}
+#fireworks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99999;display:none;background:transparent}
 #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:99998;display:none}
 #gateIntro{position:fixed;inset:0;background:#000;z-index:99997;display:flex;justify-content:center;align-items:center;cursor:pointer}
-.gate-screen{width:100%;max-width:420px;height:100vh;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#15130c 0%,#000 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.bism{font-family:'Amiri',serif;font-size:28px;color:#d4af37;text-shadow:0 0 20px rgba(212,175,55,.8),0 0 40px rgba(212,175,55,.4)}
-.bism-en{font-size:7px;letter-spacing:2.5px;color:#8a7220;margin-top:4px;font-weight:700}
-.nikkahTitle{font-family:'Great Vibes';font-size:42px;color:#ffec8a;margin-top:14px;opacity:0;transform:translateY(15px);transition:1.2s;text-shadow:0 0 20px rgba(212,175,55,.6)}
+.gate-screen{width:100%;max-width:420px;height:100vh;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#1a180e 0%,#0a0905 50%,#000 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.bism{font-family:'Amiri',serif;font-size:28px;color:#ffec8a;text-shadow:0 0 20px rgba(212,175,55,.8)}
+.bism-en{font-size:7px;letter-spacing:3px;color:#8a7220;margin-top:4px;font-weight:700}
+.nikkahTitle{font-family:'Great Vibes';font-size:40px;color:#ffec8a;margin-top:14px;opacity:0;transform:translateY(15px);transition:1.5s;text-shadow:0 0 20px rgba(212,175,55,.6)}
 .nikkahTitle.show{opacity:1;transform:translateY(0)}
-.gate-visual{position:relative;width:320px;height:480px;margin-top:16px}
-.gate-arch{position:absolute;inset:0;border:2.5px solid #d4af37;border-radius:150px 150px 14px 14px;background:linear-gradient(180deg,#1c1a12,#0c0b08);box-shadow:inset 0 0 30px rgba(212,175,55,.15)}
-.moon{position:absolute;top:32px;left:50%;transform:translateX(-50%);font-size:36px;text-shadow:0 0 25px #ffec8a;z-index:2}
-.lantern{position:absolute;width:48px;height:70px;background:linear-gradient(180deg,#ffeaa0,#d4af37,#7a5a00);border-radius:8px 8px 16px 16px;z-index:4;box-shadow:0 0 28px #ffec8a;display:flex;align-items:center;justify-content:center;animation:flicker 1.8s infinite}
-.lantern::after{content:'🔥';font-size:20px}
-@keyframes flicker{0%,100%{box-shadow:0 0 25px #ffec8a}50%{box-shadow:0 0 38px #ffec8a,0 0 80px rgba(212,175,55,.8)}}
-.l1{left:6px;top:118px}.l2{right:6px;top:118px}.l3{left:12px;top:212px;width:40px;height:58px}.l4{right:12px;top:212px;width:40px;height:58px}
-.gate-half{position:absolute;bottom:10px;width:48%;height:52%;background:linear-gradient(180deg,#1e1c14,#0f0e0a);border:2px solid #d4af37;transition:4.8s cubic-bezier(.2,0,.2,1);z-index:3}
+.gate-visual{position:relative;width:330px;height:500px;margin-top:14px}
+.gate-arch{position:absolute;inset:0;border:2.5px solid #d4af37;border-radius:160px 160px 14px 14px;background:linear-gradient(180deg,#1e1c14,#0c0b08);box-shadow:inset 0 0 40px rgba(212,175,55,.15),0 0 20px rgba(212,175,55,.1);overflow:hidden}
+.gate-arch::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:1px solid rgba(212,175,55,.25);border-radius:150px 150px 10px 10px;pointer-events:none}
+.gate-pattern{position:absolute;top:0;left:0;right:0;height:100px;background:repeating-linear-gradient(45deg,rgba(212,175,55,.08) 0px,transparent 10px,rgba(212,175,55,.08) 20px);opacity:.5}
+.islamic-border{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:85%;height:45px;border:1.2px solid rgba(212,175,55,.4);border-radius:20px;display:flex;align-items:center;justify-content:center;color:#d4af37;font-size:8px;letter-spacing:4px;background:rgba(212,175,55,.08)}
+.moon{position:absolute;top:70px;left:50%;transform:translateX(-50%);font-size:34px;text-shadow:0 0 25px #ffec8a;z-index:2}
+.lantern{position:absolute;width:46px;height:66px;background:linear-gradient(180deg,#ffeaa0,#d4af37,#7a5a00);border-radius:8px 8px 16px 16px;z-index:4;box-shadow:0 0 28px #ffec8a;display:flex;align-items:center;justify-content:center;animation:flicker 1.8s infinite}
+.lantern::after{content:'🔥';font-size:18px}
+@keyframes flicker{0%,100%{box-shadow:0 0 25px #ffec8a}50%{box-shadow:0 0 38px #ffec8a}}
+.l1{left:6px;top:118px}.l2{right:6px;top:118px}.l3{left:10px;top:208px;width:38px;height:56px}.l4{right:10px;top:208px;width:38px;height:56px}
+.gate-half{position:absolute;bottom:10px;width:48%;height:52%;background:linear-gradient(180deg,#1e1c14,#0f0e0a);border:2px solid #d4af37;transition:7s cubic-bezier(.15,0,.15,1);z-index:3;display:flex;align-items:center;justify-content:center}
+.gate-half::after{content:'✦ ✦ ✦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(212,175,55,.3);font-size:10px;letter-spacing:3px;writing-mode:vertical-rl}
 .gate-left{left:10px;transform-origin:left}.gate-right{right:10px;transform-origin:right}
-.gate-screen.open .gate-left{transform:translateX(-120%) rotateY(-40deg)}
-.gate-screen.open .gate-right{transform:translateX(120%) rotateY(40deg)}
-.gate-couple{position:absolute;left:50%;top:54%;transform:translate(-50%,-10%);width:92%;max-width:310px;opacity:0;transition:1.8s 0.6s;z-index:10;text-align:center;background:radial-gradient(ellipse at center,#151515,#000);border:2.5px solid #d4af37;border-radius:26px;padding:20px 16px;box-shadow:0 0 35px rgba(212,175,55,.6)}
-.gate-screen.open .gate-couple{opacity:1;transform:translate(-50%,-50%) scale(1.02)}
+.gate-screen.open .gate-left{transform:translateX(-135%) rotateY(-50deg)}
+.gate-screen.open .gate-right{transform:translateX(135%) rotateY(50deg)}
+.gate-couple{position:absolute;left:50%;top:50%;transform:translate(-50%,0%);width:90%;max-width:300px;opacity:0;transition:2.2s 1s;z-index:10;text-align:center;background:radial-gradient(ellipse at center,#1a1a1a,#000);border:2.5px solid #d4af37;border-radius:26px;padding:22px 16px;box-shadow:0 0 40px rgba(212,175,55,.7)}
+.gate-screen.open .gate-couple{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
 .skip{position:absolute;bottom:26px;padding:10px 22px;border-radius:30px;background:rgba(0,0,0,.88);border:1.5px solid #d4af37;color:#ffec8a;font-size:10px;letter-spacing:2px;animation:blink 1.5s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
+/* SPARROWS BIRDS FLY */
+.bird{position:absolute;font-size:18px;z-index:20;pointer-events:none;animation:flyBird linear infinite}
+@keyframes flyBird{0%{transform:translateX(-60px) translateY(0px) rotate(5deg)}20%{transform:translateX(60px) translateY(-15px) rotate(-5deg)}40%{transform:translateX(140px) translateY(5px) rotate(5deg)}60%{transform:translateX(220px) translateY(-10px) rotate(-5deg)}80%{transform:translateX(300px) translateY(10px) rotate(5deg)}100%{transform:translateX(400px) translateY(-5px) rotate(0deg)}}
+.b1{top:18%;animation-duration:7s;color:#ff6b9d}.b2{top:28%;animation-duration:8.5s;animation-delay:1s;color:#6bc8ff}.b3{top:38%;animation-duration:6.5s;animation-delay:.5s;color:#ffd93d}.b4{top:48%;animation-duration:9s;animation-delay:2s;color:#6bff9d}.b5{top:15%;animation-duration:7.5s;animation-delay:1.5s;color:#ff9f6b}
 </style>
 </head>
 <body>
 <canvas id="fireworks"></canvas>
 <canvas id="confettiCanvas"></canvas>
 <audio id="quranAudio" preload="auto" src="https://everyayah.com/data/Alafasy_128kbps/030021.mp3"></audio>
-<div id="gateIntro"><div class="gate-screen" id="gateScreen"><div style="position:relative;z-index:5"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="bism-en">IN THE NAME OF ALLAH</div><div class="nikkahTitle" id="nikkahTitle">Nikkah Invitation</div></div>
-<div class="gate-visual"><div class="gate-arch"><div class="moon">🌙</div></div><div class="lantern l1"></div><div class="lantern l2"></div><div class="lantern l3"></div><div class="lantern l4"></div>
+<div id="gateIntro"><div class="gate-screen" id="gateScreen">
+<div class="bird b1">🕊️</div><div class="bird b2">🐦</div><div class="bird b3">🕊️</div><div class="bird b4">🐦</div><div class="bird b5">🕊️</div>
+<div style="position:relative;z-index:5"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="bism-en">IN THE NAME OF ALLAH, THE MOST MERCIFUL</div><div class="nikkahTitle" id="nikkahTitle">Royal Nikkah Invitation</div></div>
+<div class="gate-visual"><div class="gate-arch"><div class="gate-pattern"></div><div class="islamic-border">✦ ﷽ ✦</div><div class="moon">🌙</div></div><div class="lantern l1"></div><div class="lantern l2"></div><div class="lantern l3"></div><div class="lantern l4"></div>
 <div class="gate-half gate-left"></div><div class="gate-half gate-right"></div>
-<div class="gate-couple"><div id="gateCoupleName" style="font-family:'Great Vibes';font-size:44px;color:#ffec8a;line-height:1.1">Hamza<br>& Noor</div><div style="width:70%;height:1.2px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:12px auto"></div><div style="font-size:10px;letter-spacing:3px;color:#d4af37;font-weight:700">💍 NIKKAH CEREMONY 💍</div></div></div><div class="skip">✨ TAP TO OPEN ROYAL GATE ✨</div></div></div>
+<div class="gate-couple"><div id="gateCoupleName" style="font-family:'Great Vibes';font-size:42px;color:#ffec8a;line-height:1.1;text-shadow:0 0 15px #d4af37">Hamza<br><span style="font-family:'Poppins';font-size:12px;letter-spacing:4px;color:#d4af37;font-weight:700;display:block;margin:8px 0">💍 NIKKAH CEREMONY 💍</span>& Noor</div><div style="width:70%;height:1.2px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:12px auto"></div><div style="font-size:9px;letter-spacing:3px;color:#8a7220">TWO SOULS • ONE HEART</div></div></div><div class="skip">✨ SLOW MOTION GATE - TAP TO OPEN ✨</div></div></div>
 <div class="main">
-<!-- TOP ROYAL CARD - ULTRA BEAUTIFUL -->
 <div class="top" style="position:relative;min-height:620px;background:radial-gradient(ellipse at center,#1c1a12 0%,#0d0c08 40%,#050505 100%);display:flex;justify-content:center;align-items:flex-start;padding:20px 14px">
 <style>
 .arch-frame{position:absolute;top:18px;left:14px;right:14px;bottom:14px;border:2px solid transparent;border-radius:160px 160px 22px 22px;background:linear-gradient(#050505,#050505) padding-box, linear-gradient(180deg,#ffec8a,#d4af37,#8c6a08) border-box;box-shadow:0 0 30px rgba(212,175,55,.2),inset 0 0 30px rgba(212,175,55,.08);z-index:1}
@@ -51,26 +60,26 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 .gold-shimmer{position:absolute;top:18px;left:14px;right:14px;height:180px;background:linear-gradient(180deg,rgba(255,236,138,.12),transparent);border-radius:160px 160px 0 0;z-index:2;pointer-events:none}
 .top-content{position:relative;z-index:3;text-align:center;width:100%;padding-top:34px}
 .bism-top{font-family:'Amiri',serif;font-size:28px;color:#ffec8a;text-shadow:0 0 20px #d4af37,0 0 40px rgba(212,175,55,.5);line-height:1.2}
-.couple-top{font-family:'Great Vibes';font-size:54px;background:linear-gradient(180deg,#fff8c0 0%,#ffec8a 20%,#d4af37 50%,#ffec8a 80%,#fff8c0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 15px rgba(212,175,55,.6));margin-top:6px;line-height:1.1;animation:shine 3s infinite}
+.couple-top{font-family:'Great Vibes';font-size:54px;background:linear-gradient(180deg,#fff8c0 0%,#ffec8a 20%,#d4af37 50%,#ffec8a 80%,#fff8c0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 15px rgba(212,175,55,.6));margin-top:6px;line-height:1.1;animation:shine 3s infinite}
 @keyframes shine{0%,100%{filter:drop-shadow(0 0 15px rgba(212,175,55,.6))}50%{filter:drop-shadow(0 0 25px rgba(255,236,138,.9))}}
-.pic-wrap{position:relative;width:136px;height:136px;margin:18px auto 0}
+.pic-wrap{position:relative;width:136px;height:136px;margin:18px auto 0;display:none}
 .pic-glow{position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 0deg,#ffec8a,#d4af37,#8c6a08,#d4af37,#ffec8a);animation:rotate 4s linear infinite;filter:blur(1px)}
 @keyframes rotate{to{transform:rotate(360deg)}}
 .pic-inner{position:absolute;inset:3px;border-radius:50%;background:#000;padding:3px;z-index:2}
 .couple-pic{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;border:none}
-.host-badge{margin-top:16px;display:inline-block;padding:6px 18px;background:linear-gradient(180deg,rgba(212,175,55,.15),rgba(0,0,0,.4));border:1px solid rgba(212,175,55,.4);border-radius:20px;color:#ffec8a;font-size:12px;letter-spacing:.5px;font-weight:600}
-.royal-btn{margin-top:14px;display:inline-block;padding:10px 28px;border-radius:30px;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.9));border:1.5px solid #d4af37;color:#ffec8a;font-size:10px;letter-spacing:3px;font-weight:700;box-shadow:0 0 20px rgba(212,175,55,.2),inset 0 1px 0 rgba(255,255,255,.1);position:relative;overflow:hidden}
+.host-badge{margin-top:16px;display:inline-block;padding:6px 18px;background:linear-gradient(180deg,rgba(212,175,55,.15),rgba(0,0,0,.4));border:1px solid rgba(212,175,55,.4);border-radius:20px;color:#ffec8a;font-size:12px;font-weight:600}
+.royal-btn{margin-top:14px;display:inline-block;padding:10px 28px;border-radius:30px;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.9));border:1.5px solid #d4af37;color:#ffec8a;font-size:10px;letter-spacing:3px;font-weight:700;box-shadow:0 0 20px rgba(212,175,55,.2);position:relative;overflow:hidden}
 .royal-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,236,138,.4),transparent);animation:sweep 2.5s infinite}
 @keyframes sweep{0%{left:-100%}100%{left:100%}}
 .sparkle{position:absolute;font-size:10px;color:#ffec8a;animation:twinkle 2s infinite;z-index:4}
 @keyframes twinkle{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
 </style>
 <div class="arch-frame"></div><div class="gold-shimmer"></div>
-<span class="sparkle" style="top:50px;left:30px;animation-delay:.2s">✨</span><span class="sparkle" style="top:80px;right:35px;animation-delay:.8s">✨</span><span class="sparkle" style="top:200px;left:40px;animation-delay:1.2s">💫</span><span class="sparkle" style="top:240px;right:40px;animation-delay:.5s">✨</span>
+<span class="sparkle" style="top:50px;left:30px">✨</span><span class="sparkle" style="top:80px;right:35px">✨</span>
 <div class="top-content">
 <div class="bism-top">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
 <div class="couple-top" id="coupleHead">Hamza & Noor</div>
-<div class="pic-wrap" id="picWrap"><div class="pic-glow"></div><div class="pic-inner"><img id="couplePic" class="couple-pic" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400" style="display:block"></div></div>
+<div class="pic-wrap" id="picWrap"><div class="pic-glow"></div><div class="pic-inner"><img id="couplePic" class="couple-pic"></div></div>
 <div class="host-badge" id="hostName">Host: Hasan Family</div><br>
 <div class="royal-btn">ROYAL INVITATION</div>
 <div style="margin-top:18px;display:flex;justify-content:center;gap:8px"><div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,#d4af37)"></div><div style="color:#d4af37;font-size:10px">💛</div><div style="width:40px;height:1px;background:linear-gradient(90deg,#d4af37,transparent)"></div></div>
@@ -79,9 +88,9 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <div class="mid" style="padding:14px;background:#070707">
 <style>
 .glass{background:linear-gradient(180deg,#151515,#0e0e0e);border:1.5px solid #2a2410;border-radius:18px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.6)}
-.input{width:100%;padding:14px;border-radius:14px;border:1.5px solid #2a2410;background:linear-gradient(180deg,#111,#0a0a0a);color:#ffec8a;text-align:center;font-weight:600;box-shadow:inset 0 2px 10px rgba(0,0,0,.5)}
+.input{width:100%;padding:14px;border-radius:14px;border:1.5px solid #2a2410;background:linear-gradient(180deg,#111,#0a0a0a);color:#ffec8a;text-align:center;font-weight:600}
 .btn{width:100%;padding:13px;border-radius:14px;border:1px solid #2a2410;background:#1a1a1a;color:#d4af37;font-weight:700;cursor:pointer;margin-top:10px}
-.btn-gold{background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e,#d4af37);color:#1a1200;border:none;box-shadow:0 0 25px rgba(212,175,55,.5),0 6px 20px rgba(0,0,0,.4);font-weight:800;letter-spacing:.5px;position:relative;overflow:hidden}
+.btn-gold{background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e,#d4af37);color:#1a1200;border:none;box-shadow:0 0 25px rgba(212,175,55,.5);font-weight:800;position:relative;overflow:hidden}
 .btn-gold::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transform:translateX(-100%);animation:btnShine 2s infinite}
 @keyframes btnShine{100%{transform:translateX(100%)}}
 .calligraphy{font-family:'Great Vibes';font-size:48px;color:#ffec8a;overflow:hidden;white-space:nowrap;width:0;animation:write 2.5s forwards;text-shadow:0 0 20px #d4af37}
@@ -106,32 +115,32 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 .music-btn{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.85);border:2px solid #d4af37;display:none;align-items:center;justify-content:center;font-size:16px;z-index:100;cursor:pointer}
 </style>
 
-<div id="lock" class="glass" style="border:1.5px solid #d4af37;box-shadow:0 0 30px rgba(212,175,55,.15)"><div style="color:#ffec8a;font-weight:700;font-size:16px;text-align:center;text-shadow:0 0 10px rgba(212,175,55,.5)">🔐 Royal Private Invitation</div><div style="text-align:center;color:#8a7220;font-size:10px;margin-top:4px;letter-spacing:1px">ENTER YOUR SECRET CODE</div><input id="p" class="input" type="password" placeholder="🔑 Password" style="margin-top:12px"><button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO ✨</button><div id="e" style="color:#ef4444;font-size:11px;margin-top:8px;text-align:center"></div></div>
+<div id="lock" class="glass" style="border:1.5px solid #d4af37"><div style="color:#ffec8a;font-weight:700;font-size:16px;text-align:center">🔐 Royal Private Invitation</div><div style="text-align:center;color:#8a7220;font-size:10px;margin-top:4px">ENTER YOUR SECRET CODE</div><input id="p" class="input" type="password" placeholder="🔑 Password" style="margin-top:12px"><button class="btn btn-gold" onclick="unlock()">✨ CARD KHOLO ✨</button><div id="e" style="color:#ef4444;font-size:11px;margin-top:8px;text-align:center"></div></div>
 
 <div id="welcomeScreen" style="display:none" class="glass"><div style="text-align:center">
 <div style="display:flex;justify-content:center"><div id="welcomeName" class="calligraphy"></div></div>
 <div id="familyInfo"></div>
 <div id="welcomeEvent" style="font-size:11px;color:#d4af37;letter-spacing:2px;margin-top:6px"></div>
-<div style="margin-top:12px;background:linear-gradient(180deg,#1a1810,#12120e);border:1px dashed #3a3520;border-radius:12px;padding:10px"><div style="font-family:'Amiri';font-size:14px;color:#ffec8a">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا</div><div style="font-size:9px;color:#8a7220;margin-top:4px">And of His signs is that He created for you mates from yourselves - Quran 30:21</div><button class="btn" style="margin-top:8px;background:#111;color:#d4af37;font-size:11px" onclick="playQuran()">▶️ Tilawat Suniye</button></div>
+<div style="margin-top:12px;background:linear-gradient(180deg,#1a1810,#12120e);border:1px dashed #3a3520;border-radius:12px;padding:10px"><div style="font-family:'Amiri';font-size:14px;color:#ffec8a">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا</div><div style="font-size:9px;color:#8a7220;margin-top:4px">Quran 30:21</div><button class="btn" style="margin-top:8px;background:#111;color:#d4af37;font-size:11px" onclick="playQuran()">▶️ Tilawat Suniye</button></div>
 <button class="btn btn-gold" onclick="showEnvelope()">💌 LETTER OPEN IT</button></div></div>
 
 <div id="envelopeStage" class="glass" style="display:none">
 <div class="env-wrap" id="envWrap"><div class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</div><audio id="bgMusic" loop preload="auto"></audio><div class="roshni" id="roshni"></div><div class="envelope" id="envelope" onclick="openEnvelope()"><div class="env-back"></div><div class="env-left"></div><div class="env-right"></div><div class="letter" id="letter"><div style="font-size:8px;letter-spacing:2.5px;color:#8c6a08;font-weight:700">YOU ARE INVITED</div><div id="cardCouple" style="font-family:'Great Vibes';font-size:30px;color:#ffec8a;margin:6px 0">Hamza & Noor</div><div id="letterGuest" style="font-weight:700;color:#ffec8a;font-size:15px"></div><div id="letterFamily" style="font-size:11px;color:#fff;margin-top:6px;background:rgba(212,175,55,.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(212,175,55,.25)"></div></div><div class="env-flap"></div><div class="seal" id="seal">💛</div></div><div class="hint" id="hint">👆 SEAL PAR TAP KARO</div></div><button id="toDetails" class="btn btn-gold" style="display:none;margin-top:12px" onclick="openCards()">✨ DETAILS DEKHEIN 🎆</button></div>
 <div id="cards" style="display:none" class="glass">
 <style>
-.event-box{background:linear-gradient(180deg,#1a1a1a,#121212);border:1.2px solid #2e2818;border-radius:18px;padding:16px;margin-top:14px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05);position:relative;overflow:hidden}
+.event-box{background:linear-gradient(180deg,#1a1a1a,#121212);border:1.2px solid #2e2818;border-radius:18px;padding:16px;margin-top:14px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.4);position:relative}
 .event-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}
 .dua-box{background:linear-gradient(180deg,#1a1810,#12120e);border:1.2px dashed #3a3520;border-radius:14px;padding:12px;margin-top:12px;text-align:center;font-size:12px;color:#d4af37;line-height:1.6}
 .countdown{display:flex;gap:8px;justify-content:center;margin-top:14px}
-.cd{flex:1;background:linear-gradient(180deg,#222,#0a0a0a);color:#ffec8a;border-radius:14px;padding:12px 2px;text-align:center;border:1.2px solid #3a3520;box-shadow:0 4px 12px rgba(0,0,0,.5)}
-.cd b{display:block;font-size:20px;text-shadow:0 0 10px #d4af37}.cd span{font-size:8px;letter-spacing:1px;opacity:.7}
+.cd{flex:1;background:linear-gradient(180deg,#222,#0a0a0a);color:#ffec8a;border-radius:14px;padding:12px 2px;text-align:center;border:1.2px solid #3a3520}
+.cd b{display:block;font-size:20px;text-shadow:0 0 10px #d4af37}.cd span{font-size:8px;opacity:.7}
 .thanks{background:linear-gradient(180deg,#1a1a1a,#080808);border:1.2px solid #2e2818;border-radius:14px;padding:14px;margin-top:12px;text-align:center;color:#ffec8a;font-size:12px}
 .foot{background:#000;color:#6a5a2a;padding:14px;text-align:center;font-size:8px;letter-spacing:2.5px;border-top:1px solid #1a1810}
-.admin-float{position:fixed;bottom:16px;right:16px;width:50px;height:50px;background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:9999;border:2px solid #fff;box-shadow:0 4px 20px rgba(212,175,55,.5)}
+.admin-float{position:fixed;bottom:16px;right:16px;width:50px;height:50px;background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:9999;border:2px solid #fff}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:10000;padding:12px}
 .modal-box{background:#121212;border:2px solid #d4af37;border-radius:16px;padding:18px;width:100%;max-width:360px;color:#fff;text-align:center}
 .duas-list{max-height:220px;overflow-y:auto;margin-top:10px;text-align:left}
-.dua-item{background:linear-gradient(180deg,#1a1a1a,#111);border:1px solid #222;border-radius:12px;padding:10px;margin-top:8px;color:#ffec8a;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.dua-item{background:linear-gradient(180deg,#1a1a1a,#111);border:1px solid #222;border-radius:12px;padding:10px;margin-top:8px;color:#ffec8a;font-size:12px}
 </style>
 <div id="gName" style="text-align:center;color:#ffec8a;font-size:34px;font-family:'Great Vibes';text-shadow:0 0 15px rgba(212,175,55,.6)"></div>
 <div id="gFamilyDetail" style="text-align:center;margin-top:6px"></div>
@@ -141,16 +150,14 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <div class="event-box" id="mehndiBox" style="display:none"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">🌿 MEHNDI</div><div id="mDateTime" style="font-weight:700;margin-top:6px;font-size:15px;color:#ffec8a"></div><div id="mVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="mMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
 <div class="event-box" id="baratBox"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">💒 BARAT</div><div id="bDateTime" style="font-weight:700;margin-top:6px;font-size:16px;color:#ffec8a"></div><div id="bVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="bMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
 <div class="event-box" id="walimaBox"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">🎉 WALIMA</div><div id="wDateTime" style="font-weight:700;margin-top:6px;font-size:16px;color:#ffec8a"></div><div id="wVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="wMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
-
-<div style="background:linear-gradient(180deg,#111,#0a0a0a);border:1.5px solid #2a2410;border-radius:16px;padding:14px;margin-top:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)">
-<div style="text-align:center;color:#ffec8a;font-weight:700;letter-spacing:.5px">🤲 Dua Wall - Apni Dua Likhein</div>
+<div style="background:linear-gradient(180deg,#111,#0a0a0a);border:1.5px solid #2a2410;border-radius:16px;padding:14px;margin-top:14px">
+<div style="text-align:center;color:#ffec8a;font-weight:700">🤲 Dua Wall</div>
 <textarea id="duaInput" class="input" style="margin-top:10px;height:72px;text-align:left" placeholder="Allah jori salamat rakhe..."></textarea>
 <button class="btn btn-gold" onclick="submitDua()">✨ Dua Bhejein</button>
 <div id="duasList" class="duas-list"></div>
 </div>
-
-<div style="background:linear-gradient(180deg,#111,#0a0a0a);border:1.5px solid #2a2410;border-radius:16px;padding:16px;margin-top:14px;text-align:center;color:#ffec8a"><div style="font-size:10px;letter-spacing:2.5px">📞 RSVP - Rabta Karein</div><div id="hostDisplay" style="margin-top:6px;font-size:11px;color:#d4af37"></div><div style="margin-top:12px"><span id="rsvp1" style="font-size:14px;font-weight:700"></span><br><br><a id="rsvpPhone" href="tel:" style="padding:8px 16px;border-radius:24px;background:#fff;color:#111;text-decoration:none;font-weight:800;font-size:11px;margin-right:6px">📞 Call</a> <a id="rsvpWhats" href="" target="_blank" style="padding:8px 16px;border-radius:24px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;font-size:11px">💬 WhatsApp</a></div></div>
-<div class="thanks" id="thanksBox" style="font-weight:600;letter-spacing:.3px">JazakAllah Khair - Aapki tashreef ka shukriya! 💛</div>
+<div style="background:linear-gradient(180deg,#111,#0a0a0a);border:1.5px solid #2a2410;border-radius:16px;padding:16px;margin-top:14px;text-align:center;color:#ffec8a"><div style="font-size:10px;letter-spacing:2.5px">📞 RSVP</div><div id="hostDisplay" style="margin-top:6px;font-size:11px;color:#d4af37"></div><div style="margin-top:12px"><span id="rsvp1" style="font-size:14px;font-weight:700"></span><br><br><a id="rsvpPhone" href="tel:" style="padding:8px 16px;border-radius:24px;background:#fff;color:#111;text-decoration:none;font-weight:800;font-size:11px;margin-right:6px">📞 Call</a> <a id="rsvpWhats" href="" target="_blank" style="padding:8px 16px;border-radius:24px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;font-size:11px">💬 WhatsApp</a></div></div>
+<div class="thanks" id="thanksBox">JazakAllah Khair!</div>
 <button class="btn" onclick="triggerFireworks();triggerGoldConfetti();" style="margin-top:12px;background:#111;color:#d4af37;border:1.5px solid #2a2410">🎆 FIREWORKS + CONFETTI 🎆</button>
 </div></div><div class="foot" id="foot">Hamza & Noor • Royal Black Gold 2026</div></div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
@@ -166,38 +173,35 @@ function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
 function playQuran(){ let a=document.getElementById('quranAudio'); if(a){ a.volume=0.9; a.play().catch(()=>{}); } }
 
-// CONFETTI - 10
+// CONFETTI
 const confettiCanvas=document.getElementById('confettiCanvas'); const confCtx=confettiCanvas.getContext('2d');
 function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeConfetti); resizeConfetti();
 function triggerGoldConfetti(){
   if(!CONFETTI_ENABLED) return;
   confettiCanvas.style.display='block'; let confettis=[];
-  for(let i=0;i<140;i++){ confettis.push({x:Math.random()*confettiCanvas.width,y:-20-Math.random()*300,vx:(Math.random()-0.5)*5,vy:1+Math.random()*5,r:3+Math.random()*6,color:['#ffec8a','#d4af37','#ffd700','#fff8c0'][Math.floor(Math.random()*4)],rot:Math.random()*360,rotV:(Math.random()-0.5)*12}); }
+  for(let i=0;i<140;i++){ confettis.push({x:Math.random()*confettiCanvas.width,y:-20-Math.random()*300,vx:(Math.random()-0.5)*5,vy:1+Math.random()*5,r:3+Math.random()*6,color:['#ffec8a','#d4af37','#ffd700'][Math.floor(Math.random()*4)],rot:Math.random()*360,rotV:(Math.random()-0.5)*12}); }
   let start=Date.now();
   (function anim(){
     confCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
     let alive=false;
     confettis.forEach(c=>{ c.x+=c.vx; c.y+=c.vy; c.rot+=c.rotV; c.vy+=0.05; if(c.y<confettiCanvas.height+30){ alive=true; confCtx.save(); confCtx.translate(c.x,c.y); confCtx.rotate(c.rot*Math.PI/180); confCtx.fillStyle=c.color; confCtx.shadowBlur=10; confCtx.shadowColor=c.color; confCtx.fillRect(-c.r/2,-c.r/2,c.r,c.r*1.8); confCtx.restore(); } });
-    if(alive && Date.now()-start<7500) requestAnimationFrame(anim); else confettiCanvas.style.display='none';
+    if(alive && Date.now()-start<7500) requestAnimationFrame(anim); else { confCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); confettiCanvas.style.display='none'; }
   })();
 }
 
-// FIREWORKS - NO BLACK SCREEN FIX
+// FIREWORKS - NO BLACK SCREEN
 const fwCanvas=document.getElementById('fireworks'); const fwCtx=fwCanvas.getContext('2d'); let fwParticles=[], fwActive=false;
+fwCanvas.style.background='transparent';
 function resizeFW(){ fwCanvas.width=window.innerWidth; fwCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeFW); resizeFW();
 function createFirework(x,y){
   let golds=['#ffec8a','#d4af37','#fff8c0','#ffb700'];
-  for(let i=0;i<80;i++){ let a=Math.random()*Math.PI*2; let sp=1+Math.random()*10; fwParticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.008+Math.random()*0.01,color:golds[Math.floor(Math.random()*golds.length)],size:1.2+Math.random()*3.5}); }
+  for(let i=0;i<75;i++){ let a=Math.random()*Math.PI*2; let sp=1+Math.random()*9; fwParticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.008+Math.random()*0.01,color:golds[Math.floor(Math.random()*golds.length)],size:1.2+Math.random()*3.2}); }
 }
-function triggerFireworks(){ if(!FW_ENABLED) return; fwCanvas.style.display='block'; fwActive=true; fwParticles=[]; let c=0; let iv=setInterval(()=>{ let x=Math.random()*fwCanvas.width*0.7+fwCanvas.width*0.15; let y=Math.random()*fwCanvas.height*0.4+fwCanvas.height*0.05; createFirework(x,y); c++; if(c>20) clearInterval(iv); },250); setTimeout(()=>{ fwActive=false; setTimeout(()=>{ fwCanvas.style.display='none'; fwParticles=[]; },3500); clearInterval(iv); },8000); }
-function animateFW(){ if(fwActive||fwParticles.length>0){ fwCtx.fillStyle='rgba(0,0,0,0.25)'; fwCtx.fillRect(0,0,fwCanvas.width,fwCanvas.height); for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.991; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=16; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } fwCtx.globalAlpha=1; fwCtx.shadowBlur=0; } requestAnimationFrame(animateFW); } animateFW();
-function showCoupleFireworksText(){
-  if(!FW_ENABLED) return; document.querySelectorAll('.fw-text').forEach(e=>e.remove());
-  let con=document.createElement('div'); con.className='fw-text';
-  con.style.cssText=`position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:0.7s cubic-bezier(.34,1.56,.64,1);background:radial-gradient(ellipse at center,#151515,#000);border:2.5px solid #d4af37;border-radius:26px;padding:22px 30px;box-shadow:0 0 35px rgba(212,175,55,.8),0 0 90px rgba(212,175,55,.4);min-width:280px`;
-  con.innerHTML=`<div style="font-family:'Great Vibes';font-size:54px;color:#ffec8a;line-height:1.1;text-shadow:0 0 20px #d4af37">Hamza<br>& Noor</div><div style="height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:14px 0"></div><div style="font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:800">💍 ${FW_TITLE} 💍</div><div style="font-size:12px;letter-spacing:3px;color:#ffec8a;margin-top:8px;font-weight:700">✨ ${FW_SUB} ✨</div>`;
-  document.body.appendChild(con); setTimeout(()=>{con.style.opacity='1';con.style.transform='translate(-50%,-50%) scale(1.06)';},80); setTimeout(()=>{con.style.opacity='0';con.style.transform='translate(-50%,-50%) scale(0.9)';setTimeout(()=>con.remove(),600);},3400);
-}
+function triggerFireworks(){ if(!FW_ENABLED) return; fwCanvas.style.display='block'; fwCanvas.style.background='transparent'; fwActive=true; fwParticles=[]; let c=0; let iv=setInterval(()=>{ let x=Math.random()*fwCanvas.width*0.7+fwCanvas.width*0.15; let y=Math.random()*fwCanvas.height*0.4+fwCanvas.height*0.05; createFirework(x,y); c++; if(c>18) clearInterval(iv); },280); setTimeout(()=>{ fwActive=false; fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); fwCanvas.style.display='none'; fwParticles=[]; clearInterval(iv); },7000); }
+function animateFW(){ if(fwActive){ fwCtx.fillStyle='rgba(0,0,0,0.18)'; fwCtx.fillRect(0,0,fwCanvas.width,fwCanvas.height); for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.991; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=14; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } fwCtx.globalAlpha=1; fwCtx.shadowBlur=0; } else { fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); } requestAnimationFrame(animateFW); } animateFW();
+function showCoupleFireworksText(){ if(!FW_ENABLED) return; document.querySelectorAll('.fw-text').forEach(e=>e.remove()); let con=document.createElement('div'); con.className='fw-text'; con.style.cssText=`position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:0.6s cubic-bezier(.34,1.56,.64,1);background:radial-gradient(ellipse at center,#151515,#000);border:2.5px solid #d4af37;border-radius:26px;padding:22px 30px;box-shadow:0 0 35px rgba(212,175,55,.8);min-width:280px`; con.innerHTML=`<div style="font-family:'Great Vibes';font-size:54px;color:#ffec8a;line-height:1.1;text-shadow:0 0 20px #d4af37">Hamza<br>& Noor</div><div style="height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:14px 0"></div><div style="font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:800">💍 ${FW_TITLE} 💍</div><div style="font-size:12px;letter-spacing:3px;color:#ffec8a;margin-top:8px;font-weight:700">✨ ${FW_SUB} ✨</div>`; document.body.appendChild(con); setTimeout(()=>{con.style.opacity='1';con.style.transform='translate(-50%,-50%) scale(1.05)';},80); setTimeout(()=>{con.style.opacity='0';setTimeout(()=>con.remove(),500);},3000); }
+
+// GATE SLOW MOTION 7 SEC + NO BLACK SCREEN
 let gateOpened=false;
 function openGate(){
   if(gateOpened) return; gateOpened=true;
@@ -205,22 +209,67 @@ function openGate(){
   if(GATE_SONG){ let audio=document.getElementById('bgMusic'); if(audio&&audio.src){ audio.volume=0.45; audio.play().then(()=>{ document.getElementById('musicBtn').style.display='flex'; isMusicPlaying=true; }).catch(()=>{}); } else if(window.autoPlaySong){ window.autoPlaySong(); } }
   document.getElementById('nikkahTitle').classList.add('show');
   document.getElementById('gateScreen').classList.add('open');
-  let nameDiv=document.getElementById('gateCoupleName'); if(nameDiv){ nameDiv.innerHTML=`<div style="font-family:'Great Vibes';font-size:46px;line-height:1">Hamza</div><div style="font-size:9px;letter-spacing:3.5px;color:#d4af37;font-weight:700;margin:8px 0">💍 NIKKAH CEREMONY 💍</div><div style="font-family:'Great Vibes';font-size:44px;line-height:1">& Noor</div>`; }
-  // BLACK SCREEN FIX - Gate ke saath hi hide, no gap
   setTimeout(()=>{
-    triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText();
-    document.getElementById('gateIntro').style.transition='opacity 0.5s ease'; document.getElementById('gateIntro').style.opacity='0'; setTimeout(()=>{ document.getElementById('gateIntro').style.display='none'; },500);
-  },2600);
+    document.getElementById('gateIntro').style.transition='opacity 0.5s ease';
+    document.getElementById('gateIntro').style.opacity='0';
+    setTimeout(()=>{ 
+      document.getElementById('gateIntro').style.display='none'; 
+      triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText();
+      fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+    },500);
+  },3800);
 }
 document.getElementById('gateScreen').addEventListener('click',openGate);
-setTimeout(()=>{ document.getElementById('nikkahTitle').classList.add('show'); },600);
-setTimeout(()=>{ if(!gateOpened) openGate(); },4200);
+setTimeout(()=>{ document.getElementById('nikkahTitle').classList.add('show'); },800);
+setTimeout(()=>{ if(!gateOpened) openGate(); },5500);
+
 function toggleMusic(){let a=document.getElementById('bgMusic');let b=document.getElementById('musicBtn');if(!a||!a.src)return;if(isMusicPlaying){a.pause();b.innerText='🔇';isMusicPlaying=false;}else{a.play().catch(()=>{});b.innerText='🎶';isMusicPlaying=true;}}
 function formatFamily(c,t){ c=parseInt(c)||1; if(t&&t.toLowerCase().includes('family')) return `👨‍👩‍👧‍👦 Full Family - ${c} Persons`; if(c==1) return `👤 1 Person`; if(c==2) return `👥 2 Persons`; return `👥 ${c} Persons`; }
 function animateName(name){ let el=document.getElementById('welcomeName'); if(!el) return; if(!CALLIGRAPHY_ENABLED){ el.innerText=name; el.style.width='100%'; return; } el.style.width='0'; el.innerText=name; el.classList.remove('calligraphy'); void el.offsetWidth; el.classList.add('calligraphy'); }
 async function loadDuas(){ if(!DUA_WALL_ENABLED) return; try{ let {data}=await sb.from('duas').select('*').order('created_at',{ascending:false}).limit(20); let list=document.getElementById('duasList'); if(!list) return; list.innerHTML=''; if(data){ data.forEach(d=>{ let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${d.name||'Mehman'}:</b> ${d.message}`; list.appendChild(div); }); } }catch(e){} }
 async function submitDua(){ let msg=document.getElementById('duaInput').value.trim(); if(!msg) return alert('Dua likhein'); let name=currentGuestData?currentGuestData.name:'Mehman'; try{ await sb.from('duas').insert([{name:name,message:msg}]); loadDuas(); }catch(e){ let list=document.getElementById('duasList'); let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${name}:</b> ${msg}`; list.prepend(div); } document.getElementById('duaInput').value=''; triggerGoldConfetti(); alert('🤲 JazakAllah! Dua save ho gayi'); }
-async function loadConfig(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); if(!data) return; let f=(data.c1||'')+(data.c1&&data.c2?' & ':'')+(data.c2||''); if(f){ document.getElementById('coupleHead').innerText=f; document.getElementById('cardCouple').innerText=f; document.getElementById('foot').innerText=(data.footer_text||f.toUpperCase()+' • ROYAL BLACK 2026'); } if(data.host){ document.getElementById('hostName').innerText='Host: '+data.host; document.getElementById('hostDisplay').innerText='Host: '+data.host; } if(data.pic){ try{ let pics=JSON.parse(data.pic); let url=Array.isArray(pics)?pics[0]:pics; if(url){ document.getElementById('couplePic').src=url; document.getElementById('gPic').src=url; document.getElementById('gPic').style.display='block'; } }catch(e){ if(data.pic){ document.getElementById('couplePic').src=data.pic; } } } document.getElementById('bDateTime').innerText=(data.bd||data.barat_date||'')+' '+(data.bt||data.barat_time||''); document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; document.getElementById('wDateTime').innerText=(data.wd||data.walima_date||'')+' '+(data.wt||data.walima_time||''); document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; if(data.md||data.mehndi_date){ document.getElementById('mehndiBox').style.display='block'; document.getElementById('mDateTime').innerText=(data.md||data.mehndi_date||'')+' '+(data.mt||data.mehndi_time||''); document.getElementById('mVenue').innerText=data.mv||data.mehndi_venue||''; if(data.mv||data.mehndi_venue) document.getElementById('mMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.mv||data.mehndi_venue); } if(data.bv||data.barat_venue) document.getElementById('bMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.bv||data.barat_venue||data.venue); if(data.wv||data.walima_venue) document.getElementById('wMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.wv||data.walima_venue); if(data.dua_text) document.getElementById('duaBox').innerHTML=data.dua_text; if(data.thanks_text) document.getElementById('thanksBox').innerText=data.thanks_text; if(data.phone){ document.getElementById('rsvpPhone').href='tel:'+data.phone; document.getElementById('rsvp1').innerText=data.phone; document.getElementById('rsvpWhats').href='https://wa.me/'+data.phone.replace(/[^0-9]/g,''); } if(data.song){ let audio=document.getElementById('bgMusic'); audio.src=data.song; audio.volume=0.85; document.getElementById('musicBtn').style.display='flex'; window.autoPlaySong=()=>{ if(!GATE_SONG) return; audio.play().then(()=>{document.getElementById('musicBtn').innerText='🎶';isMusicPlaying=true;}).catch(()=>{}); }; } if(data.quran_url){ document.getElementById('quranAudio').src=data.quran_url; } FW_TITLE=data.fireworks_title||'NIKAH CEREMONY'; FW_SUB=data.fireworks_subtitle||'QABOOL HAI'; FW_ENABLED=data.fireworks_enabled!==false; GATE_SONG=data.gate_song_enabled!==false; CONFETTI_ENABLED=data.confetti_enabled!==false; QURAN_ENABLED=data.quran_enabled!==false; CALLIGRAPHY_ENABLED=data.calligraphy_enabled!==false; DUA_WALL_ENABLED=data.dua_wall_enabled!==false; let dateStr=data.bd||data.barat_date||data.wd||data.walima_date; if(dateStr){ let t=new Date(dateStr); setInterval(()=>{ let diff=t-new Date(); if(diff<=0) return; let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText=v;}; g('cdD',Math.floor(diff/86400000)); g('cdH',Math.floor(diff%86400000/3600000)); g('cdM',Math.floor(diff%3600000/60000)); g('cdS',Math.floor(diff%60000/1000)); },1000); } }catch(e){ console.log(e); } loadDuas(); }
+
+async function loadConfig(){ 
+  try{ 
+    let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); 
+    if(!data) return; 
+    let f=(data.c1||'')+(data.c1&&data.c2?' & ':'')+(data.c2||''); 
+    if(f){ document.getElementById('coupleHead').innerText=f; document.getElementById('cardCouple').innerText=f; document.getElementById('foot').innerText=(data.footer_text||f.toUpperCase()+' • ROYAL BLACK 2026'); 
+      // Gate name fix
+      let gateName=document.getElementById('gateCoupleName');
+      if(gateName){ gateName.innerHTML=`${data.c1||'Hamza'}<br><span style="font-family:'Poppins';font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:700;display:block;margin:8px 0">💍 NIKKAH CEREMONY 💍</span>& ${data.c2||'Noor'}`; }
+    } 
+    if(data.host){ document.getElementById('hostName').innerText='Host: '+data.host; document.getElementById('hostDisplay').innerText='Host: '+data.host; } 
+    // NO DEFAULT PIC FIX - Sirf admin wali pic
+    if(data.pic){ 
+      try{ 
+        let pics=JSON.parse(data.pic); let url=Array.isArray(pics)?pics[0]:pics; 
+        if(url && url.length>20){ 
+          document.getElementById('picWrap').style.display='block';
+          document.getElementById('couplePic').src=url; 
+          document.getElementById('gPic').src=url; document.getElementById('gPic').style.display='block'; 
+        } 
+      }catch(e){ 
+        if(data.pic && data.pic.length>20){
+          document.getElementById('picWrap').style.display='block';
+          document.getElementById('couplePic').src=data.pic;
+        }
+      } 
+    } 
+    document.getElementById('bDateTime').innerText=(data.bd||data.barat_date||'')+' '+(data.bt||data.barat_time||''); document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; 
+    document.getElementById('wDateTime').innerText=(data.wd||data.walima_date||'')+' '+(data.wt||data.walima_time||''); document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; 
+    if(data.md||data.mehndi_date){ document.getElementById('mehndiBox').style.display='block'; document.getElementById('mDateTime').innerText=(data.md||data.mehndi_date||'')+' '+(data.mt||data.mehndi_time||''); document.getElementById('mVenue').innerText=data.mv||data.mehndi_venue||''; if(data.mv||data.mehndi_venue) document.getElementById('mMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.mv||data.mehndi_venue); } 
+    if(data.bv||data.barat_venue) document.getElementById('bMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.bv||data.barat_venue||data.venue); 
+    if(data.wv||data.walima_venue) document.getElementById('wMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.wv||data.walima_venue); 
+    if(data.dua_text) document.getElementById('duaBox').innerHTML=data.dua_text; 
+    if(data.thanks_text) document.getElementById('thanksBox').innerText=data.thanks_text; 
+    if(data.phone){ document.getElementById('rsvpPhone').href='tel:'+data.phone; document.getElementById('rsvp1').innerText=data.phone; document.getElementById('rsvpWhats').href='https://wa.me/'+data.phone.replace(/[^0-9]/g,''); } 
+    if(data.song){ let audio=document.getElementById('bgMusic'); audio.src=data.song; audio.volume=0.85; document.getElementById('musicBtn').style.display='flex'; window.autoPlaySong=()=>{ if(!GATE_SONG) return; audio.play().then(()=>{document.getElementById('musicBtn').innerText='🎶';isMusicPlaying=true;}).catch(()=>{}); }; } 
+    if(data.quran_url){ document.getElementById('quranAudio').src=data.quran_url; } 
+    FW_TITLE=data.fireworks_title||'NIKAH CEREMONY'; FW_SUB=data.fireworks_subtitle||'QABOOL HAI'; FW_ENABLED=data.fireworks_enabled!==false; GATE_SONG=data.gate_song_enabled!==false; CONFETTI_ENABLED=data.confetti_enabled!==false; QURAN_ENABLED=data.quran_enabled!==false; CALLIGRAPHY_ENABLED=data.calligraphy_enabled!==false; DUA_WALL_ENABLED=data.dua_wall_enabled!==false; 
+    let dateStr=data.bd||data.barat_date||data.wd||data.walima_date; if(dateStr){ let t=new Date(dateStr); setInterval(()=>{ let diff=t-new Date(); if(diff<=0) return; let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText=v;}; g('cdD',Math.floor(diff/86400000)); g('cdH',Math.floor(diff%86400000/3600000)); g('cdM',Math.floor(diff%3600000/60000)); g('cdS',Math.floor(diff%60000/1000)); },1000); } 
+  }catch(e){ console.log(e); } loadDuas(); 
+}
 async function unlock(){ let v=document.getElementById('p').value.trim(); if(!v) return; document.getElementById('e').innerText='Checking...'; try{ let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle(); if(data){ currentGuestData=data; currentGuestEvent=(data.event||'both').toLowerCase(); let count=data.count||data.guest_count||1; let familyType=data.family_type||data.type||''; document.getElementById('lock').style.display='none'; animateName(data.name); document.getElementById('familyInfo').innerHTML=`<span class="family-badge">${formatFamily(count,familyType)}</span>`; document.getElementById('letterGuest').innerText='For '+data.name+' ❤️'; document.getElementById('letterFamily').innerText=formatFamily(count,familyType); document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA'; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText=''; triggerGoldConfetti(); }else{ document.getElementById('e').innerText='❌ Galat Password'; } }catch{} }
 function showEnvelope(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('envelopeStage').style.display='block';}
 let opened=false;function openEnvelope(){if(opened)return;opened=true;document.getElementById('seal').classList.add('broken');document.getElementById('hint').style.display='none';document.getElementById('roshni').classList.add('on'); triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText(); setTimeout(()=>{document.getElementById('envelope').classList.add('open');},450);setTimeout(()=>{document.getElementById('envelope').classList.add('full');document.getElementById('toDetails').style.display='block';if(window.autoPlaySong)window.autoPlaySong();},1400);}

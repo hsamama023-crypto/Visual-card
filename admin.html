@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Premium FINAL</title>
+<title>Admin - Premium Pro + Gate + Family + Fireworks</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0} body{background:#050505;color:#fff;font-family:Poppins,sans-serif;padding:12px}
-.card{background:linear-gradient(180deg,#1e1e1e,#141414);border:2px solid #d4af37;border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.card{background:linear-gradient(180deg,#1e1e1e,#141414);border:2px solid #d4af37;border-radius:20px;padding:18px;margin-bottom:16px}
 h2{color:#ffec8a;text-align:center;margin:14px 0;font-size:22px;letter-spacing:2px} h3{color:#d4af37;margin-bottom:10px;font-size:14px;letter-spacing:1.5px}
 label{color:#d4af37;font-size:10px;display:block;margin-top:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
 input,textarea,select{width:100%;background:#222;border:1.5px solid #333;color:#fff;padding:12px;border-radius:12px;margin:6px 0;outline:none}
 input:focus,textarea:focus,select:focus{border-color:#d4af37}
-.btn{width:100%;background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e);color:#1a1200;font-weight:800;padding:14px;border:none;border-radius:14px;margin:6px 0;cursor:pointer;letter-spacing:1px}
-.btn:active{transform:scale(.97)} .btn-red{background:#ef4444;color:#fff} .btn-green{background:#22c55e;color:#fff}
+.btn{width:100%;background:linear-gradient(135deg,#8c6a08,#d4af37,#ffec9e);color:#1a1200;font-weight:800;padding:14px;border:none;border-radius:14px;margin:6px 0;cursor:pointer}
 .item{background:#222;padding:12px;border-radius:12px;margin:7px 0;font-size:13px;display:flex;align-items:center;gap:8px;border:1.5px solid #333}
 .item.selected{border-color:#d4af37;background:#2e2810}
 .item input[type=checkbox]{width:18px;height:18px}
@@ -24,45 +23,36 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 </style>
 </head>
 <body>
-<h2>👑 PREMIUM ADMIN FINAL</h2>
-
+<h2>👑 PREMIUM PRO ADMIN - GATE + FIREWORKS</h2>
 <div class="card">
-<h3>💒 Couple & Venue Setup</h3>
-<label>Dulha Name (He)</label><input id="c1" placeholder="Hasan">
-<label>Dulhan Name (She)</label><input id="c2" placeholder="Hira">
-<label>🏠 Host / Family Name</label><input id="host" placeholder="Hasan Family">
-<label>📞 RSVP Phone (Call + WhatsApp)</label><input id="phone" placeholder="03001234567">
-<label>🏛️ Barat Venue</label><input id="bv" placeholder="Grand Hall, Gujranwala">
-<label>🏛️ Walima Venue</label><input id="wv" placeholder="Royal Venue, Gujranwala">
-<label>📅 Barat Date</label><input id="bd" type="date">
-<label>⏰ Barat Time</label><input id="bt" placeholder="07:00 PM">
-<label>📅 Walima Date</label><input id="wd" type="date">
-<label>⏰ Walima Time</label><input id="wt" placeholder="01:00 PM">
-<label>🖼️ Couple Pic</label>
-<input type="file" id="picInput" accept="image/*"><div id="picPreview" style="margin-top:8px"></div>
-
-<div class="music-box">
-<div style="color:#ffec8a;font-weight:800;letter-spacing:2px;font-size:12px">🎵 PREMIUM NIKAH MUSIC - ROSHNI EFFECT KE SAATH</div>
-<label>MP3 Link (Supabase Storage se)</label>
-<input id="songUrl" type="text" placeholder="https://...mp3">
-
-<!-- NEW: FILE SE DIRECT ADD -->
-<label style="color:#ffec8a">📁 FILE SE SONG ADD KARO (NEW)</label>
-<input type="file" id="songFileInput" accept="audio/*,.mp3">
-<div id="songUploadStatus" style="font-size:11px;color:#a3e635;margin-top:6px"></div>
-
-<div style="font-size:10px;color:#888;margin-top:6px">Supabase > Storage > Create Bucket 'songs' (Public ON) > Upload MP3 > Copy URL > Yahan paste - Ya upar File se direct upload karo</div>
-<audio id="previewAudio" controls style="width:100%;margin-top:10px;display:none"></audio>
-<button onclick="previewSong()" style="margin-top:8px;padding:7px 14px;border-radius:20px;background:#222;color:#ffec8a;border:1px solid #d4af37;font-size:11px;font-weight:700">▶️ Preview Suno</button>
-<div style="font-size:10px;color:#d4af37;margin-top:8px">✅ Card khulte hi roshni + ye song auto bajega, upar 🎶 button se band bhi kar sakte hain</div>
+<h3>💒 Couple & Host</h3>
+<label>Dulha Name</label><input id="c1" placeholder="Sajid">
+<label>Dulhan Name</label><input id="c2" placeholder="Fatima">
+<label>🏠 Host Name</label><input id="host" placeholder="Mian Family">
+<label>📞 Phone</label><input id="phone" placeholder="0300...">
+<label>🖼️ Couple Pic</label><input type="file" id="picInput" accept="image/*"><div id="picPreview" style="margin-top:8px"></div>
+<label>Dua Text</label><textarea id="duaText" rows="3"></textarea>
+<label>Thanks Message</label><textarea id="thanksText" rows="2"></textarea>
+<label>Footer Text</label><input id="footerText" placeholder="Sajid & Fatima • Fireworks 2026">
 </div>
-
-<button class="btn" id="saveBtn">💾 Save LIVE - Premium + Music + Roshni</button>
+<div class="card">
+<h3>📅 Events + 🎵 Music</h3>
+<label>Mehndi Date</label><input id="md" type="date"><label>Mehndi Time</label><input id="mt" placeholder="07:00 PM"><label>Mehndi Venue</label><input id="mv" placeholder="Home">
+<label>Barat Date</label><input id="bd" type="date"><label>Barat Time</label><input id="bt" placeholder="07:00 PM"><label>Barat Venue</label><input id="bv" placeholder="Grand Hall">
+<label>Walima Date</label><input id="wd" type="date"><label>Walima Time</label><input id="wt" placeholder="01:00 PM"><label>Walima Venue</label><input id="wv" placeholder="Royal Venue">
+<div class="music-box">
+<div style="color:#ffec8a;font-weight:800;font-size:12px">🎵 Music + Fireworks Trigger</div>
+<label>MP3 Link</label><input id="songUrl" placeholder="https://...mp3">
+<label>File Upload</label><input type="file" id="songFileInput" accept="audio/*">
+<div id="songUploadStatus" style="font-size:11px;color:#a3e635;margin-top:6px"></div>
+<audio id="previewAudio" controls style="width:100%;margin-top:10px;display:none"></audio>
+<button onclick="previewSong()" style="margin-top:8px;padding:7px 14px;border-radius:20px;background:#222;color:#ffec8a;border:1px solid #d4af37;font-size:11px">▶️ Preview</button>
+</div>
+<button class="btn" id="saveBtn">💾 Save LIVE - Gate + Fireworks + All</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:8px"></p>
 </div>
-
 <div class="card">
-<h3>👑 Mehman List - Premium Select</h3>
+<h3>👑 Guests - Family Count + Fireworks</h3>
 <div class="tools">
 <button style="background:#d4af37" onclick="selectAll()">✅ All</button>
 <button style="background:#333;color:#fff" onclick="clearSelect()">❌ Clear</button>
@@ -70,72 +60,39 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 <button style="background:#22c55e;color:#fff" onclick="copySelectedLinks()">🔗 Copy Links</button>
 </div>
 <p id="selectedInfo" style="color:#ffec8a;font-size:12px;margin-top:10px">Selected: 0</p>
-<label>Add Single Guest</label>
-<input id="gName" placeholder="Naam: Ali"><input id="gPass" placeholder="Password: 1234">
-<input id="gPersons" placeholder="Full Family" value="Full Family">
-<select id="gEvent"><option value="both">Barat & Walima (Dono)</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
-<button class="btn" id="addOneBtn">+ ADD GUEST</button>
-<label>Bulk Add (Name,Password,Event)</label>
-<textarea id="bulkInput" rows="4" placeholder="Ali,1234,walima&#10;Ahmed,5678,barat"></textarea>
+<input id="gName" placeholder="Name: Ahmed Family"><input id="gPass" placeholder="Password: ahmed123">
+<div style="display:flex;gap:8px"><select id="gCount" style="flex:1"><option value="1">1 Person</option><option value="2">2 Persons</option><option value="3">3</option><option value="4">4</option><option value="5" selected>5 Family</option><option value="6">6</option><option value="8">8 Family</option><option value="10">10</option><option value="15">15 Bara Khandan</option></select><select id="gType" style="flex:1"><option value="family">Full Family</option><option value="single">Single</option><option value="couple">Couple</option><option value="friends">Friends</option></select></div>
+<input id="gPersons" placeholder="Label: Full Family" value="Full Family">
+<select id="gEvent"><option value="both">Both</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
+<button class="btn" id="addOneBtn">+ ADD GUEST 🎆</button>
+<textarea id="bulkInput" rows="4" placeholder="Ali Family,ali123,both,5"></textarea>
 <button class="btn" id="addBulkBtn" style="background:#222;color:#d4af37;border:1px solid #d4af37">🚀 Bulk Add</button>
-<label>Search</label><input id="searchInput" placeholder="Search name or password...">
-<div id="guestList" style="margin-top:10px;max-height:500px;overflow:auto"></div>
+<input id="searchInput" placeholder="Search..."><div id="guestList" style="margin-top:10px;max-height:500px;overflow:auto"></div>
 <p id="totalCount" style="margin-top:8px;font-size:12px;color:#aaa"></p>
 </div>
-
-<button onclick="location.href='index.html'" style="width:100%;padding:14px;background:#111;color:#ffec8a;border:1.5px solid #d4af37;border-radius:14px;font-weight:700">⬅️ Premium Card Dekho</button>
-
-<div id="editModal" class="modal"><div class="modal-box">
-<h3 style="color:#ffec8a;text-align:center">✏️ Edit Guest</h3>
-<input id="editName"><input id="editPass"><select id="editEvent"><option value="both">Both</option><option value="barat">Barat</option><option value="walima">Walima</option></select>
-<button class="btn" id="saveEditBtn">Save Edit</button>
-<button class="btn" style="background:#333;color:#fff" onclick="closeEdit()">Cancel</button>
-</div></div>
-
+<button onclick="location.href='index.html'" style="width:100%;padding:14px;background:#111;color:#ffec8a;border:1.5px solid #d4af37;border-radius:14px;font-weight:700">⬅️ Fireworks Wala Card Dekho 🎆</button>
+<div id="editModal" class="modal"><div class="modal-box"><h3 style="color:#ffec8a;text-align:center">✏️ Edit Guest</h3><input id="editName"><input id="editPass"><select id="editCount"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="8">8</option><option value="10">10</option></select><select id="editEvent"><option value="both">Both</option><option value="barat">Barat</option><option value="walima">Walima</option></select><select id="editType"><option value="family">Family</option><option value="single">Single</option><option value="couple">Couple</option></select><button class="btn" id="saveEditBtn">Save</button><button class="btn" style="background:#333;color:#fff" onclick="closeEdit()">Cancel</button></div></div>
 <script>
 const sb=supabase.createClient('https://saaoukcqwqnxgmcuojjl.supabase.co','sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8');
 window._pics=[]; let selectedIds=new Set(); let editingId=null; let allGuests=[];
-function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=500;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.5));};img.src=e.target.result;};r.readAsDataURL(file);}
-function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('MP3 Link dalo ya File upload karo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
-
-// === NEW: FILE UPLOAD TO SUPABASE STORAGE ===
-document.getElementById('songFileInput').addEventListener('change', async (e)=>{
- let file=e.target.files[0]; if(!file) return;
- let st=document.getElementById('songUploadStatus');
- if(file.size > 15*1024*1024){ st.innerText='❌ File 15MB se choti rakho'; return; }
- st.innerText='⏳ Uploading: '+file.name+'...';
- try{
-  let fname=Date.now()+'_'+file.name.replace(/\s+/g,'_');
-  let {error}=await sb.storage.from('songs').upload(fname, file, {upsert:true, cacheControl:'3600'});
-  if(error) throw error;
-  let {data}=sb.storage.from('songs').getPublicUrl(fname);
-  document.getElementById('songUrl').value=data.publicUrl;
-  st.innerText='✅ Upload Ho Gaya! Link auto fill ho gaya';
-  previewSong();
- }catch(err){ st.innerText='❌ Upload Fail: '+err.message+' - Bucket songs ko Public karo'; console.log(err); }
-});
-
-async function loadSettings(){try{let {data}=await sb.from('settings').select('*').eq('id',1).single();if(data){if(data.c1)c1.value=data.c1;if(data.c2)c2.value=data.c2;if(data.host)host.value=data.host;if(data.phone)phone.value=data.phone;if(data.bv)bv.value=data.bv;if(data.wv)wv.value=data.wv;if(data.bd)bd.value=data.bd;if(data.bt)bt.value=data.bt;if(data.wd)wd.value=data.wd;if(data.wt)wt.value=data.wt;if(data.song){songUrl.value=data.song;previewAudio.src=data.song;previewAudio.style.display='block';}if(data.pic){try{let pics=JSON.parse(data.pic);window._pics=Array.isArray(pics)?pics:[data.pic];if(window._pics[0])picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';}catch{}}}}catch(e){}}
+function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=600;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.6));};img.src=e.target.result;};r.readAsDataURL(file);}
+function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('Link dalo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
+document.getElementById('songFileInput').addEventListener('change', async (e)=>{ let file=e.target.files[0]; if(!file) return; let st=document.getElementById('songUploadStatus'); st.innerText='⏳ Uploading...'; try{ let fname=Date.now()+'_'+file.name.replace(/\s+/g,'_'); let {error}=await sb.storage.from('songs').upload(fname,file,{upsert:true}); if(error) throw error; let {data}=sb.storage.from('songs').getPublicUrl(fname); document.getElementById('songUrl').value=data.publicUrl; st.innerText='✅ Upload Ho Gaya'; previewSong(); }catch(err){ st.innerText='❌ '+err.message; } });
+async function loadSettings(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).single(); if(!data) return; c1.value=data.c1||''; c2.value=data.c2||''; host.value=data.host||''; phone.value=data.phone||''; bd.value=data.bd||data.barat_date||''; bt.value=data.bt||data.barat_time||''; bv.value=data.bv||data.barat_venue||data.venue||''; wd.value=data.wd||data.walima_date||''; wt.value=data.wt||data.walima_time||''; wv.value=data.wv||data.walima_venue||''; md.value=data.md||data.mehndi_date||''; mt.value=data.mt||data.mehndi_time||''; mv.value=data.mv||data.mehndi_venue||''; songUrl.value=data.song||''; duaText.value=data.dua_text||''; thanksText.value=data.thanks_text||''; footerText.value=data.footer_text||''; if(data.song){ previewAudio.src=data.song; previewAudio.style.display='block'; } if(data.pic){ try{ let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">'; }catch{} } }catch(e){} }
 picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';});});
-saveBtn.addEventListener('click',async()=>{
- let c1v=c1.value.trim(),c2v=c2.value.trim();if(!c1v||!c2v){alert('Dono naam likho');return;} saveMsg.innerText='⏳ Saving Premium...';
- let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,venue:bv.value,song:songUrl.value.trim()||null};
- if(window._pics[0]&&window._pics[0].length<500000)payload.pic=JSON.stringify(window._pics);
- let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Premium Saved! '+c1v+' & '+c2v+' | Song: '+(payload.song?'ON':'OFF');
-});
-addOneBtn.addEventListener('click',async()=>{let n=gName.value.trim(),p=gPass.value.trim();if(!n||!p){alert('Naam Password');return;}let {error}=await sb.from('guests').insert({name:n,pass:p,persons:gPersons.value,event:gEvent.value});if(error)alert(error.message);else{gName.value='';gPass.value='';render();}});
-addBulkBtn.addEventListener('click',async()=>{let txt=bulkInput.value.trim();if(!txt)return;let arr=[];txt.split('\n').forEach(l=>{let sp=l.split(',');if(sp.length>=2){let ev=sp[2]?sp[2].trim().toLowerCase():'both';if(!['barat','walima','both'].includes(ev))ev='both';arr.push({name:sp[0].trim(),pass:sp[1].trim(),event:ev,persons:'Full Family'});}});if(arr.length){let {error}=await sb.from('guests').insert(arr);if(error)alert(error.message);else{bulkInput.value='';render();}}});
-function toggleSelect(id){if(selectedIds.has(id))selectedIds.delete(id);else selectedIds.add(id);updateUI();}
-function selectAll(){allGuests.forEach(g=>selectedIds.add(g.id));updateUI();} function clearSelect(){selectedIds.clear();updateUI();}
-function updateUI(){document.getElementById('selectedInfo').innerText='Selected: '+selectedIds.size;render();}
-async function deleteSelected(){if(selectedIds.size==0){alert('Koi select nahi');return;}if(!confirm(selectedIds.size+' delete karna hai?'))return;let {error}=await sb.from('guests').delete().in('id',Array.from(selectedIds));if(error)alert(error.message);else{selectedIds.clear();render();}}
-function copySelectedLinks(){if(selectedIds.size==0){alert('Select karo');return;}let base=location.href.replace('admin.html','index.html');let links=allGuests.filter(g=>selectedIds.has(g.id)).map(g=>`${g.name}: ${base} - Password: ${g.pass} (${g.event})`).join('\n');navigator.clipboard.writeText(links);alert('✅ Copied '+selectedIds.size+' links!');}
-window.editGuest=(id)=>{let g=allGuests.find(x=>x.id==id);if(!g)return;editingId=id;editName.value=g.name;editPass.value=g.pass;editEvent.value=g.event;document.getElementById('editModal').style.display='flex';}
-function closeEdit(){document.getElementById('editModal').style.display='none';}
-saveEditBtn.addEventListener('click',async()=>{if(!editingId)return;let {error}=await sb.from('guests').update({name:editName.value,pass:editPass.value,event:editEvent.value}).eq('id',editingId);if(error)alert(error.message);else{closeEdit();render();}});
-window.delOne=async id=>{if(!confirm('Delete?'))return;await sb.from('guests').delete().eq('id',id);render();}
-window.copyLink=(pass)=>{let base=location.href.replace('admin.html','index.html');navigator.clipboard.writeText(base+'? Password se khulega: '+pass);alert('Copied!');}
-async function render(){let q=searchInput.value.toLowerCase();let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false});if(!g)return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q));guestList.innerHTML=f.map(x=>`<div class="item ${selectedIds.has(x.id)?'selected':''}"><input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect('${x.id}')"><span style="flex:1"><b>${x.name}</b> - ${x.pass} - <span style="color:#ffec8a">${x.event}</span></span><button onclick="editGuest('${x.id}')" style="background:#333;color:#d4af37;border:none;padding:5px 8px;border-radius:6px">✏️</button><button onclick="copyLink('${x.pass}')" style="background:#22c55e;color:#fff;border:none;padding:5px 8px;border-radius:6px">🔗</button><button onclick="delOne('${x.id}')" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:6px">X</button></div>`).join('');totalCount.innerText='Total: '+g.length;}
+saveBtn.addEventListener('click',async()=>{ let c1v=c1.value.trim(),c2v=c2.value.trim(); if(!c1v||!c2v){alert('Naam likho');return;} saveMsg.innerText='⏳ Saving...'; let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,md:md.value,mt:mt.value,mv:mv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,mehndi_date:md.value,mehndi_time:mt.value,mehndi_venue:mv.value,venue:bv.value,song:songUrl.value.trim()||null,dua_text:duaText.value,thanks_text:thanksText.value,footer_text:footerText.value}; if(window._pics[0]) payload.pic=JSON.stringify(window._pics); let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Full Pro + Fireworks Saved!'; });
+addOneBtn.addEventListener('click',async()=>{ let n=gName.value.trim(),p=gPass.value.trim(); if(!n||!p){alert('Name Pass');return;} let cnt=parseInt(gCount.value)||1; let {error}=await sb.from('guests').insert({name:n,pass:p,persons:gPersons.value,event:gEvent.value,count:cnt,guest_count:cnt,family_type:gType.value,type:gType.value}); if(error) alert(error.message); else{ gName.value='';gPass.value=''; render(); } });
+addBulkBtn.addEventListener('click',async()=>{ let txt=bulkInput.value.trim(); if(!txt) return; let arr=[]; txt.split('\n').forEach(l=>{ let sp=l.split(','); if(sp.length>=2){ let ev=sp[2]?sp[2].trim().toLowerCase():'both'; let cnt=sp[3]?parseInt(sp[3]):5; arr.push({name:sp[0].trim(),pass:sp[1].trim(),event:ev,persons:'Full Family',count:cnt,guest_count:cnt,family_type:'family',type:'family'}); } }); if(arr.length){ let {error}=await sb.from('guests').insert(arr); if(error) alert(error.message); else{ bulkInput.value=''; render(); } } });
+function toggleSelect(id){ if(selectedIds.has(id)) selectedIds.delete(id); else selectedIds.add(id); updateUI(); }
+function selectAll(){ allGuests.forEach(g=>selectedIds.add(g.id)); updateUI(); } function clearSelect(){ selectedIds.clear(); updateUI(); }
+function updateUI(){ selectedInfo.innerText='Selected: '+selectedIds.size; render(); }
+async function deleteSelected(){ if(selectedIds.size==0){alert('Select');return;} if(!confirm(selectedIds.size+' delete?')) return; await sb.from('guests').delete().in('id',Array.from(selectedIds)); selectedIds.clear(); render(); }
+function copySelectedLinks(){ if(selectedIds.size==0){alert('Select');return;} let base=location.href.replace('admin.html','index.html'); let links=allGuests.filter(g=>selectedIds.has(g.id)).map(g=>`${g.name} (${g.count||1} persons): ${base} - ${g.pass}`).join('\n'); navigator.clipboard.writeText(links); alert('Copied '+selectedIds.size); }
+window.editGuest=(id)=>{ let g=allGuests.find(x=>x.id==id); if(!g) return; editingId=id; editName.value=g.name; editPass.value=g.pass; editCount.value=g.count||1; editEvent.value=g.event; editType.value=g.family_type||'family'; editModal.style.display='flex'; }
+function closeEdit(){ editModal.style.display='none'; }
+saveEditBtn.addEventListener('click',async()=>{ if(!editingId) return; let {error}=await sb.from('guests').update({name:editName.value,pass:editPass.value,count:parseInt(editCount.value),guest_count:parseInt(editCount.value),event:editEvent.value,family_type:editType.value,type:editType.value}).eq('id',editingId); if(error) alert(error.message); else{ closeEdit(); render(); } });
+window.delOne=async id=>{ if(!confirm('Delete?')) return; await sb.from('guests').delete().eq('id',id); render(); }
+async function render(){ let q=searchInput.value.toLowerCase(); let {data:g}=await sb.from('guests').select('*').order('id',{ascending:false}); if(!g) return; allGuests=g; let f=g.filter(x=>x.name.toLowerCase().includes(q)||x.pass.toLowerCase().includes(q)); guestList.innerHTML=f.map(x=>`<div class="item ${selectedIds.has(x.id)?'selected':''}"><input type="checkbox" ${selectedIds.has(x.id)?'checked':''} onchange="toggleSelect('${x.id}')"><span style="flex:1"><b>${x.name}</b> - ${x.pass}<br><small style="color:#ffec8a">${x.count||1} persons - ${x.family_type||''} - ${x.event}</small></span><button onclick="editGuest('${x.id}')" style="background:#333;color:#d4af37;border:none;padding:5px 8px;border-radius:6px">✏️</button><button onclick="delOne('${x.id}')" style="background:#ef4444;color:#fff;border:none;padding:5px 8px;border-radius:6px">X</button></div>`).join(''); totalCount.innerText='Total: '+g.length+' | Persons: '+g.reduce((s,x)=>s+(parseInt(x.count||1)),0); }
 searchInput.addEventListener('input',render);
 loadSettings(); render();
 </script>

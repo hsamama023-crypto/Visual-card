@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Premium Pro + Gate + Family + Fireworks</title>
+<title>Admin - Premium Pro + Gate + Family + Fireworks Control</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0} body{background:#050505;color:#fff;font-family:Poppins,sans-serif;padding:12px}
@@ -20,10 +20,13 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
 .modal-box{background:#1e1e1e;border:2px solid #d4af37;border-radius:18px;padding:18px;width:100%;max-width:400px}
 .music-box{background:linear-gradient(180deg,#111,#000);border:1.5px solid #d4af37;border-radius:14px;padding:14px;margin-top:14px}
+.toggle-box{background:linear-gradient(180deg,#111,#1a1500);border:1.5px solid #d4af37;border-radius:14px;padding:14px;margin-top:14px}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
+.toggle-row input[type=checkbox]{width:50px;height:24px}
 </style>
 </head>
 <body>
-<h2>👑 PREMIUM PRO ADMIN - GATE + FIREWORKS</h2>
+<h2>👑 PREMIUM PRO ADMIN - GATE + FIREWORKS CONTROL</h2>
 <div class="card">
 <h3>💒 Couple & Host</h3>
 <label>Dulha Name</label><input id="c1" placeholder="Sajid">
@@ -36,39 +39,36 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 <label>Footer Text</label><input id="footerText" placeholder="Sajid & Fatima • Fireworks 2026">
 </div>
 <div class="card">
-<h3>📅 Events + 🎵 Music</h3>
+<h3>📅 Events</h3>
 <label>Mehndi Date</label><input id="md" type="date"><label>Mehndi Time</label><input id="mt" placeholder="07:00 PM"><label>Mehndi Venue</label><input id="mv" placeholder="Home">
 <label>Barat Date</label><input id="bd" type="date"><label>Barat Time</label><input id="bt" placeholder="07:00 PM"><label>Barat Venue</label><input id="bv" placeholder="Grand Hall">
 <label>Walima Date</label><input id="wd" type="date"><label>Walima Time</label><input id="wt" placeholder="01:00 PM"><label>Walima Venue</label><input id="wv" placeholder="Royal Venue">
 <div class="music-box">
-<div style="color:#ffec8a;font-weight:800;font-size:12px">🎵 Music + Fireworks Trigger</div>
+<div style="color:#ffec8a;font-weight:800;font-size:12px">🎵 Music + Gate Song</div>
 <label>MP3 Link</label><input id="songUrl" placeholder="https://...mp3">
 <label>File Upload</label><input type="file" id="songFileInput" accept="audio/*">
 <div id="songUploadStatus" style="font-size:11px;color:#a3e635;margin-top:6px"></div>
 <audio id="previewAudio" controls style="width:100%;margin-top:10px;display:none"></audio>
 <button onclick="previewSong()" style="margin-top:8px;padding:7px 14px;border-radius:20px;background:#222;color:#ffec8a;border:1px solid #d4af37;font-size:11px">▶️ Preview</button>
 </div>
+<div class="toggle-box">
+<div style="color:#ffec8a;font-weight:800;font-size:13px">🎆 FIREWORKS CONTROL</div>
+<div class="toggle-row"><span style="font-size:12px;color:#fff">🎆 Fireworks ON/OFF</span><input type="checkbox" id="fwEnabled" checked></div>
+<div class="toggle-row"><span style="font-size:12px;color:#fff">🎵 Gate pe Song bajega?</span><input type="checkbox" id="gateSongEnabled" checked></div>
+<label>💍 Fireworks Title</label><input id="fwTitle" placeholder="WEDDING CEREMONY" value="WEDDING CEREMONY">
+<label>✨ Fireworks Sub-Title</label><input id="fwSubTitle" placeholder="QABOOL HAI" value="QABOOL HAI">
+<label>💛 Fireworks Style</label><select id="fwStyle"><option value="hearts">💛 Golden Hearts + Glitter</option><option value="mix">🎆 Mix Colors + Hearts</option><option value="golden">✨ Only Golden</option><option value="simple">✨ Simple</option></select>
+</div>
 <button class="btn" id="saveBtn">💾 Save LIVE - Gate + Fireworks + All</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:8px"></p>
 </div>
 <div class="card">
 <h3>👑 Guests - Family Count + Fireworks</h3>
-<div class="tools">
-<button style="background:#d4af37" onclick="selectAll()">✅ All</button>
-<button style="background:#333;color:#fff" onclick="clearSelect()">❌ Clear</button>
-<button style="background:#ef4444;color:#fff" onclick="deleteSelected()">🗑️ Delete</button>
-<button style="background:#22c55e;color:#fff" onclick="copySelectedLinks()">🔗 Copy Links</button>
-</div>
+<div class="tools"><button style="background:#d4af37" onclick="selectAll()">✅ All</button><button style="background:#333;color:#fff" onclick="clearSelect()">❌ Clear</button><button style="background:#ef4444;color:#fff" onclick="deleteSelected()">🗑️ Delete</button><button style="background:#22c55e;color:#fff" onclick="copySelectedLinks()">🔗 Copy Links</button></div>
 <p id="selectedInfo" style="color:#ffec8a;font-size:12px;margin-top:10px">Selected: 0</p>
 <input id="gName" placeholder="Name: Ahmed Family"><input id="gPass" placeholder="Password: ahmed123">
-<div style="display:flex;gap:8px"><select id="gCount" style="flex:1"><option value="1">1 Person</option><option value="2">2 Persons</option><option value="3">3</option><option value="4">4</option><option value="5" selected>5 Family</option><option value="6">6</option><option value="8">8 Family</option><option value="10">10</option><option value="15">15 Bara Khandan</option></select><select id="gType" style="flex:1"><option value="family">Full Family</option><option value="single">Single</option><option value="couple">Couple</option><option value="friends">Friends</option></select></div>
-<input id="gPersons" placeholder="Label: Full Family" value="Full Family">
-<select id="gEvent"><option value="both">Both</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select>
-<button class="btn" id="addOneBtn">+ ADD GUEST 🎆</button>
-<textarea id="bulkInput" rows="4" placeholder="Ali Family,ali123,both,5"></textarea>
-<button class="btn" id="addBulkBtn" style="background:#222;color:#d4af37;border:1px solid #d4af37">🚀 Bulk Add</button>
-<input id="searchInput" placeholder="Search..."><div id="guestList" style="margin-top:10px;max-height:500px;overflow:auto"></div>
-<p id="totalCount" style="margin-top:8px;font-size:12px;color:#aaa"></p>
+<div style="display:flex;gap:8px"><select id="gCount" style="flex:1"><option value="1">1 Person</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5" selected>5 Family</option><option value="6">6</option><option value="8">8 Family</option><option value="10">10</option><option value="15">15 Bara Khandan</option></select><select id="gType" style="flex:1"><option value="family">Full Family</option><option value="single">Single</option><option value="couple">Couple</option><option value="friends">Friends</option></select></div>
+<input id="gPersons" placeholder="Label: Full Family" value="Full Family"><select id="gEvent"><option value="both">Both</option><option value="barat">Barat Only</option><option value="walima">Walima Only</option></select><button class="btn" id="addOneBtn">+ ADD GUEST 🎆</button><textarea id="bulkInput" rows="4" placeholder="Ali Family,ali123,both,5"></textarea><button class="btn" id="addBulkBtn" style="background:#222;color:#d4af37;border:1px solid #d4af37">🚀 Bulk Add</button><input id="searchInput" placeholder="Search..."><div id="guestList" style="margin-top:10px;max-height:500px;overflow:auto"></div><p id="totalCount" style="margin-top:8px;font-size:12px;color:#aaa"></p>
 </div>
 <button onclick="location.href='index.html'" style="width:100%;padding:14px;background:#111;color:#ffec8a;border:1.5px solid #d4af37;border-radius:14px;font-weight:700">⬅️ Fireworks Wala Card Dekho 🎆</button>
 <div id="editModal" class="modal"><div class="modal-box"><h3 style="color:#ffec8a;text-align:center">✏️ Edit Guest</h3><input id="editName"><input id="editPass"><select id="editCount"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="8">8</option><option value="10">10</option></select><select id="editEvent"><option value="both">Both</option><option value="barat">Barat</option><option value="walima">Walima</option></select><select id="editType"><option value="family">Family</option><option value="single">Single</option><option value="couple">Couple</option></select><button class="btn" id="saveEditBtn">Save</button><button class="btn" style="background:#333;color:#fff" onclick="closeEdit()">Cancel</button></div></div>
@@ -78,9 +78,9 @@ window._pics=[]; let selectedIds=new Set(); let editingId=null; let allGuests=[]
 function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=600;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.6));};img.src=e.target.result;};r.readAsDataURL(file);}
 function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('Link dalo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
 document.getElementById('songFileInput').addEventListener('change', async (e)=>{ let file=e.target.files[0]; if(!file) return; let st=document.getElementById('songUploadStatus'); st.innerText='⏳ Uploading...'; try{ let fname=Date.now()+'_'+file.name.replace(/\s+/g,'_'); let {error}=await sb.storage.from('songs').upload(fname,file,{upsert:true}); if(error) throw error; let {data}=sb.storage.from('songs').getPublicUrl(fname); document.getElementById('songUrl').value=data.publicUrl; st.innerText='✅ Upload Ho Gaya'; previewSong(); }catch(err){ st.innerText='❌ '+err.message; } });
-async function loadSettings(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).single(); if(!data) return; c1.value=data.c1||''; c2.value=data.c2||''; host.value=data.host||''; phone.value=data.phone||''; bd.value=data.bd||data.barat_date||''; bt.value=data.bt||data.barat_time||''; bv.value=data.bv||data.barat_venue||data.venue||''; wd.value=data.wd||data.walima_date||''; wt.value=data.wt||data.walima_time||''; wv.value=data.wv||data.walima_venue||''; md.value=data.md||data.mehndi_date||''; mt.value=data.mt||data.mehndi_time||''; mv.value=data.mv||data.mehndi_venue||''; songUrl.value=data.song||''; duaText.value=data.dua_text||''; thanksText.value=data.thanks_text||''; footerText.value=data.footer_text||''; if(data.song){ previewAudio.src=data.song; previewAudio.style.display='block'; } if(data.pic){ try{ let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">'; }catch{} } }catch(e){} }
+async function loadSettings(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).single(); if(!data) return; c1.value=data.c1||''; c2.value=data.c2||''; host.value=data.host||''; phone.value=data.phone||''; bd.value=data.bd||data.barat_date||''; bt.value=data.bt||data.barat_time||''; bv.value=data.bv||data.barat_venue||data.venue||''; wd.value=data.wd||data.walima_date||''; wt.value=data.wt||data.walima_time||''; wv.value=data.wv||data.walima_venue||''; md.value=data.md||data.mehndi_date||''; mt.value=data.mt||data.mehndi_time||''; mv.value=data.mv||data.mehndi_venue||''; songUrl.value=data.song||''; duaText.value=data.dua_text||''; thanksText.value=data.thanks_text||''; footerText.value=data.footer_text||''; fwEnabled.checked=data.fireworks_enabled!==false; gateSongEnabled.checked=data.gate_song_enabled!==false; fwTitle.value=data.fireworks_title||'WEDDING CEREMONY'; fwSubTitle.value=data.fireworks_subtitle||'QABOOL HAI'; fwStyle.value=data.fireworks_style||'hearts'; if(data.song){ previewAudio.src=data.song; previewAudio.style.display='block'; } if(data.pic){ try{ let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">'; }catch{} } }catch(e){} }
 picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';});});
-saveBtn.addEventListener('click',async()=>{ let c1v=c1.value.trim(),c2v=c2.value.trim(); if(!c1v||!c2v){alert('Naam likho');return;} saveMsg.innerText='⏳ Saving...'; let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,md:md.value,mt:mt.value,mv:mv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,mehndi_date:md.value,mehndi_time:mt.value,mehndi_venue:mv.value,venue:bv.value,song:songUrl.value.trim()||null,dua_text:duaText.value,thanks_text:thanksText.value,footer_text:footerText.value}; if(window._pics[0]) payload.pic=JSON.stringify(window._pics); let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Full Pro + Fireworks Saved!'; });
+saveBtn.addEventListener('click',async()=>{ let c1v=c1.value.trim(),c2v=c2.value.trim(); if(!c1v||!c2v){alert('Naam likho');return;} saveMsg.innerText='⏳ Saving...'; let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,md:md.value,mt:mt.value,mv:mv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,mehndi_date:md.value,mehndi_time:mt.value,mehndi_venue:mv.value,venue:bv.value,song:songUrl.value.trim()||null,dua_text:duaText.value,thanks_text:thanksText.value,footer_text:footerText.value,fireworks_enabled:fwEnabled.checked,gate_song_enabled:gateSongEnabled.checked,fireworks_title:fwTitle.value,fireworks_subtitle:fwSubTitle.value,fireworks_style:fwStyle.value}; if(window._pics[0]) payload.pic=JSON.stringify(window._pics); let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Full Pro + Fireworks Saved!'; });
 addOneBtn.addEventListener('click',async()=>{ let n=gName.value.trim(),p=gPass.value.trim(); if(!n||!p){alert('Name Pass');return;} let cnt=parseInt(gCount.value)||1; let {error}=await sb.from('guests').insert({name:n,pass:p,persons:gPersons.value,event:gEvent.value,count:cnt,guest_count:cnt,family_type:gType.value,type:gType.value}); if(error) alert(error.message); else{ gName.value='';gPass.value=''; render(); } });
 addBulkBtn.addEventListener('click',async()=>{ let txt=bulkInput.value.trim(); if(!txt) return; let arr=[]; txt.split('\n').forEach(l=>{ let sp=l.split(','); if(sp.length>=2){ let ev=sp[2]?sp[2].trim().toLowerCase():'both'; let cnt=sp[3]?parseInt(sp[3]):5; arr.push({name:sp[0].trim(),pass:sp[1].trim(),event:ev,persons:'Full Family',count:cnt,guest_count:cnt,family_type:'family',type:'family'}); } }); if(arr.length){ let {error}=await sb.from('guests').insert(arr); if(error) alert(error.message); else{ bulkInput.value=''; render(); } } });
 function toggleSelect(id){ if(selectedIds.has(id)) selectedIds.delete(id); else selectedIds.add(id); updateUI(); }

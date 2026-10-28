@@ -27,7 +27,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 .lantern::after{content:'🔥';font-size:18px}
 @keyframes flicker{0%,100%{box-shadow:0 0 25px #ffec8a}50%{box-shadow:0 0 38px #ffec8a}}
 .l1{left:6px;top:118px}.l2{right:6px;top:118px}.l3{left:10px;top:208px;width:38px;height:56px}.l4{right:10px;top:208px;width:38px;height:56px}
-.gate-half{position:absolute;bottom:10px;width:48%;height:52%;background:linear-gradient(180deg,#1e1c14,#0f0e0a);border:2px solid #d4af37;transition:7s cubic-bezier(.15,0,.15,1);z-index:3;display:flex;align-items:center;justify-content:center}
+.gate-half{position:absolute;bottom:10px;width:48%;height:52%;background:linear-gradient(180deg,#1e1c14,#0f0e0a);border:2px solid #d4af37;transition:7s cubic-bezier(.15,0,.15,1);z-index:3}
 .gate-half::after{content:'✦ ✦ ✦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(212,175,55,.3);font-size:10px;letter-spacing:3px;writing-mode:vertical-rl}
 .gate-left{left:10px;transform-origin:left}.gate-right{right:10px;transform-origin:right}
 .gate-screen.open .gate-left{transform:translateX(-135%) rotateY(-50deg)}
@@ -38,7 +38,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
 .bird{position:absolute;font-size:18px;z-index:20;pointer-events:none;animation:flyBird linear infinite}
 @keyframes flyBird{0%{transform:translateX(-60px) translateY(0px) rotate(5deg)}20%{transform:translateX(60px) translateY(-15px) rotate(-5deg)}40%{transform:translateX(140px) translateY(5px) rotate(5deg)}60%{transform:translateX(220px) translateY(-10px) rotate(-5deg)}80%{transform:translateX(300px) translateY(10px) rotate(5deg)}100%{transform:translateX(400px) translateY(-5px) rotate(0deg)}}
-.b1{top:18%;animation-duration:7s;color:#ff6b9d}.b2{top:28%;animation-duration:8.5s;animation-delay:1s;color:#6bc8ff}.b3{top:38%;animation-duration:6.5s;animation-delay:.5s;color:#ffd93d}.b4{top:48%;animation-duration:9s;animation-delay:2s;color:#6bff9d}.b5{top:15%;animation-duration:7.5s;animation-delay:1.5s;color:#ff9f6b}
+.b1{top:18%;animation-duration:7s}.b2{top:28%;animation-duration:8.5s;animation-delay:1s}.b3{top:38%;animation-duration:6.5s;animation-delay:.5s}.b4{top:48%;animation-duration:9s;animation-delay:2s}.b5{top:15%;animation-duration:7.5s;animation-delay:1.5s}
 </style>
 </head>
 <body>
@@ -124,8 +124,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <button class="btn btn-gold" onclick="showEnvelope()">💌 LETTER OPEN IT</button></div></div>
 
 <div id="envelopeStage" class="glass" style="display:none">
-<div class="env-wrap" id="envWrap"><div class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</div><audio id="bgMusic" loop preload="auto"></audio><div class="roshni" id="roshni"></div><div class="envelope" id="envelope" onclick="openEnvelope()"><div class="env-back"></div><div class="env-left"></div><div class="env-right"></div><div class="letter" id="letter"><div style="font-size:8px;letter-spacing:2.5px;color:#8c6a08;font-weight:700">YOU ARE INVITED</div><div id="cardCouple" style="font-family:'Great Vibes';font-size:30px;color:#ffec8a;margin:6px 0">Hamza & Noor</div><div id="letterGuest" style="font-weight:700;color:#ffec8a;font-size:15px"></div><div id="letterFamily" style="font-size:11px;color:#fff;margin-top:6px;background:rgba(212,175,55,.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(212,175,55,.25)"></div></div><div class="env-flap"></div><div class="seal" id="seal">💛</div></div><div class="hint" id="hint">👆 SEAL PAR TAP KARO</div></div><button id="toDetails" class="btn btn-gold" style="display:none;margin-top:12px" onclick="openCards()">✨ DETAILS DEKHEIN 🎆</button></div>
-<div id="cards" style="display:none" class="glass">
+  <div id="cards" style="display:none" class="glass">
 <style>
 .event-box{background:linear-gradient(180deg,#1a1a1a,#121212);border:1.2px solid #2e2818;border-radius:18px;padding:16px;margin-top:14px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.4);position:relative}
 .event-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}
@@ -146,9 +145,9 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <img id="gPic" style="width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid #d4af37;margin:12px auto 0;display:none;box-shadow:0 0 25px rgba(212,175,55,.4)">
 <div class="dua-box" id="duaBox">“وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا...”<br><b>🤲 Allah is rishtay ko rehmat se bhar de</b></div>
 <div class="countdown"><div class="cd"><b id="cdD">--</b><span>DIN</span></div><div class="cd"><b id="cdH">--</b><span>GHANTE</span></div><div class="cd"><b id="cdM">--</b><span>MIN</span></div><div class="cd"><b id="cdS">--</b><span>SEC</span></div></div>
-<div class="event-box" id="mehndiBox" style="display:none"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">🌿 MEHNDI</div><div id="mDateTime" style="font-weight:700;margin-top:6px;font-size:15px;color:#ffec8a"></div><div id="mVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="mMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
-<div class="event-box" id="baratBox"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">💒 BARAT</div><div id="bDateTime" style="font-weight:700;margin-top:6px;font-size:16px;color:#ffec8a"></div><div id="bVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="bMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
-<div class="event-box" id="walimaBox"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">🎉 WALIMA</div><div id="wDateTime" style="font-weight:700;margin-top:6px;font-size:16px;color:#ffec8a"></div><div id="wVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="wMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
+<div class="event-box" id="mehndiBox" style="display:none"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">🌿 MEHNDI</div><div id="mDateTime" style="font-weight:700;margin-top:6px;font-size:14px;color:#ffec8a;line-height:1.4"></div><div id="mVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="mMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
+<div class="event-box" id="baratBox"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">💒 BARAT</div><div id="bDateTime" style="font-weight:700;margin-top:6px;font-size:14px;color:#ffec8a;line-height:1.4"></div><div id="bVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="bMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
+<div class="event-box" id="walimaBox"><div style="font-weight:700;letter-spacing:2.5px;font-size:10px;color:#d4af37">🎉 WALIMA</div><div id="wDateTime" style="font-weight:700;margin-top:6px;font-size:14px;color:#ffec8a;line-height:1.4"></div><div id="wVenue" style="font-size:12px;color:#aaa;margin-top:5px"></div><a id="wMap" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;border-radius:30px;background:linear-gradient(135deg,#d4af37,#ffec9e);color:#000;font-size:11px;text-decoration:none;font-weight:800">📍 Location</a></div>
 <div style="background:linear-gradient(180deg,#111,#0a0a0a);border:1.5px solid #2a2410;border-radius:16px;padding:14px;margin-top:14px">
 <div style="text-align:center;color:#ffec8a;font-weight:700">🤲 Dua Wall</div>
 <textarea id="duaInput" class="input" style="margin-top:10px;height:72px;text-align:left" placeholder="Allah jori salamat rakhe..."></textarea>
@@ -161,7 +160,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 </div></div><div class="foot" id="foot">Hamza & Noor • Royal Black Gold 2026</div></div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
 <div id="lockModal" class="modal"><div class="modal-box"><h3 style="color:#ffec8a;margin-bottom:10px">🔒 Admin Access</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input"><button class="btn btn-gold" id="unlockBtn">Unlock</button><button class="btn" style="background:#222;color:#fff;margin-top:8px" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:11px;margin-top:6px"></p></div></div>
-<script>
+  <script>
 const SUPA_URL='https://saaoukcqwqnxgmcuojjl.supabase.co';
 const SUPA_KEY='sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
 let sb; try{ sb=supabase.createClient(SUPA_URL,SUPA_KEY);}catch(e){}
@@ -171,8 +170,22 @@ const ADMIN_PASS='Admin@2026';
 function openLock(){document.getElementById('lockModal').style.display='flex';}
 function closeLock(){document.getElementById('lockModal').style.display='none';}
 function playQuran(){ let a=document.getElementById('quranAudio'); if(a){ a.volume=0.9; a.play().catch(()=>{}); } }
-
-// CONFETTI
+function formatDatePyara(dateStr){
+  if(!dateStr) return '';
+  try{
+    let d=new Date(dateStr);
+    if(isNaN(d.getTime())) return dateStr;
+    let monthsFull=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    let days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')} ${monthsFull[d.getMonth()]} ${d.getFullYear()}`;
+  }catch(e){ return dateStr; }
+}
+function formatDateTimePyara(dateStr,timeStr){
+  if(!dateStr) return '';
+  let datePart=formatDatePyara(dateStr);
+  if(timeStr) return `${datePart} | ${timeStr}`;
+  return datePart;
+}
 const confettiCanvas=document.getElementById('confettiCanvas'); const confCtx=confettiCanvas.getContext('2d');
 function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeConfetti); resizeConfetti();
 function triggerGoldConfetti(){
@@ -187,20 +200,60 @@ function triggerGoldConfetti(){
     if(alive && Date.now()-start<7500) requestAnimationFrame(anim); else { confCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); confettiCanvas.style.display='none'; }
   })();
 }
-
-// FIREWORKS - NO BLACK SCREEN
 const fwCanvas=document.getElementById('fireworks'); const fwCtx=fwCanvas.getContext('2d'); let fwParticles=[], fwActive=false;
 fwCanvas.style.background='transparent';
 function resizeFW(){ fwCanvas.width=window.innerWidth; fwCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeFW); resizeFW();
 function createFirework(x,y){
   let golds=['#ffec8a','#d4af37','#fff8c0','#ffb700'];
-  for(let i=0;i<75;i++){ let a=Math.random()*Math.PI*2; let sp=1+Math.random()*9; fwParticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.008+Math.random()*0.01,color:golds[Math.floor(Math.random()*golds.length)],size:1.2+Math.random()*3.2}); }
+  for(let i=0;i<60;i++){ let a=Math.random()*Math.PI*2; let sp=1+Math.random()*8; fwParticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.01+Math.random()*0.012,color:golds[Math.floor(Math.random()*golds.length)],size:1+Math.random()*2.5}); }
 }
-function triggerFireworks(){ if(!FW_ENABLED) return; fwCanvas.style.display='block'; fwCanvas.style.background='transparent'; fwActive=true; fwParticles=[]; let c=0; let iv=setInterval(()=>{ let x=Math.random()*fwCanvas.width*0.7+fwCanvas.width*0.15; let y=Math.random()*fwCanvas.height*0.4+fwCanvas.height*0.05; createFirework(x,y); c++; if(c>18) clearInterval(iv); },280); setTimeout(()=>{ fwActive=false; fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); fwCanvas.style.display='none'; fwParticles=[]; clearInterval(iv); },7000); }
-function animateFW(){ if(fwActive){ fwCtx.fillStyle='rgba(0,0,0,0.18)'; fwCtx.fillRect(0,0,fwCanvas.width,fwCanvas.height); for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.991; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=14; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } fwCtx.globalAlpha=1; fwCtx.shadowBlur=0; } else { fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); } requestAnimationFrame(animateFW); } animateFW();
-function showCoupleFireworksText(){ if(!FW_ENABLED) return; document.querySelectorAll('.fw-text').forEach(e=>e.remove()); let con=document.createElement('div'); con.className='fw-text'; con.style.cssText=`position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);z-index:100000;text-align:center;pointer-events:none;opacity:0;transition:0.6s cubic-bezier(.34,1.56,.64,1);background:radial-gradient(ellipse at center,#151515,#000);border:2.5px solid #d4af37;border-radius:26px;padding:22px 30px;box-shadow:0 0 35px rgba(212,175,55,.8);min-width:280px`; con.innerHTML=`<div style="font-family:'Great Vibes';font-size:54px;color:#ffec8a;line-height:1.1;text-shadow:0 0 20px #d4af37">Hamza<br>& Noor</div><div style="height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:14px 0"></div><div style="font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:800">💍 ${FW_TITLE} 💍</div><div style="font-size:12px;letter-spacing:3px;color:#ffec8a;margin-top:8px;font-weight:700">✨ ${FW_SUB} ✨</div>`; document.body.appendChild(con); setTimeout(()=>{con.style.opacity='1';con.style.transform='translate(-50%,-50%) scale(1.05)';},80); setTimeout(()=>{con.style.opacity='0';setTimeout(()=>con.remove(),500);},3000); }
-
-// GATE SLOW MOTION 7 SEC + NO BLACK SCREEN
+function triggerFireworks(){ 
+  if(!FW_ENABLED) return; 
+  fwCanvas.style.display='block'; fwCanvas.style.background='transparent'; fwActive=true; fwParticles=[]; 
+  let c=0; let iv=setInterval(()=>{ let x=Math.random()*fwCanvas.width*0.6+fwCanvas.width*0.2; let y=Math.random()*fwCanvas.height*0.35+fwCanvas.height*0.1; createFirework(x,y); c++; if(c>12) clearInterval(iv); },350); 
+  setTimeout(()=>{ fwActive=false; fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); fwCanvas.style.display='none'; fwParticles=[]; clearInterval(iv); },5500); 
+}
+function animateFW(){ 
+  if(fwActive){ 
+    fwCtx.fillStyle='rgba(0,0,0,0.22)'; fwCtx.fillRect(0,0,fwCanvas.width,fwCanvas.height); 
+    for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.06; p.vx*=0.989; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=8; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } 
+    fwCtx.globalAlpha=1; fwCtx.shadowBlur=0; 
+  } else { fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); } 
+  requestAnimationFrame(animateFW); 
+} animateFW();
+let fwTextCount=0;
+function showCoupleFireworksText(){ 
+  if(!FW_ENABLED) return;
+  if(fwTextCount>=2) return;
+  fwTextCount++;
+  document.querySelectorAll('.fw-text').forEach(e=>e.remove());
+  let con=document.createElement('div'); con.className='fw-text';
+  con.style.cssText=`
+    position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.9);
+    z-index:100000;text-align:center;pointer-events:none;opacity:0;
+    transition:0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    background:linear-gradient(180deg,rgba(15,15,15,0.95),rgba(0,0,0,0.98));
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(212,175,55,0.4);
+    border-radius:16px;
+    padding:20px 32px;
+    min-width:260px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,175,55,0.1) inset;
+  `;
+  con.innerHTML=`
+    <div style="font-family:'Great Vibes';font-size:42px;color:#fff;line-height:1.1;letter-spacing:1px;font-weight:400">Hamza <span style="font-family:'Poppins';font-size:12px;color:#d4af37;letter-spacing:6px;font-weight:300;display:block;margin:4px 0">&</span> Noor</div>
+    <div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);margin:14px 0"></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+      <span style="width:18px;height:1px;background:#d4af37"></span>
+      <span style="font-size:9px;letter-spacing:3.5px;color:#d4af37;font-weight:600;font-family:'Poppins'">${FW_TITLE}</span>
+      <span style="width:18px;height:1px;background:#d4af37"></span>
+    </div>
+    <div style="font-size:8px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-top:10px;font-family:'Poppins';font-weight:400">✦ ${FW_SUB} ✦</div>
+  `;
+  document.body.appendChild(con);
+  setTimeout(()=>{con.style.opacity='1';con.style.transform='translate(-50%,-50%) scale(1)';},100);
+  setTimeout(()=>{con.style.opacity='0';con.style.transform='translate(-50%,-50%) scale(0.95)';setTimeout(()=>con.remove(),800);},2800);
+}
 let gateOpened=false;
 function openGate(){
   if(gateOpened) return; gateOpened=true;
@@ -221,13 +274,11 @@ function openGate(){
 document.getElementById('gateScreen').addEventListener('click',openGate);
 setTimeout(()=>{ document.getElementById('nikkahTitle').classList.add('show'); },800);
 setTimeout(()=>{ if(!gateOpened) openGate(); },5500);
-
 function toggleMusic(){let a=document.getElementById('bgMusic');let b=document.getElementById('musicBtn');if(!a||!a.src)return;if(isMusicPlaying){a.pause();b.innerText='🔇';isMusicPlaying=false;}else{a.play().catch(()=>{});b.innerText='🎶';isMusicPlaying=true;}}
 function formatFamily(c,t){ c=parseInt(c)||1; if(t&&t.toLowerCase().includes('family')) return `👨‍👩‍👧‍👦 Full Family - ${c} Persons`; if(c==1) return `👤 1 Person`; if(c==2) return `👥 2 Persons`; return `👥 ${c} Persons`; }
 function animateName(name){ let el=document.getElementById('welcomeName'); if(!el) return; if(!CALLIGRAPHY_ENABLED){ el.innerText=name; el.style.width='100%'; return; } el.style.width='0'; el.innerText=name; el.classList.remove('calligraphy'); void el.offsetWidth; el.classList.add('calligraphy'); }
 async function loadDuas(){ if(!DUA_WALL_ENABLED) return; try{ let {data}=await sb.from('duas').select('*').order('created_at',{ascending:false}).limit(20); let list=document.getElementById('duasList'); if(!list) return; list.innerHTML=''; if(data){ data.forEach(d=>{ let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${d.name||'Mehman'}:</b> ${d.message}`; list.appendChild(div); }); } }catch(e){} }
 async function submitDua(){ let msg=document.getElementById('duaInput').value.trim(); if(!msg) return alert('Dua likhein'); let name=currentGuestData?currentGuestData.name:'Mehman'; try{ await sb.from('duas').insert([{name:name,message:msg}]); loadDuas(); }catch(e){ let list=document.getElementById('duasList'); let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${name}:</b> ${msg}`; list.prepend(div); } document.getElementById('duaInput').value=''; triggerGoldConfetti(); alert('🤲 JazakAllah! Dua save ho gayi'); }
-
 async function loadConfig(){ 
   try{ 
     let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); 
@@ -238,7 +289,6 @@ async function loadConfig(){
       if(gateName){ gateName.innerHTML=`${data.c1||'Hamza'}<br><span style="font-family:'Poppins';font-size:11px;letter-spacing:4px;color:#d4af37;font-weight:700;display:block;margin:8px 0">💍 NIKKAH CEREMONY 💍</span>& ${data.c2||'Noor'}`; }
     } 
     if(data.host){ document.getElementById('hostName').innerText='Host: '+data.host; document.getElementById('hostDisplay').innerText='Host: '+data.host; } 
-    // NO DEFAULT PIC - Sirf admin wali
     if(data.pic){ 
       try{ 
         let pics=JSON.parse(data.pic); let url=Array.isArray(pics)?pics[0]:pics; 
@@ -254,9 +304,16 @@ async function loadConfig(){
         }
       } 
     } 
-    document.getElementById('bDateTime').innerText=(data.bd||data.barat_date||'')+' '+(data.bt||data.barat_time||''); document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; 
-    document.getElementById('wDateTime').innerText=(data.wd||data.walima_date||'')+' '+(data.wt||data.walima_time||''); document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; 
-    if(data.md||data.mehndi_date){ document.getElementById('mehndiBox').style.display='block'; document.getElementById('mDateTime').innerText=(data.md||data.mehndi_date||'')+' '+(data.mt||data.mehndi_time||''); document.getElementById('mVenue').innerText=data.mv||data.mehndi_venue||''; if(data.mv||data.mehndi_venue) document.getElementById('mMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.mv||data.mehndi_venue); } 
+    document.getElementById('bDateTime').innerText=formatDateTimePyara(data.bd||data.barat_date, data.bt||data.barat_time);
+    document.getElementById('bVenue').innerText=data.bv||data.barat_venue||data.venue||''; 
+    document.getElementById('wDateTime').innerText=formatDateTimePyara(data.wd||data.walima_date, data.wt||data.walima_time);
+    document.getElementById('wVenue').innerText=data.wv||data.walima_venue||''; 
+    if(data.md||data.mehndi_date){ 
+      document.getElementById('mehndiBox').style.display='block'; 
+      document.getElementById('mDateTime').innerText=formatDateTimePyara(data.md||data.mehndi_date, data.mt||data.mehndi_time);
+      document.getElementById('mVenue').innerText=data.mv||data.mehndi_venue||''; 
+      if(data.mv||data.mehndi_venue) document.getElementById('mMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.mv||data.mehndi_venue); 
+    } 
     if(data.bv||data.barat_venue) document.getElementById('bMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.bv||data.barat_venue||data.venue); 
     if(data.wv||data.walima_venue) document.getElementById('wMap').href='https://www.google.com/maps/search/'+encodeURIComponent(data.wv||data.walima_venue); 
     if(data.dua_text) document.getElementById('duaBox').innerHTML=data.dua_text; 
@@ -265,8 +322,6 @@ async function loadConfig(){
     if(data.song){ let audio=document.getElementById('bgMusic'); audio.src=data.song; audio.volume=0.85; document.getElementById('musicBtn').style.display='flex'; window.autoPlaySong=()=>{ if(!GATE_SONG) return; audio.play().then(()=>{document.getElementById('musicBtn').innerText='🎶';isMusicPlaying=true;}).catch(()=>{}); }; } 
     if(data.quran_url){ document.getElementById('quranAudio').src=data.quran_url; } 
     FW_TITLE=data.fireworks_title||'NIKAH CEREMONY'; FW_SUB=data.fireworks_subtitle||'QABOOL HAI'; FW_ENABLED=data.fireworks_enabled!==false; GATE_SONG=data.gate_song_enabled!==false; CONFETTI_ENABLED=data.confetti_enabled!==false; QURAN_ENABLED=data.quran_enabled!==false; CALLIGRAPHY_ENABLED=data.calligraphy_enabled!==false; DUA_WALL_ENABLED=data.dua_wall_enabled!==false; 
-
-    // ========= COUNTER FIX ADDED =========
     function parseTime12h(timeStr){
       if(!timeStr) return {h:19,m:0};
       timeStr=timeStr.trim().toUpperCase();
@@ -280,35 +335,46 @@ async function loadConfig(){
       if(isAM && h==12) h=0;
       return {h,m};
     }
-    let mainDateStr=data.bd||data.barat_date||data.wd||data.walima_date||'2026-02-14';
-    let mainTimeStr=data.bt||data.barat_time||'7:00 PM';
-    if(mainDateStr){
-      let tm=parseTime12h(mainTimeStr);
-      let t=new Date(mainDateStr);
-      t.setHours(tm.h, tm.m, 0, 0);
+    function toDateObj(dStr,tStr){
+      if(!dStr) return null;
+      try{
+        let tm=parseTime12h(tStr||'7:00 PM');
+        let t=new Date(dStr);
+        if(isNaN(t.getTime())) return null;
+        t.setHours(tm.h, tm.m, 0, 0);
+        return t;
+      }catch(e){ return null; }
+    }
+    let dates=[];
+    let md=toDateObj(data.md||data.mehndi_date, data.mt||data.mehndi_time);
+    let bd=toDateObj(data.bd||data.barat_date, data.bt||data.barat_time);
+    let wd=toDateObj(data.wd||data.walima_date, data.wt||data.walima_time);
+    if(md) dates.push(md);
+    if(bd) dates.push(bd);
+    if(wd) dates.push(wd);
+    let now=new Date();
+    let futureDates=dates.filter(d=>d>now).sort((a,b)=>a-b);
+    let targetDate=futureDates.length>0?futureDates[0]:(dates.length>0?dates.sort((a,b)=>b-a)[0]:new Date(Date.now()+86400000*5));
+    if(targetDate){
       setInterval(()=>{
-        let diff=t-new Date();
-        if(diff<=0){
-          let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText='0';};
-          g('cdD',0); g('cdH',0); g('cdM',0); g('cdS',0);
-          return;
-        }
+        let diff=targetDate-new Date();
         let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText=v;};
-        g('cdD',Math.floor(diff/86400000));
-        g('cdH',Math.floor(diff%86400000/3600000));
-        g('cdM',Math.floor(diff%3600000/60000));
-        g('cdS',Math.floor(diff%60000/1000));
+        if(diff<=0){ g('cdD','00'); g('cdH','00'); g('cdM','00'); g('cdS','00'); return; }
+        g('cdD',String(Math.floor(diff/86400000)).padStart(2,'0'));
+        g('cdH',String(Math.floor(diff%86400000/3600000)).padStart(2,'0'));
+        g('cdM',String(Math.floor(diff%3600000/60000)).padStart(2,'0'));
+        g('cdS',String(Math.floor(diff%60000/1000)).padStart(2,'0'));
       },1000);
     }
-
   }catch(e){ console.log(e); } loadDuas(); 
 }
 async function unlock(){ let v=document.getElementById('p').value.trim(); if(!v) return; document.getElementById('e').innerText='Checking...'; try{ let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle(); if(data){ currentGuestData=data; currentGuestEvent=(data.event||'both').toLowerCase(); let count=data.count||data.guest_count||1; let familyType=data.family_type||data.type||''; document.getElementById('lock').style.display='none'; animateName(data.name); document.getElementById('familyInfo').innerHTML=`<span class="family-badge">${formatFamily(count,familyType)}</span>`; document.getElementById('letterGuest').innerText='For '+data.name+' ❤️'; document.getElementById('letterFamily').innerText=formatFamily(count,familyType); document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA'; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText=''; triggerGoldConfetti(); }else{ document.getElementById('e').innerText='❌ Galat Password'; } }catch{} }
 function showEnvelope(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('envelopeStage').style.display='block';}
 let opened=false;function openEnvelope(){if(opened)return;opened=true;document.getElementById('seal').classList.add('broken');document.getElementById('hint').style.display='none';document.getElementById('roshni').classList.add('on'); triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText(); setTimeout(()=>{document.getElementById('envelope').classList.add('open');},450);setTimeout(()=>{document.getElementById('envelope').classList.add('full');document.getElementById('toDetails').style.display='block';if(window.autoPlaySong)window.autoPlaySong();},1400);}
-function openCards(){document.getElementById('envelopeStage').style.display='none';document.getElementById('gName').innerText='Dear '+document.getElementById('welcomeName').innerText+' ❤️'; if(currentGuestData){ let count=currentGuestData.count||currentGuestData.guest_count||1; let familyType=currentGuestData.family_type||currentGuestData.type||''; document.getElementById('gFamilyDetail').innerHTML=`<span class="family-badge" style="font-size:13px;padding:8px 18px">${formatFamily(count,familyType)} Invited 🎆</span>`; } document.getElementById('cards').style.display='block'; triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText(); loadDuas(); let b=document.getElementById('baratBox');let w=document.getElementById('walimaBox'); if(currentGuestEvent==='barat'){b.style.display='block';w.style.display='none';} else if(currentGuestEvent==='walima'){b.style.display='none';w.style.display='block';} else{b.style.display='block';w.style.display='block';}}
+function openCards(){document.getElementById('envelopeStage').style.display='none';document.getElementById('gName').innerText='Dear '+document.getElementById('welcomeName').innerText+' ❤️'; if(currentGuestData){ let count=currentGuestData.count||currentGuestData.guest_count||1; let familyType=currentGuestData.family_type||currentGuestData.type||''; document.getElementById('gFamilyDetail').innerHTML=`<span class="family-badge" style="font-size:13px;padding:8px 18px">${formatFamily(count,familyType)} Invited 🎆</span>`; } document.getElementById('cards').style.display='block'; triggerFireworks(); triggerGoldConfetti(); loadDuas(); let b=document.getElementById('baratBox');let w=document.getElementById('walimaBox'); if(currentGuestEvent==='barat'){b.style.display='block';w.style.display='none';} else if(currentGuestEvent==='walima'){b.style.display='none';w.style.display='block';} else{b.style.display='block';w.style.display='block';}}
 document.getElementById('unlockBtn').addEventListener('click',()=>{ if(document.getElementById('lockPass').value===ADMIN_PASS){ closeLock(); location.href='admin.html'; }else{ document.getElementById('lockMsg').innerText='❌ Galat Password'; } });
 loadConfig();
 </script>
 </body>
 </html>
+<div class="env-wrap" id="envWrap"><div class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</div><audio id="bgMusic" loop preload="auto"></audio><div class="roshni" id="roshni"></div><div class="envelope" id="envelope" onclick="openEnvelope()"><div class="env-back"></div><div class="env-left"></div><div class="env-right"></div><div class="letter" id="letter"><div style="font-size:8px;letter-spacing:2.5px;color:#8c6a08;font-weight:700">YOU ARE INVITED</div><div id="cardCouple" style="font-family:'Great Vibes';font-size:30px;color:#ffec8a;margin:6px 0">Hamza & Noor</div><div id="letterGuest" style="font-weight:700;color:#ffec8a;font-size:15px"></div><div id="letterFamily" style="font-size:11px;color:#fff;margin-top:6px;background:rgba(212,175,55,.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(212,175,55,.25)"></div></div><div class="env-flap"></div><div class="seal" id="seal">💛</div></div><div class="hint" id="hint">👆 SEAL PAR TAP KARO</div></div><button id="toDetails" class="btn btn-gold" style="display:none;margin-top:12px" onclick="openCards()">✨ DETAILS DEKHEIN 🎆</button></div>

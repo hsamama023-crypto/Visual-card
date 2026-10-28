@@ -35,16 +35,20 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 <label>🏠 Host Name</label><input id="host" placeholder="Family of Hamza & Noor">
 <label>📞 Phone</label><input id="phone" placeholder="0300...">
 <label>🖼️ Couple Pic</label><input type="file" id="picInput" accept="image/*"><div id="picPreview" style="margin-top:8px"></div>
-<label>Dua Text (Top)</label><textarea id="duaText" rows="3"></textarea>
-<label>Thanks Message</label><textarea id="thanksText" rows="2"></textarea>
+<label>Dua Text (Top)</label><textarea id="duaText" rows="3" placeholder="وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم..."></textarea>
+<label>Thanks Message</label><textarea id="thanksText" rows="2" placeholder="JazakAllah Khair!"></textarea>
 <label>Footer Text</label><input id="footerText" placeholder="Hamza & Noor • Royal 2026">
 </div>
 
 <div class="card">
-<h3>📅 Events</h3>
+<h3>📅 Events - DATE FORMAT FIXED</h3>
 <label>Mehndi Date</label><input id="md" type="date"><label>Mehndi Time</label><input id="mt" placeholder="07:00 PM"><label>Mehndi Venue</label><input id="mv" placeholder="Home">
 <label>Barat Date</label><input id="bd" type="date"><label>Barat Time</label><input id="bt" placeholder="07:00 PM"><label>Barat Venue</label><input id="bv" placeholder="Grand Hall">
 <label>Walima Date</label><input id="wd" type="date"><label>Walima Time</label><input id="wt" placeholder="01:00 PM"><label>Walima Venue</label><input id="wv" placeholder="Royal Venue">
+<div style="background:#111;border:1px solid #333;border-radius:10px;padding:10px;margin-top:10px;font-size:11px;color:#ffec8a">
+📅 Date Preview: <span id="datePreview" style="color:#d4af37">Monday, 09 February 2026 | 07:00 PM</span><br>
+<small style="color:#666">Card pe ye pyara format show hoga!</small>
+</div>
 
 <div class="music-box">
 <div style="color:#ffec8a;font-weight:800;font-size:12px">🎵 Music + Quran Voice</div>
@@ -59,8 +63,8 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 </div>
 
 <div class="toggle-box">
-<div style="color:#ffec8a;font-weight:800;font-size:13px">🎆 ALL FEATURES CONTROL</div>
-<div class="toggle-row"><span style="font-size:12px;color:#fff">🎆 Fireworks ON/OFF</span><input type="checkbox" id="fwEnabled" checked></div>
+<div style="color:#ffec8a;font-weight:800;font-size:13px">🎆 ALL FEATURES CONTROL - FIXED</div>
+<div class="toggle-row"><span style="font-size:12px;color:#fff">🎆 Fireworks ON/OFF (Black Screen Fixed)</span><input type="checkbox" id="fwEnabled" checked></div>
 <div class="toggle-row"><span style="font-size:12px;color:#fff">🎵 Gate pe Song bajega?</span><input type="checkbox" id="gateSongEnabled" checked></div>
 <div class="toggle-row"><span style="font-size:12px;color:#fff">🎊 Gold Confetti Rain ON</span><input type="checkbox" id="confettiEnabled" checked></div>
 <div class="toggle-row"><span style="font-size:12px;color:#fff">📖 Quran Ayah Voice ON</span><input type="checkbox" id="quranEnabled" checked></div>
@@ -73,7 +77,6 @@ input:focus,textarea:focus,select:focus{border-color:#d4af37}
 <button class="btn" id="saveBtn">💾 SAVE LIVE - ALL FEATURES</button>
 <p id="saveMsg" style="text-align:center;color:#22c55e;font-size:12px;margin-top:8px"></p>
 </div>
-
 <div class="card">
 <h3>🤲 Dua Wall - Manage Duas</h3>
 <div id="duaAdminList" style="max-height:400px;overflow:auto"></div>
@@ -98,13 +101,35 @@ window._pics=[]; let selectedIds=new Set(); let editingId=null; let allGuests=[]
 function compressImage(file,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const maxW=600;const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',0.6));};img.src=e.target.result;};r.readAsDataURL(file);}
 function previewSong(){let u=document.getElementById('songUrl').value.trim();if(!u) return alert('Link dalo');let a=document.getElementById('previewAudio');a.src=u;a.style.display='block';a.play();}
 function previewQuranAudio(){let u=document.getElementById('quranUrl').value.trim();if(!u) return;let a=document.getElementById('previewQuran');a.src=u;a.style.display='block';a.play();}
+function formatDatePyaraPreview(dateStr){
+  if(!dateStr) return 'Monday, 09 February 2026 | 07:00 PM';
+  try{
+    let d=new Date(dateStr);
+    if(isNaN(d.getTime())) return dateStr;
+    let monthsFull=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    let days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')} ${monthsFull[d.getMonth()]} ${d.getFullYear()}`;
+  }catch(e){ return dateStr; }
+}
+function updateDatePreview(){
+  let bd=document.getElementById('bd').value;
+  let bt=document.getElementById('bt').value;
+  let preview=document.getElementById('datePreview');
+  if(preview){
+    let datePart=formatDatePyaraPreview(bd);
+    preview.innerText=bt?`${datePart} | ${bt}`:datePart;
+  }
+}
+document.getElementById('bd').addEventListener('change',updateDatePreview);
+document.getElementById('bt').addEventListener('input',updateDatePreview);
+
 document.getElementById('songFileInput').addEventListener('change', async (e)=>{ let file=e.target.files[0]; if(!file) return; let st=document.getElementById('songUploadStatus'); st.innerText='⏳ Uploading...'; try{ let fname=Date.now()+'_'+file.name.replace(/\s+/g,'_'); let {error}=await sb.storage.from('songs').upload(fname,file,{upsert:true}); if(error) throw error; let {data}=sb.storage.from('songs').getPublicUrl(fname); document.getElementById('songUrl').value=data.publicUrl; st.innerText='✅ Upload Ho Gaya'; previewSong(); }catch(err){ st.innerText='❌ '+err.message; } });
 
-async function loadSettings(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).single(); if(!data) return; c1.value=data.c1||''; c2.value=data.c2||''; host.value=data.host||''; phone.value=data.phone||''; bd.value=data.bd||data.barat_date||''; bt.value=data.bt||data.barat_time||''; bv.value=data.bv||data.barat_venue||data.venue||''; wd.value=data.wd||data.walima_date||''; wt.value=data.wt||data.walima_time||''; wv.value=data.wv||data.walima_venue||''; md.value=data.md||data.mehndi_date||''; mt.value=data.mt||data.mehndi_time||''; mv.value=data.mv||data.mehndi_venue||''; songUrl.value=data.song||''; quranUrl.value=data.quran_url||'https://everyayah.com/data/Alafasy_128kbps/030021.mp3'; duaText.value=data.dua_text||''; thanksText.value=data.thanks_text||''; footerText.value=data.footer_text||''; fwEnabled.checked=data.fireworks_enabled!==false; gateSongEnabled.checked=data.gate_song_enabled!==false; confettiEnabled.checked=data.confetti_enabled!==false; quranEnabled.checked=data.quran_enabled!==false; calligraphyEnabled.checked=data.calligraphy_enabled!==false; duaWallEnabled.checked=data.dua_wall_enabled!==false; fwTitle.value=data.fireworks_title||'NIKAH CEREMONY'; fwSubTitle.value=data.fireworks_subtitle||'QABOOL HAI'; fwStyle.value=data.fireworks_style||'hearts'; if(data.song){ previewAudio.src=data.song; previewAudio.style.display='block'; } if(data.quran_url){ previewQuran.src=data.quran_url; } if(data.pic){ try{ let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">'; }catch{} } }catch(e){ console.log(e); } }
+async function loadSettings(){ try{ let {data}=await sb.from('settings').select('*').eq('id',1).single(); if(!data) return; c1.value=data.c1||''; c2.value=data.c2||''; host.value=data.host||''; phone.value=data.phone||''; bd.value=data.bd||data.barat_date||''; bt.value=data.bt||data.barat_time||''; bv.value=data.bv||data.barat_venue||data.venue||''; wd.value=data.wd||data.walima_date||''; wt.value=data.wt||data.walima_time||''; wv.value=data.wv||data.walima_venue||''; md.value=data.md||data.mehndi_date||''; mt.value=data.mt||data.mehndi_time||''; mv.value=data.mv||data.mehndi_venue||''; songUrl.value=data.song||''; quranUrl.value=data.quran_url||'https://everyayah.com/data/Alafasy_128kbps/030021.mp3'; duaText.value=data.dua_text||''; thanksText.value=data.thanks_text||''; footerText.value=data.footer_text||''; fwEnabled.checked=data.fireworks_enabled!==false; gateSongEnabled.checked=data.gate_song_enabled!==false; confettiEnabled.checked=data.confetti_enabled!==false; quranEnabled.checked=data.quran_enabled!==false; calligraphyEnabled.checked=data.calligraphy_enabled!==false; duaWallEnabled.checked=data.dua_wall_enabled!==false; fwTitle.value=data.fireworks_title||'NIKAH CEREMONY'; fwSubTitle.value=data.fireworks_subtitle||'QABOOL HAI'; fwStyle.value=data.fireworks_style||'hearts'; updateDatePreview(); if(data.song){ previewAudio.src=data.song; previewAudio.style.display='block'; } if(data.quran_url){ previewQuran.src=data.quran_url; } if(data.pic){ try{ let pics=JSON.parse(data.pic); window._pics=Array.isArray(pics)?pics:[data.pic]; if(window._pics[0]) picPreview.innerHTML='<img src="'+window._pics[0]+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">'; }catch{} } }catch(e){ console.log(e); } }
 
 picInput.addEventListener('change',function(){if(!this.files[0])return;compressImage(this.files[0],c=>{window._pics=[c];picPreview.innerHTML='<img src="'+c+'" style="max-width:100%;border-radius:12px;border:2px solid #d4af37">';});});
 
-saveBtn.addEventListener('click',async()=>{ let c1v=c1.value.trim(),c2v=c2.value.trim(); if(!c1v||!c2v){alert('Naam likho');return;} saveMsg.innerText='⏳ Saving...'; let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,md:md.value,mt:mt.value,mv:mv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,mehndi_date:md.value,mehndi_time:mt.value,mehndi_venue:mv.value,venue:bv.value,song:songUrl.value.trim()||null,quran_url:quranUrl.value.trim()||null,dua_text:duaText.value,thanks_text:thanksText.value,footer_text:footerText.value,fireworks_enabled:fwEnabled.checked,gate_song_enabled:gateSongEnabled.checked,confetti_enabled:confettiEnabled.checked,quran_enabled:quranEnabled.checked,calligraphy_enabled:calligraphyEnabled.checked,dua_wall_enabled:duaWallEnabled.checked,fireworks_title:fwTitle.value,fireworks_subtitle:fwSubTitle.value,fireworks_style:fwStyle.value}; if(window._pics[0]) payload.pic=JSON.stringify(window._pics); let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Full Pro + All 4 Features Saved!'; });
+saveBtn.addEventListener('click',async()=>{ let c1v=c1.value.trim(),c2v=c2.value.trim(); if(!c1v||!c2v){alert('Naam likho');return;} saveMsg.innerText='⏳ Saving...'; let payload={id:1,c1:c1v,c2:c2v,host:host.value,phone:phone.value,bd:bd.value,bt:bt.value,bv:bv.value,wd:wd.value,wt:wt.value,wv:wv.value,md:md.value,mt:mt.value,mv:mv.value,barat_date:bd.value,barat_time:bt.value,barat_venue:bv.value,walima_date:wd.value,walima_time:wt.value,walima_venue:wv.value,mehndi_date:md.value,mehndi_time:mt.value,mehndi_venue:mv.value,venue:bv.value,song:songUrl.value.trim()||null,quran_url:quranUrl.value.trim()||null,dua_text:duaText.value,thanks_text:thanksText.value,footer_text:footerText.value,fireworks_enabled:fwEnabled.checked,gate_song_enabled:gateSongEnabled.checked,confetti_enabled:confettiEnabled.checked,quran_enabled:quranEnabled.checked,calligraphy_enabled:calligraphyEnabled.checked,dua_wall_enabled:duaWallEnabled.checked,fireworks_title:fwTitle.value,fireworks_subtitle:fwSubTitle.value,fireworks_style:fwStyle.value}; if(window._pics[0]) payload.pic=JSON.stringify(window._pics); let {error}=await sb.from('settings').upsert(payload,{onConflict:'id'}); saveMsg.innerText=error?'❌ '+error.message:'✅ Full Pro + All 4 Features Saved! Date Format Fixed!'; });
 
 async function loadDuasAdmin(){ try{ let {data}=await sb.from('duas').select('*').order('created_at',{ascending:false}); let div=document.getElementById('duaAdminList'); div.innerHTML=''; if(data){ data.forEach(d=>{ let el=document.createElement('div'); el.className='dua-admin-item'; el.innerHTML=`<div style="display:flex;justify-content:space-between"><b style="color:#d4af37">${d.name}</b><small style="color:#666">${new Date(d.created_at).toLocaleDateString()}</small></div><div style="margin-top:4px;color:#fff;font-size:12px">${d.message}</div><button onclick="deleteDua('${d.id}')" style="margin-top:6px;background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:6px;font-size:10px">Delete</button>`; div.appendChild(el); }); } }catch(e){} }
 window.deleteDua=async(id)=>{ if(!confirm('Delete dua?')) return; await sb.from('duas').delete().eq('id',id); loadDuasAdmin(); }
@@ -125,4 +150,4 @@ searchInput.addEventListener('input',render);
 loadSettings(); render(); loadDuasAdmin();
 </script>
 </body>
-  </html>
+</html>

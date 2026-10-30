@@ -37,7 +37,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 .skip{position:absolute;bottom:26px;padding:10px 22px;border-radius:30px;background:rgba(0,0,0,.88);border:1.5px solid #d4af37;color:#ffec8a;font-size:10px;letter-spacing:2px;animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
 .bird-canvas-wrap{position:absolute;inset:0;z-index:26;pointer-events:none;overflow:hidden;border-radius:160px 160px 14px 14px}
-#birdCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 10px #ffec8a) drop-shadow(0 0 20px rgba(212,175,55,.5))}
+#birdCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 12px #fff) drop-shadow(0 0 22px #ffec8a) brightness(1.2);}
 </style>
 </head>
 <body>
@@ -45,9 +45,10 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <canvas id="confettiCanvas"></canvas>
 <audio id="quranAudio" preload="auto" src="https://everyayah.com/data/Alafasy_128kbps/030021.mp3"></audio>
 <div id="gateIntro"><div class="gate-screen" id="gateScreen">
+<!-- BIRD2 - White Dove - Black BG - Natural - GATE PR -->
 <div class="bird-canvas-wrap">
-  <video id="birdVideo" autoplay loop muted playsinline crossorigin="anonymous" style="display:none">
-    <source src="bird.mp4" type="video/mp4">
+  <video id="birdVideo" autoplay loop muted playsinline style="display:none">
+    <source src="bird2.mp4" type="video/mp4">
   </video>
   <canvas id="birdCanvas"></canvas>
 </div>
@@ -127,7 +128,6 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 .cd{flex:1;background:linear-gradient(180deg,#222,#0a0a0a);color:#ffec8a;border-radius:14px;padding:12px 2px;text-align:center;border:1.2px solid #3a3520}
 .cd b{display:block;font-size:20px;text-shadow:0 0 10px #d4af37}.cd span{font-size:8px;opacity:.7}
 .thanks{background:linear-gradient(180deg,#1a1a1a,#080808);border:1.2px solid #2e2818;border-radius:14px;padding:14px;margin-top:12px;text-align:center;color:#ffec8a;font-size:12px}
-.foot{background:#000;color:#6a5a2a;padding:14px;text-align:center;font-size:8px;letter-spacing:2.5px;border-top:1px solid #1a1810}
 .admin-float{position:fixed;bottom:16px;right:16px;width:36px;height:36px;background:#111;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:9999;border:1px solid #333;opacity:0.2}
 .admin-float:hover{opacity:1}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:10000;padding:12px}
@@ -156,36 +156,36 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <div class="admin-float" onclick="openLock()">⚙️</div>
 <div id="lockModal" class="modal"><div class="modal-box"><h3 style="color:#ffec8a;margin-bottom:10px">🔒 Admin Access</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input"><button class="btn btn-gold" id="unlockBtn">Unlock</button><button class="btn" style="background:#222;color:#fff;margin-top:8px" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:11px;margin-top:6px"></p></div></div>
 <script>
-// ===== GREEN SCREEN BIRDS - bird.mp4 - SLOW MOTION PROFESSIONAL =====
+// ===== BIRD2 - WHITE DOVE BLACK BG - NATURAL - GATE PR - SLOW MOTION =====
 (function(){
   const video=document.getElementById('birdVideo');
   const canvas=document.getElementById('birdCanvas');
   if(!video||!canvas) return;
   const ctx=canvas.getContext('2d',{willReadFrequently:true});
-  canvas.width=330; canvas.height=500;
+  canvas.width=1200; canvas.height=1800;
   video.playbackRate=0.45;
-  function chromaLoop(){
-    if(video.paused||video.ended){requestAnimationFrame(chromaLoop);return;}
+  function loop(){
+    if(video.paused||video.ended){requestAnimationFrame(loop);return;}
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.drawImage(video,0,0,canvas.width,canvas.height);
-    let frame=ctx.getImageData(0,0,canvas.width,canvas.height);
-    let d=frame.data;
+    let f=ctx.getImageData(0,0,canvas.width,canvas.height);
+    let d=f.data;
     for(let i=0;i<d.length;i+=4){
       let r=d[i],g=d[i+1],b=d[i+2];
-      if(g>85 && g>r*1.2 && g>b*1.2){
-        let diff=g-Math.max(r,b);
-        if(diff>35) d[i+3]=0;
-        else d[i+3]=Math.floor(d[i+3]*(1-diff/80));
-      } else if(d[i+3]!=0 && r>140 && g>140 && b>140){
-        d[i]=255; d[i+1]=248; d[i+2]=180;
+      let bright=(r+g+b)/3;
+      if(bright<18){ d[i+3]=0; }
+      else if(bright<35){ d[i+3]=(bright-18)*10; }
+      else {
+        let isBrown = r>50 && r<130 && g>30 && g<90 && b<50;
+        let y=Math.floor((i/4)/canvas.width);
+        if(isBrown && y>canvas.height*0.75){ d[i+3]=0; }
       }
     }
-    ctx.putImageData(frame,0,0);
-    requestAnimationFrame(chromaLoop);
+    ctx.putImageData(f,0,0);
+    requestAnimationFrame(loop);
   }
-  video.addEventListener('play',()=>{ video.playbackRate=0.45; requestAnimationFrame(chromaLoop); });
-  setTimeout(()=>{ video.playbackRate=0.45; video.play().catch(()=>{}); requestAnimationFrame(chromaLoop); },800);
-  video.addEventListener('canplay',()=>{ video.playbackRate=0.45; video.play().catch(()=>{}); });
+  video.addEventListener('play',()=>{ video.playbackRate=0.45; loop(); });
+  setTimeout(()=>{ video.playbackRate=0.45; video.play().catch(()=>{}); loop(); },800);
 })();
 </script>
 <script>
@@ -313,4 +313,4 @@ document.getElementById('unlockBtn').addEventListener('click',()=>{ if(document.
 loadConfig();
 </script>
 </body>
-  </html>
+</html>

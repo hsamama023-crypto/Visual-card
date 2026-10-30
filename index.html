@@ -36,9 +36,8 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 .gate-screen.open .gate-couple{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
 .skip{position:absolute;bottom:26px;padding:10px 22px;border-radius:30px;background:rgba(0,0,0,.88);border:1.5px solid #d4af37;color:#ffec8a;font-size:10px;letter-spacing:2px;animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
-.bird{position:absolute;font-size:18px;z-index:20;pointer-events:none;animation:flyBird linear infinite}
-@keyframes flyBird{0%{transform:translateX(-60px) translateY(0px)}100%{transform:translateX(400px) translateY(-5px)}}
-.b1{top:18%;animation-duration:7s}.b2{top:28%;animation-duration:8.5s;animation-delay:1s}.b3{top:38%;animation-duration:6.5s;animation-delay:.5s}.b4{top:48%;animation-duration:9s;animation-delay:2s}.b5{top:15%;animation-duration:7.5s;animation-delay:1.5s}
+.bird-canvas-wrap{position:absolute;inset:0;z-index:26;pointer-events:none;overflow:hidden;border-radius:160px 160px 14px 14px}
+#birdCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 0 10px #ffec8a) drop-shadow(0 0 20px rgba(212,175,55,.5))}
 </style>
 </head>
 <body>
@@ -46,7 +45,12 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <canvas id="confettiCanvas"></canvas>
 <audio id="quranAudio" preload="auto" src="https://everyayah.com/data/Alafasy_128kbps/030021.mp3"></audio>
 <div id="gateIntro"><div class="gate-screen" id="gateScreen">
-<div class="bird b1">🕊️</div><div class="bird b2">🐦</div><div class="bird b3">🕊️</div><div class="bird b4">🐦</div><div class="bird b5">🕊️</div>
+<div class="bird-canvas-wrap">
+  <video id="birdVideo" autoplay loop muted playsinline crossorigin="anonymous" style="display:none">
+    <source src="bird.mp4" type="video/mp4">
+  </video>
+  <canvas id="birdCanvas"></canvas>
+</div>
 <div style="position:relative;z-index:5"><div class="bism">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="bism-en">IN THE NAME OF ALLAH, THE MOST MERCIFUL</div><div class="nikkahTitle" id="nikkahTitle">Royal Nikkah Invitation</div></div>
 <div class="gate-visual"><div class="gate-arch"><div class="gate-pattern"></div><div class="islamic-border">✦ ﷽ ✦</div><div class="moon">🌙</div></div><div class="lantern l1"></div><div class="lantern l2"></div><div class="lantern l3"></div><div class="lantern l4"></div>
 <div class="gate-half gate-left"></div><div class="gate-half gate-right"></div>
@@ -54,7 +58,6 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <div class="main">
 <div class="top" style="position:relative;min-height:620px;background:radial-gradient(ellipse at center,#1c1a12 0%,#0d0c08 40%,#050505 100%);display:flex;justify-content:center;align-items:flex-start;padding:20px 14px">
 <style>
-/* BUG FIX 1: dot lagaya */
 .arch-frame{position:absolute;top:18px;left:14px;right:14px;bottom:14px;border:2px solid transparent;border-radius:160px 160px 22px 22px;background:linear-gradient(#050505,#050505) padding-box, linear-gradient(180deg,#ffec8a,#d4af37,#8c6a08) border-box;box-shadow:0 0 30px rgba(212,175,55,.2),inset 0 0 30px rgba(212,175,55,.08);z-index:1}
 .arch-frame::before{content:'';position:absolute;inset:6px;border:1px solid rgba(212,175,55,.3);border-radius:150px 150px 16px 16px;pointer-events:none}
 .gold-shimmer{position:absolute;top:18px;left:14px;right:14px;height:180px;background:linear-gradient(180deg,rgba(255,236,138,.12),transparent);border-radius:160px 160px 0 0;z-index:2;pointer-events:none}
@@ -152,6 +155,39 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 </div></div><div class="foot" id="foot">Hamza & Noor • Royal Black Gold 2026</div></div>
 <div class="admin-float" onclick="openLock()">⚙️</div>
 <div id="lockModal" class="modal"><div class="modal-box"><h3 style="color:#ffec8a;margin-bottom:10px">🔒 Admin Access</h3><input id="lockPass" type="password" placeholder="Admin Password" class="input"><button class="btn btn-gold" id="unlockBtn">Unlock</button><button class="btn" style="background:#222;color:#fff;margin-top:8px" onclick="closeLock()">Cancel</button><p id="lockMsg" style="color:#ef4444;font-size:11px;margin-top:6px"></p></div></div>
+<script>
+// ===== GREEN SCREEN BIRDS - bird.mp4 - SLOW MOTION PROFESSIONAL =====
+(function(){
+  const video=document.getElementById('birdVideo');
+  const canvas=document.getElementById('birdCanvas');
+  if(!video||!canvas) return;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  canvas.width=330; canvas.height=500;
+  video.playbackRate=0.45;
+  function chromaLoop(){
+    if(video.paused||video.ended){requestAnimationFrame(chromaLoop);return;}
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    let frame=ctx.getImageData(0,0,canvas.width,canvas.height);
+    let d=frame.data;
+    for(let i=0;i<d.length;i+=4){
+      let r=d[i],g=d[i+1],b=d[i+2];
+      if(g>85 && g>r*1.2 && g>b*1.2){
+        let diff=g-Math.max(r,b);
+        if(diff>35) d[i+3]=0;
+        else d[i+3]=Math.floor(d[i+3]*(1-diff/80));
+      } else if(d[i+3]!=0 && r>140 && g>140 && b>140){
+        d[i]=255; d[i+1]=248; d[i+2]=180;
+      }
+    }
+    ctx.putImageData(frame,0,0);
+    requestAnimationFrame(chromaLoop);
+  }
+  video.addEventListener('play',()=>{ video.playbackRate=0.45; requestAnimationFrame(chromaLoop); });
+  setTimeout(()=>{ video.playbackRate=0.45; video.play().catch(()=>{}); requestAnimationFrame(chromaLoop); },800);
+  video.addEventListener('canplay',()=>{ video.playbackRate=0.45; video.play().catch(()=>{}); });
+})();
+</script>
 <script>
 const SUPA_URL='https://saaoukcqwqnxgmcuojjl.supabase.co';
 const SUPA_KEY='sb_publishable_T5X1hJ1PMplw7BX5unufjg_0wJggkG8';
@@ -251,10 +287,30 @@ async function loadConfig(){
 }
 async function unlock(){ let v=document.getElementById('p').value.trim(); if(!v) return; document.getElementById('e').innerText='Checking...'; try{ let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle(); if(data){ currentGuestData=data; currentGuestEvent=(data.event||'both').toLowerCase(); let count=data.count||data.guest_count||1; let familyType=data.family_type||data.type||''; document.getElementById('lock').style.display='none'; animateName(data.name); document.getElementById('familyInfo').innerHTML=`<span class="family-badge">${formatFamily(count,familyType)}</span>`; document.getElementById('letterGuest').innerText='For '+data.name+' ❤️'; document.getElementById('letterFamily').innerText=formatFamily(count,familyType); document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA'; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText=''; triggerGoldConfetti(); }else{ document.getElementById('e').innerText='❌ Galat Password'; } }catch(e){ document.getElementById('e').innerText='❌ Supabase Error'; } }
 function showEnvelope(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('envelopeStage').style.display='block';}
-let opened=false;function openEnvelope(){if(opened)return;opened=true;document.getElementById('seal').classList.add('broken');document.getElementById('hint').style.display='none';document.getElementById('roshni').classList.add('on'); triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText(); setTimeout(()=>{document.getElementById('envelope').classList.add('open');},450);setTimeout(()=>{document.getElementById('envelope').classList.add('full');document.getElementById('toDetails').style.display='block';if(window.autoPlaySong)window.autoPlaySong();},1400);}
-function openCards(){document.getElementById('envelopeStage').style.display='none';document.getElementById('gName').innerText='Dear '+document.getElementById('welcomeName').innerText+' ❤️'; if(currentGuestData){ let count=currentGuestData.count||currentGuestData.guest_count||1; let familyType=currentGuestData.family_type||currentGuestData.type||''; document.getElementById('gFamilyDetail').innerHTML=`<span class="family-badge" style="font-size:13px;padding:8px 18px">${formatFamily(count,familyType)} Invited 🎆</span>`; } document.getElementById('cards').style.display='block'; triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText(); loadDuas(); let b=document.getElementById('baratBox');let w=document.getElementById('walimaBox'); if(currentGuestEvent==='barat'){b.style.display='block';w.style.display='none';} else if(currentGuestEvent==='walima'){b.style.display='none';w.style.display='block';} else{b.style.display='block';w.style.display='block';}}
+let opened=false;
+function openEnvelope(){
+  if(opened)return;opened=true;
+  document.getElementById('seal').classList.add('broken');
+  document.getElementById('hint').style.display='none';
+  document.getElementById('roshni').classList.add('on'); 
+  triggerFireworks(); triggerGoldConfetti(); 
+  setTimeout(()=>{document.getElementById('envelope').classList.add('open');},450);
+  setTimeout(()=>{document.getElementById('envelope').classList.add('full');document.getElementById('toDetails').style.display='block';if(window.autoPlaySong)window.autoPlaySong();},1400);
+}
+function openCards(){
+  document.getElementById('envelopeStage').style.display='none';
+  document.getElementById('gName').innerText='Dear '+document.getElementById('welcomeName').innerText+' ❤️'; 
+  if(currentGuestData){ let count=currentGuestData.count||currentGuestData.guest_count||1; let familyType=currentGuestData.family_type||currentGuestData.type||''; document.getElementById('gFamilyDetail').innerHTML=`<span class="family-badge" style="font-size:13px;padding:8px 18px">${formatFamily(count,familyType)} Invited 🎆</span>`; } 
+  document.getElementById('cards').style.display='block'; 
+  triggerFireworks(); triggerGoldConfetti(); showCoupleFireworksText();
+  loadDuas(); 
+  let b=document.getElementById('baratBox');let w=document.getElementById('walimaBox'); 
+  if(currentGuestEvent==='barat'){b.style.display='block';w.style.display='none';} 
+  else if(currentGuestEvent==='walima'){b.style.display='none';w.style.display='block';} 
+  else{b.style.display='block';w.style.display='block';}
+}
 document.getElementById('unlockBtn').addEventListener('click',()=>{ if(document.getElementById('lockPass').value===ADMIN_PASS){ closeLock(); location.href='admin.html'; }else{ document.getElementById('lockMsg').innerText='❌ Galat Password'; } });
 loadConfig();
 </script>
 </body>
-</html>
+  </html>

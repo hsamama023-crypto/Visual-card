@@ -125,7 +125,7 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <div id="envelopeStage" class="glass" style="display:none"><div class="env-wrap"><div class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</div><audio id="bgMusic" loop preload="auto"></audio><div class="roshni" id="roshni"></div><div class="envelope" id="envelope" onclick="openEnvelope()"><div class="env-back"></div><div class="env-left"></div><div class="env-right"></div><div class="letter" id="letter"><div id="cardCouple" style="font-family:'Great Vibes';font-size:22px;color:#ffec8a;margin:2px 0">Loading...</div><div id="letterGuest" style="font-weight:600;color:#ffec8a;font-size:12px"></div><div id="letterFamily" style="font-size:9px;color:#aaa;margin-top:3px;background:rgba(212,175,55,.12);padding:3px 8px;border-radius:12px;border:1px solid rgba(212,175,55,.2)"></div><div style="margin-top:8px;font-size:6px;letter-spacing:2px;color:#8a7220">YOU ARE INVITED</div></div><div class="env-flap"></div><div class="seal" id="seal">💛</div></div><div class="hint" id="hint">TAP SEAL TO OPEN</div></div><button id="toDetails" class="btn btn-gold" style="display:none;margin-top:10px;font-size:10px" onclick="openCards()">VIEW DETAILS</button></div>
 <div id="cards" style="display:none" class="glass">
 <style>
-.event-box{background:linear-gradient(180deg,#1a1a1a,#121212);border:1px solid #252525;border-radius:12px;padding:10px;margin-top:10px;text-align:center;position:relative}
+event-box{background:linear-gradient(180deg,#1a1a1a,#121212);border:1px solid #252525;border-radius:12px;padding:10px;margin-top:10px;text-align:center;position:relative}
 .event-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);opacity:0.5}
 .dua-box{background:linear-gradient(180deg,#1a1810,#12120e);border:1px dashed #2a2520;border-radius:10px;padding:8px;margin-top:10px;text-align:center;font-size:10px;color:#d4af37;line-height:1.5}
 .countdown{display:flex;gap:5px;justify-content:center;margin-top:10px}
@@ -148,7 +148,10 @@ body{background:#000;display:flex;justify-content:center;padding:8px;font-family
 <div id="hijriDate" class="hijri-badge">🌙 Loading...</div>
 <div id="walidainBox" class="walidain-box">Walidain Ki Dua Se</div>
 <img id="gPic" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:1.5px solid #d4af37;margin:8px auto 0;display:none">
-<div class="dua-box" id="duaBox">“وَمِنْ آيَاتِهِ...”<br><b>Allah is rishtay ko rehmat se bhar de</b></div>
+<div class="dua-box" id="duaBox" style="font-family:'Amiri',serif; font-size:13px; line-height:1.9; color:#ffec8a;">
+وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+<br><span style="font-family:'Poppins'; font-size:8px; color:#8a7220; letter-spacing:1px; display:block; margin-top:6px; font-weight:600">Surah Ar-Rum 30:21 — Allah is rishtay ko rehmat se bhar de</span>
+</div>
 <div class="countdown"><div class="cd"><b id="cdD">--</b><span>DAYS</span></div><div class="cd"><b id="cdH">--</b><span>HRS</span></div><div class="cd"><b id="cdM">--</b><span>MIN</span></div><div class="cd"><b id="cdS">--</b><span>SEC</span></div></div>
 <div class="event-box" id="mehndiBox" style="display:none"><div style="font-weight:600;letter-spacing:2px;font-size:8px;color:#8a7220">MEHNDI</div><div id="mDateTime" style="font-weight:600;margin-top:3px;color:#ffec8a;font-size:11px"></div><div id="mVenue" style="font-size:9px;color:#777;margin-top:2px"></div><a id="mMap" target="_blank" style="display:inline-block;margin-top:6px;padding:5px 10px;border-radius:20px;background:#d4af37;color:#000;font-size:9px;text-decoration:none;font-weight:700">Location</a></div>
 <div class="event-box" id="baratBox"><div style="font-weight:600;letter-spacing:2px;font-size:8px;color:#8a7220">BARAT</div><div id="bDateTime" style="font-weight:600;margin-top:3px;color:#ffec8a;font-size:12px"></div><div id="bVenue" style="font-size:9px;color:#777;margin-top:2px"></div><a id="bMap" target="_blank" style="display:inline-block;margin-top:6px;padding:5px 10px;border-radius:20px;background:#d4af37;color:#000;font-size:9px;text-decoration:none;font-weight:700">Location</a></div>
@@ -196,11 +199,6 @@ function triggerRosePetals(){
       setTimeout(()=>petal.remove(),5000);
     },i*90);
   }
-}
-function showKabootar(){
-  let k=document.getElementById('kabootarMsg');
-  k.classList.add('show');
-  setTimeout(()=>{ k.classList.remove('show'); },3500);
 }
 const confettiCanvas=document.getElementById('confettiCanvas'); const confCtx=confettiCanvas.getContext('2d');
 function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; } window.addEventListener('resize',resizeConfetti); resizeConfetti();
@@ -259,7 +257,6 @@ function openGate(){
 }
 document.getElementById('gateScreen').addEventListener('click',openGate);
 setTimeout(()=>{ document.getElementById('nikkahTitle').classList.add('show'); },800);
-
 function toggleMusic(){let a=document.getElementById('bgMusic');let b=document.getElementById('musicBtn');if(!a||!a.src)return;if(isMusicPlaying){a.pause();b.innerText='🔇';isMusicPlaying=false;}else{a.play().catch(()=>{});b.innerText='🎶';isMusicPlaying=true;}}
 function formatFamily(c,t){ c=parseInt(c)||1; if(t&&t.toLowerCase().includes('family')) return `Full Family - ${c} Persons`; if(c==1) return `1 Person`; if(c==2) return `2 Persons`; return `${c} Persons`; }
 function animateName(name){ 
@@ -327,7 +324,6 @@ async function loadConfig(){
   try{ 
     let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); 
     if(!data) return; 
-    // 100% ADMIN ONLY - NO HARDCODED
     let c1=(data.c1||'').trim();
     let c2=(data.c2||'').trim();
     if(!c1 || !c2){

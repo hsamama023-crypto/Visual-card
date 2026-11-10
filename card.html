@@ -182,8 +182,8 @@ function formatDatePyara(dateStr,timeStr){
     document.getElementById('hijriDate').innerText=`🌙 ${hijri}`;
     return timeStr?`${days[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')} ${monthsFull[d.getMonth()]} ${d.getFullYear()} | ${timeStr}`:`${days[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')} ${monthsFull[d.getMonth()]} ${d.getFullYear()}`;
   }catch(e){ return dateStr; }
-  }
-  function triggerRosePetals(){
+}
+function triggerRosePetals(){
   for(let i=0;i<24;i++){
     setTimeout(()=>{
       let petal=document.createElement('div');
@@ -229,8 +229,8 @@ function heavyFireworks(){
   fwCanvas.style.display='block'; fwActive=true; fwParticles=[];
   let c=0; let iv=setInterval(()=>{ for(let j=0;j<3;j++){ let x=Math.random()*fwCanvas.width; let y=Math.random()*fwCanvas.height*0.5; createFirework(x,y); } c++; if(c>18) clearInterval(iv); },200);
   setTimeout(()=>{ fwActive=false; fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); fwCanvas.style.display='none'; },7000);
-}
-function animateFW(){ if(fwActive){ fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.99; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=10; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } fwCtx.globalAlpha=1; } requestAnimationFrame(animateFW); } animateFW();
+  }
+  function animateFW(){ if(fwActive){ fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); for(let i=fwParticles.length-1;i>=0;i--){ let p=fwParticles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.05; p.vx*=0.99; p.life-=p.decay; if(p.life<=0){ fwParticles.splice(i,1); continue; } fwCtx.globalAlpha=p.life; fwCtx.fillStyle=p.color; fwCtx.shadowBlur=10; fwCtx.shadowColor=p.color; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fwCtx.fill(); } fwCtx.globalAlpha=1; } requestAnimationFrame(animateFW); } animateFW();
   function showCoupleFireworksText(){ 
   if(!FW_ENABLED) return; 
   document.querySelectorAll('.fw-text').forEach(e=>e.remove()); 
@@ -256,8 +256,8 @@ function openGate(){
       heavyFireworks(); triggerGoldConfetti(); showCoupleFireworksText();
     },1000);
   },3500);
-  }
-  document.getElementById('gateScreen').addEventListener('click',openGate);
+}
+document.getElementById('gateScreen').addEventListener('click',openGate);
 setTimeout(()=>{ document.getElementById('nikkahTitle').classList.add('show'); },800);
 
 function toggleMusic(){let a=document.getElementById('bgMusic');let b=document.getElementById('musicBtn');if(!a||!a.src)return;if(isMusicPlaying){a.pause();b.innerText='🔇';isMusicPlaying=false;}else{a.play().catch(()=>{});b.innerText='🎶';isMusicPlaying=true;}}
@@ -321,8 +321,8 @@ async function loadDuas(){
       }); 
     } 
   }catch(e){} 
-}
-async function submitDua(){ let msg=document.getElementById('duaInput').value.trim(); if(!msg) return alert('Dua likhein'); let name=currentGuestData?currentGuestData.name:'Guest'; try{ await sb.from('duas').insert([{name:name,message:msg}]); loadDuas(); }catch(e){ let list=document.getElementById('duasList'); let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${name}:</b> ${msg}`; list.prepend(div); } document.getElementById('duaInput').value=''; triggerGoldConfetti(); triggerRosePetals(); alert('JazakAllah! Dua saved'); }
+  }
+  async function submitDua(){ let msg=document.getElementById('duaInput').value.trim(); if(!msg) return alert('Dua likhein'); let name=currentGuestData?currentGuestData.name:'Guest'; try{ await sb.from('duas').insert([{name:name,message:msg}]); loadDuas(); }catch(e){ let list=document.getElementById('duasList'); let div=document.createElement('div'); div.className='dua-item'; div.innerHTML=`<b style="color:#d4af37">${name}:</b> ${msg}`; list.prepend(div); } document.getElementById('duaInput').value=''; triggerGoldConfetti(); triggerRosePetals(); alert('JazakAllah! Dua saved'); }
 async function loadConfig(){ 
   try{ 
     let {data}=await sb.from('settings').select('*').eq('id',1).maybeSingle(); 
@@ -358,8 +358,20 @@ async function loadConfig(){
     FW_TITLE=data.fireworks_title||'NIKAH CEREMONY'; FW_SUB=data.fireworks_subtitle||'QABOOL HAI'; FW_ENABLED=data.fireworks_enabled!==false; GATE_SONG=data.gate_song_enabled!==false; CONFETTI_ENABLED=data.confetti_enabled!==false; QURAN_ENABLED=data.quran_enabled!==false;
     let dateStr=data.bd||data.barat_date||data.wd||data.walima_date; if(dateStr){ let t=new Date(dateStr); if(isNaN(t)) t=new Date(dateStr+' 2026'); if(!isNaN(t)) setInterval(()=>{ let diff=t-new Date(); if(diff<=0) return; let g=(id,v)=>{let e=document.getElementById(id); if(e) e.innerText=v;}; g('cdD',Math.floor(diff/86400000)); g('cdH',Math.floor(diff%86400000/3600000)); g('cdM',Math.floor(diff%3600000/60000)); g('cdS',Math.floor(diff%60000/1000)); },1000); } 
   }catch(e){} loadDuas(); 
-  }
-  function openCards(){
+}
+async function unlock(){ let v=document.getElementById('p').value.trim(); if(!v) return; document.getElementById('e').innerText='Checking...'; try{ let {data}=await sb.from('guests').select('*').eq('pass',v).maybeSingle(); if(data){ currentGuestData=data; currentGuestEvent=(data.event||'both').toLowerCase(); let count=data.count||data.guest_count||1; let familyType=data.family_type||data.type||''; document.getElementById('lock').style.display='none'; animateName(data.name); document.getElementById('familyInfo').innerHTML=`<span class="family-badge">${formatFamily(count,familyType)}</span>`; document.getElementById('letterGuest').innerText='For '+data.name; document.getElementById('letterFamily').innerText=formatFamily(count,familyType); document.getElementById('welcomeEvent').innerText=currentGuestEvent==='barat'?'BARAT ONLY':currentGuestEvent==='walima'?'WALIMA ONLY':'BARAT & WALIMA'; document.getElementById('welcomeScreen').style.display='block'; document.getElementById('e').innerText=''; triggerGoldConfetti(); triggerRosePetals(); }else{ document.getElementById('e').innerText='Wrong Password'; } }catch(e){ document.getElementById('e').innerText='Supabase Error'; } }
+function showEnvelope(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('envelopeStage').style.display='block';}
+let opened=false;
+function openEnvelope(){
+  if(opened)return;opened=true;
+  document.getElementById('seal').classList.add('broken');
+  document.getElementById('hint').style.display='none';
+  document.getElementById('roshni').classList.add('on'); 
+  heavyFireworks(); triggerGoldConfetti(); triggerRosePetals();
+  setTimeout(()=>{document.getElementById('envelope').classList.add('open');},350);
+  setTimeout(()=>{document.getElementById('envelope').classList.add('full');document.getElementById('toDetails').style.display='block';if(window.autoPlaySong)window.autoPlaySong();},1000);
+}
+function openCards(){
   document.getElementById('envelopeStage').style.display='none';
   document.getElementById('gName').innerText='Dear '+document.getElementById('welcomeName').innerText; 
   if(currentGuestData){ let count=currentGuestData.count||currentGuestData.guest_count||1; let familyType=currentGuestData.family_type||currentGuestData.type||''; document.getElementById('gFamilyDetail').innerHTML=`<span class="family-badge" style="font-size:10px;padding:5px 12px">${formatFamily(count,familyType)} Invited</span>`; } 
